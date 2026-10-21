@@ -60,6 +60,17 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
 .dz:hover,.dz.drag,.dz:focus-visible{transform:scale(1.015);border-color:var(--brand);outline:0}.dz b{font-size:2.2rem;animation:bob 2.6s ease-in-out infinite}.dz small{font-weight:400;color:var(--mute);font-size:.8rem}
 .dz.busy{pointer-events:none;opacity:.8}.dz.busy b{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .qrsum{margin-top:12px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,#16a34a 12%,var(--solid));border:1px solid color-mix(in srgb,#16a34a 40%,var(--line));font-size:.88rem;animation:up .5s var(--ease) both}.qrsum b{display:block;margin-bottom:2px}.qrsum button{min-height:auto;border:0;background:none;color:var(--brand);padding:4px 0 0;text-decoration:underline;font-weight:650;box-shadow:none!important}.qrsum.warn{background:color-mix(in srgb,#f59e0b 14%,var(--solid));border-color:color-mix(in srgb,#f59e0b 45%,var(--line))}
+.lrow{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;flex-wrap:wrap;margin:16px 0 8px}.lrow label{margin:0}
+.ea{position:relative;min-height:38px;padding:0 15px 0 11px;border-radius:999px;border:0;color:#fff;font-size:.85rem;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(110deg,#6366f1,#14b8a6,#6366f1);background-size:220% 100%;animation:slide 4s linear infinite;box-shadow:0 8px 20px -8px #6366f1}
+.ea i{font-style:normal;display:inline-block;animation:bob 2.2s ease-in-out infinite}
+.ea em{position:absolute;top:-9px;right:8px;font:800 8.5px/1 system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;font-style:normal;background:#f59e0b;color:#1c1203;padding:3px 6px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ea::before{content:"";position:absolute;inset:-4px;border-radius:inherit;border:2px solid #6366f1;opacity:0;animation:ping 2.4s ease-out infinite;pointer-events:none}
+@keyframes slide{to{background-position:-220% 0}}@keyframes ping{0%{opacity:.7;transform:scale(.94)}100%{opacity:0;transform:scale(1.16)}}
+.ea.busy{pointer-events:none;opacity:.9}.ea.busy i{animation:spin 1s linear infinite}
+.card.drag{outline:3px dashed var(--brand);outline-offset:-6px}
+.inp{position:relative;flex:1;min-width:0}.inp input{padding-right:54px}
+.pst{position:absolute;right:5px;top:50%;transform:translateY(-50%);min-height:38px;width:40px;padding:0;border-radius:10px;font-size:1.05rem;border:0;background:color-mix(in srgb,var(--brand) 14%,transparent)}
+.pst:hover:not(:disabled){transform:translateY(-50%) scale(1.1);box-shadow:none}.pst:active:not(:disabled){transform:translateY(-50%) scale(.9)}
 .hide{display:none!important}#pimg{display:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{body::before,body::after{display:none}body>*:not(#pimg){display:none!important}#pimg{display:block;margin:0 auto;max-width:100%;max-height:100vh}}
@@ -76,23 +87,23 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
   <label for="name">🏪 Merchant / Payee name</label>
   <input id="name" maxlength="50" autocomplete="off" placeholder="e.g. Sharma Medical Store">
   <div class="msg" id="e-name"></div>
-  <label for="type">💳 Payment address type</label>
+  <div class="lrow"><label for="type">💳 Payment address type</label><button class="ea" id="up" type="button" aria-label="Upload an existing UPI QR image to auto-fill (early access)"><i>📷</i><span class="t">Upload QR</span><em>Early access</em></button></div>
   <select id="type">
    <option value="vpa">UPI ID (recommended)</option>
-   <option value="qr">📷 Upload existing QR (auto-fill)</option>
-   <option value="mob">Mobile number</option>
    <option value="bank">Bank account + IFSC</option>
+   <option value="mob">Mobile number</option>
    <option value="aad">Aadhaar number</option>
   </select>
+  <div class="msg" id="e-qr"></div>
+  <input type="file" id="qrfile" accept="image/*" hidden>
   <div class="qrsum hide" id="qrsum" role="status"></div>
-  <div id="f-qr" class="hide"><label class="dz" id="dz" for="qrfile" tabindex="0"><b>📷</b><span>Tap to upload a UPI QR image</span><small>or drag &amp; drop · paste · works with any UPI QR (PNG, JPG, WebP)</small></label><input type="file" id="qrfile" accept="image/*" hidden><div class="msg" id="e-qr"></div></div>
-  <div id="f-vpa"><label for="vpa">UPI ID</label><input id="vpa" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><div class="msg" id="e-vpa"></div></div>
+  <div id="f-vpa"><label for="vpa">UPI ID</label><div class="inp"><input id="vpa" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><button class="pst" type="button" data-for="vpa" aria-label="Paste UPI ID">📋</button></div><div class="msg" id="e-vpa"></div></div>
   <div id="f-mob" class="hide"><label for="mob">Mobile number</label>
-   <div class="row"><input id="mob" inputmode="numeric" maxlength="10" placeholder="9876543210"><select id="hnd" aria-label="UPI handle"><option>@ybl</option><option>@paytm</option><option>@okaxis</option><option>@oksbi</option><option>@okhdfcbank</option><option>@okicici</option><option>@apl</option><option>@axl</option><option>@ibl</option></select></div>
+   <div class="row"><div class="inp"><input id="mob" inputmode="numeric" maxlength="10" placeholder="9876543210"><button class="pst" type="button" data-for="mob" aria-label="Paste mobile number">📋</button></div><select id="hnd" aria-label="UPI handle"><option>@ybl</option><option>@paytm</option><option>@okaxis</option><option>@oksbi</option><option>@okhdfcbank</option><option>@okicici</option><option>@apl</option><option>@axl</option><option>@ibl</option></select></div>
    <div class="hint">Choose the handle of the UPI app this number is registered on.</div><div class="msg" id="e-mob"></div></div>
-  <div id="f-bank" class="hide"><label for="acc">Bank account number</label><input id="acc" inputmode="numeric" maxlength="18" placeholder="9 to 18 digits"><div class="msg" id="e-acc"></div>
-   <label for="ifsc">IFSC code</label><input id="ifsc" maxlength="11" autocapitalize="characters" placeholder="SBIN0001234"><div class="msg" id="e-ifsc"></div></div>
-  <div id="f-aad" class="hide"><label for="aad">Aadhaar number</label><input id="aad" inputmode="numeric" maxlength="12" placeholder="12 digits"><div class="hint">Not every UPI app supports Aadhaar-based payments. Use a UPI ID if scans fail.</div><div class="msg" id="e-aad"></div></div>
+  <div id="f-bank" class="hide"><label for="acc">Bank account number</label><div class="inp"><input id="acc" inputmode="numeric" maxlength="18" placeholder="9 to 18 digits"><button class="pst" type="button" data-for="acc" aria-label="Paste account number">📋</button></div><div class="msg" id="e-acc"></div>
+   <label for="ifsc">IFSC code</label><div class="inp"><input id="ifsc" maxlength="11" autocapitalize="characters" placeholder="SBIN0001234"><button class="pst" type="button" data-for="ifsc" aria-label="Paste IFSC code">📋</button></div><div class="msg" id="e-ifsc"></div></div>
+  <div id="f-aad" class="hide"><label for="aad">Aadhaar number</label><div class="inp"><input id="aad" inputmode="numeric" maxlength="12" placeholder="12 digits"><button class="pst" type="button" data-for="aad" aria-label="Paste Aadhaar number">📋</button></div><div class="hint">Not every UPI app supports Aadhaar-based payments. Use a UPI ID if scans fail.</div><div class="msg" id="e-aad"></div></div>
   <label for="amt">💰 Amount (optional)</label>
   <div class="amt"><span>₹</span><input id="amt" inputmode="decimal" placeholder="Leave empty to let the payer enter it"></div>
   <div class="msg" id="e-amt"></div>
@@ -102,7 +113,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
  </section>
  <section class="card prev" aria-live="polite" aria-label="QR code preview">
   <div class="empty" id="empty"><b>📲</b>Fill in the name and payment address to generate your premium QR card.</div>
-  <div class="stage"><canvas id="cv" class="hide" width="1080" height="1800" role="img" aria-label="Generated UPI QR code card"></canvas></div>
+  <div class="stage"><canvas id="cv" class="hide" width="1080" height="1700" role="img" aria-label="Generated UPI QR code card"></canvas></div>
   <div class="linkbox hide" id="lb"><div class="uri" id="uri"></div><button class="copy" id="b-copy" type="button">📋 Copy</button></div>
   <div class="btns">
    <button class="primary" id="b-open" type="button" disabled><i>🚀</i>Open UPI app</button>
@@ -134,7 +145,6 @@ const clean=s=>s.replace(/[\u0000-\u001f\u007f<>]/g,"").replace(/\s+/g," ").trim
 
 function resolve(){
  const e={},t=el.type.value,name=clean(el.name.value);let vpa="",ok=true,touched=false;
- if(t=="qr"){e.qr="x"}
  if(!name)e.name="Enter the merchant or payee name.";
  if(t=="vpa"){const v=el.vpa.value.trim();touched=!!v;
   if(!v)e.vpa="Enter a UPI ID.";else if(!/^[a-zA-Z0-9._-]{2,64}@[a-zA-Z][a-zA-Z0-9.]{1,40}$/.test(v))e.vpa="Use the format name@bank, e.g. shop@okaxis.";else vpa=v}
@@ -161,10 +171,10 @@ try{for(const k in(window.UPI_LOGOS||{})){const L=window.UPI_LOGOS[k],i=new Imag
 function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
 const FF="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
 function drawCard(q,r){
- const c=$("cv"),x=c.getContext("2d"),W=1080,H=1800,n=q.getModuleCount();x.textAlign="center";x.textBaseline="alphabetic";
+ const c=$("cv"),x=c.getContext("2d"),W=1080,H=1700,n=q.getModuleCount();x.textAlign="center";x.textBaseline="alphabetic";
  let g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#042f2e");g.addColorStop(.55,"#0f766e");g.addColorStop(1,"#2dd4bf");x.fillStyle=g;x.fillRect(0,0,W,H);
- x.fillStyle="rgba(255,255,255,.07)";[[120,160,260],[980,420,320],[160,1500,300],[940,1700,220]].forEach(([a,b,d])=>{x.beginPath();x.arc(a,b,d,0,7);x.fill()});
- x.save();x.shadowColor="rgba(0,0,0,.35)";x.shadowBlur=60;x.shadowOffsetY=24;x.fillStyle="#fff";rr(x,48,48,984,1704,64);x.fill();x.restore();
+ x.fillStyle="rgba(255,255,255,.07)";[[120,160,260],[980,420,320],[160,1440,300],[940,1620,220]].forEach(([a,b,d])=>{x.beginPath();x.arc(a,b,d,0,7);x.fill()});
+ x.save();x.shadowColor="rgba(0,0,0,.35)";x.shadowBlur=60;x.shadowOffsetY=24;x.fillStyle="#fff";rr(x,48,48,984,1604,64);x.fill();x.restore();
  const fit=(t,max,w,wt)=>{let s=max;do{x.font=wt+" "+s+"px "+FF;s-=2}while(x.measureText(t).width>w&&s>22);return t};
  g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,"#0f766e");g.addColorStop(1,"#6366f1");x.fillStyle=g;x.font="800 84px "+FF;x.fillText("💸 Scan & Pay",W/2,185);
  x.fillStyle="#64748b";x.font="500 31px "+FF;x.fillText("Fast  •  Secure  •  Works with every UPI app",W/2,240);
@@ -183,8 +193,8 @@ function drawCard(q,r){
  x.fillStyle="#94a3b8";x.font="700 22px "+FF;x.fillText("ACCEPTED ON ALL UPI APPS",W/2,1478);
  x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
  const row=(ks,hh,gap,Y)=>{const L=ks.map(k=>LG[k]).filter(l=>l&&l.ok),ws=L.map(l=>l.w*hh/l.h);let X=(W-(ws.reduce((a,b)=>a+b,0)+gap*(L.length-1)))/2;L.forEach((l,i)=>{x.drawImage(l.i,X,Y,ws[i],hh);X+=ws[i]+gap})};
- row(["bhim","upi"],74,70,1506);row(["gpay","phonepe","paytm","amazon"],54,46,1608);
- x.fillStyle="#64748b";x.font="500 26px "+FF;x.fillText("🔒 Always verify the payee name in your UPI app before paying",W/2,1716);
+ row(["gpay","phonepe","paytm","bhim","upi"],54,40,1508);
+ x.fillStyle="#64748b";x.font="500 26px "+FF;x.fillText("🔒 Always verify the payee name in your UPI app before paying",W/2,1622);
 }
 function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))d+=`M${j+m} ${i+m}h1v1h-1z`;
@@ -203,7 +213,7 @@ function render(){
   catch(err){$("empty").textContent="Details are too long to encode. Shorten the name or note.";$("empty").classList.remove("hide");$("cv").classList.add("hide");$("lb").classList.add("hide");btn.forEach(b=>b.disabled=true)}}
  if(el.rem.checked)store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note"].map(k=>[k,el[k].value])),rem:1}));
 }
-function layout(){["qr","vpa","mob","bank","aad"].forEach(k=>$("f-"+k).classList.toggle("hide",k!=el.type.value))}
+function layout(){["vpa","mob","bank","aad"].forEach(k=>$("f-"+k).classList.toggle("hide",k!=el.type.value))}
 const slug=()=>"upi-qr-"+(clean(el.name.value).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"code")+(cur&&cur.r.am?"-"+cur.r.am:"");
 const save=(blob,name)=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 const jpg=()=>new Promise(res=>$("cv").toBlob(res,"image/jpeg",.95));
@@ -244,32 +254,44 @@ async function readQR(file){
  return null}
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 async function handleFile(f){
- const dz=$("dz"),err=$("e-qr");err.textContent="";if(!f)return;
+ const up=$("up"),t=up.querySelector(".t"),err=$("e-qr");err.textContent="";if(!f)return;
  if(!/^image\//.test(f.type)&&!/\.(png|jpe?g|webp|gif|bmp)$/i.test(f.name)){err.textContent="❌ Please choose an image file.";return}
  if(f.size>20e6){err.textContent="❌ Image is too large (max 20 MB).";return}
- dz.classList.add("busy");dz.querySelector("span").textContent="🔍 Reading QR code…";
+ up.classList.add("busy");t.textContent="Reading…";
  await new Promise(r=>setTimeout(r,60));
  try{const raw=await readQR(f);
   if(!raw)err.textContent="❌ No QR code found. Use a sharp, well-lit image with the full QR visible.";
   else{const p=parsePay(raw);if(!p||!p.vpa)err.textContent="❌ This QR has no UPI payment address. Upload a UPI / BHIM / Bharat QR.";else applyPay(p)}}
  catch{err.textContent="❌ Couldn't open this image. Try a PNG or JPG."}
- dz.classList.remove("busy");dz.querySelector("span").textContent="Tap to upload a UPI QR image";}
-function applyPay(p){
+ up.classList.remove("busy");t.textContent="Upload QR"}
+function applyPay(p,src){const W=src=="paste"?"Payment link":"QR";
  const a=p.am.replace(/,/g,""),amOk=/^\d{1,8}(\.\d{1,2})?$/.test(a)&&+a>0;
  el.type.value="vpa";layout();el.vpa.value=p.vpa.slice(0,100);el.name.value=p.name.slice(0,50);el.amt.value=amOk?a:"";el.note.value=p.note.slice(0,50);
  ["vpa","name","amt","note"].forEach(k=>el[k].dataset.d="1");render();
  const q=$("qrsum"),miss=!p.name;q.className="qrsum"+(miss?" warn":"");
- q.innerHTML="<b>"+(miss?"⚠️ QR read – please add the payee name":"✅ QR read successfully")+"</b>"+(p.name?"🏪 "+esc(p.name)+"<br>":"")+"📲 "+esc(p.vpa)+"<br>"+(amOk?"💰 ₹"+esc(a):"💰 No amount in QR – add one below if you like")+"<br>"+(p.note?"📝 "+esc(p.note):"📝 No note in QR")+'<br><button type="button" id="again">📷 Upload another QR</button>';
- $("again").onclick=()=>{el.type.value="qr";layout();render();$("qrfile").click()};
- toast(miss?"⚠️ Add the payee name":"✅ QR read – new dynamic QR ready");buzz();
+ q.innerHTML="<b>"+(miss?"⚠️ "+W+" read – please add the payee name":"✅ "+W+" read successfully")+"</b>"+(p.name?"🏪 "+esc(p.name)+"<br>":"")+"📲 "+esc(p.vpa)+"<br>"+(amOk?"💰 ₹"+esc(a):"💰 No amount in QR – add one below if you like")+"<br>"+(p.note?"📝 "+esc(p.note):"📝 No note in QR")+'<br><button type="button" id="again">📷 Upload another QR</button>';
+ $("again").onclick=()=>$("qrfile").click();
+ toast(miss?"⚠️ Add the payee name":"✅ "+W+" read – dynamic QR ready");buzz();
  if(miss)el.name.focus();else if(matchMedia("(max-width:820px)").matches)setTimeout(()=>$("cv").scrollIntoView({behavior:"smooth",block:"center"}),350)}
-const qf=$("qrfile"),dzEl=$("dz");
+const qf=$("qrfile");
+$("up").addEventListener("click",()=>qf.click());
 qf.addEventListener("change",()=>{const f=qf.files[0];qf.value="";handleFile(f)});
-dzEl.addEventListener("keydown",e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();qf.click()}});
-["dragenter","dragover"].forEach(v=>dzEl.addEventListener(v,e=>{e.preventDefault();dzEl.classList.add("drag")}));
-["dragleave","drop"].forEach(v=>dzEl.addEventListener(v,e=>{e.preventDefault();dzEl.classList.remove("drag")}));
-dzEl.addEventListener("drop",e=>handleFile(e.dataTransfer.files[0]));
-addEventListener("paste",e=>{const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>i.type.startsWith("image/"));if(it){e.preventDefault();el.type.value=el.type.value;handleFile(it.getAsFile())}});
+const card=document.querySelector("main .card");
+["dragenter","dragover"].forEach(v=>card.addEventListener(v,e=>{if([...(e.dataTransfer&&e.dataTransfer.types||[])].includes("Files")){e.preventDefault();card.classList.add("drag")}}));
+["dragleave","drop"].forEach(v=>card.addEventListener(v,e=>{e.preventDefault();card.classList.remove("drag")}));
+card.addEventListener("drop",e=>handleFile(e.dataTransfer.files[0]));
+addEventListener("paste",e=>{const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>i.type.startsWith("image/"));if(it){e.preventDefault();handleFile(it.getAsFile())}});
+const PASTE={vpa:t=>t.replace(/\s+/g,""),mob:t=>t.replace(/\D/g,"").slice(-10),acc:t=>t.replace(/\D/g,"").slice(0,18),ifsc:t=>t.replace(/\s+/g,"").toUpperCase().slice(0,11),aad:t=>t.replace(/\D/g,"").slice(0,12)};
+async function doPaste(k){
+ const c=navigator.clipboard;if(!c||!c.readText){toast("📋 Long-press the field to paste");return}
+ try{
+  if(c.read){try{for(const it of await c.read()){const ty=it.types.find(x=>x.startsWith("image/"));if(ty){handleFile(new File([await it.getType(ty)],"clipboard.png",{type:ty}));return}}}catch{}}
+  const t=((await c.readText())||"").trim();
+  if(!t){toast("📋 Clipboard is empty");return}
+  const p=parsePay(t);if(p&&p.vpa){applyPay(p,"paste");return}
+  el[k].value=PASTE[k](t.split(/\r?\n/)[0]);el[k].dataset.d="1";el[k].dispatchEvent(new Event("input",{bubbles:true}));toast("📋 Pasted");buzz()
+ }catch{toast("📋 Allow clipboard access, or long-press the field to paste")}}
+document.querySelectorAll(".pst").forEach(b=>b.addEventListener("click",()=>doPaste(b.dataset.for)));
 
 const th=$("theme"),root=document.documentElement,applyT=t=>root.dataset.theme=t;
 applyT(store.get(TKEY)||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));

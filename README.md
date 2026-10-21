@@ -21,7 +21,7 @@ Builds a standard `upi://pay?pa=…&pn=…&am=…&cu=INR&tn=…` link and encode
 ## Third-party notices
 - `qrcode.js` – Kazuhiko Arase, MIT.
 - `jsqr.js` – Cosmo Wolfe, Apache-2.0 (QR reading).
-- BHIM, UPI, Google Pay, PhonePe, Paytm and Amazon Pay names and logos (`logos.js`) are trademarks of their respective owners, shown only to indicate accepted payment apps. No affiliation or endorsement.
+- BHIM, UPI, Google Pay, PhonePe and Paytm names and logos (`logos.js`) are trademarks of their respective owners, shown only to indicate accepted payment apps. No affiliation or endorsement.
 
 ## Disclaimer
 Independent tool; not affiliated with NPCI, BHIM, any bank or payment app. Always verify the payee name in your UPI app before paying.
