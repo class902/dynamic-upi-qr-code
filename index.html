@@ -6,8 +6,9 @@
 <title>Dynamic UPI QR Code Generator – Free, Private, No Signup</title>
 <meta name="description" content="Create dynamic UPI QR codes with a pre-filled amount and note. Works with Google Pay, PhonePe, Paytm, BHIM and all UPI apps. Runs entirely in your browser.">
 <meta name="theme-color" content="#0f766e">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="UPI QR">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 :root{--bg:#f1f7f5;--card:rgba(255,255,255,.82);--solid:#fff;--ink:#0b1f1c;--mute:#5a6e6a;--line:#d6e4e0;--brand:#0f766e;--brand2:#14b8a6;--brand-ink:#fff;--err:#b42318;--shadow:0 20px 50px -20px rgba(15,118,110,.35);--ease:cubic-bezier(.22,1,.36,1)}
@@ -63,7 +64,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
 .lrow{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;flex-wrap:wrap;margin:16px 0 8px}.lrow label{margin:0}
 .ea{position:relative;min-height:38px;padding:0 15px 0 11px;border-radius:999px;border:0;color:#fff;font-size:.85rem;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(110deg,#6366f1,#14b8a6,#6366f1);background-size:220% 100%;animation:slide 4s linear infinite;box-shadow:0 8px 20px -8px #6366f1}
 .ea i{font-style:normal;display:inline-block;animation:bob 2.2s ease-in-out infinite}
-.ea em{position:absolute;top:-9px;right:8px;font:800 8.5px/1 system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;font-style:normal;background:#f59e0b;color:#1c1203;padding:3px 6px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ea em.gone{display:none}.ea em{position:absolute;top:-9px;right:8px;font:800 8.5px/1 system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;font-style:normal;background:#f59e0b;color:#1c1203;padding:3px 6px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
 .ea::before{content:"";position:absolute;inset:-4px;border-radius:inherit;border:2px solid #6366f1;opacity:0;animation:ping 2.4s ease-out infinite;pointer-events:none}
 @keyframes slide{to{background-position:-220% 0}}@keyframes ping{0%{opacity:.7;transform:scale(.94)}100%{opacity:0;transform:scale(1.16)}}
 .ea.busy{pointer-events:none;opacity:.9}.ea.busy i{animation:spin 1s linear infinite}
@@ -71,6 +72,20 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
 .inp{position:relative;flex:1;min-width:0}.inp input{padding-right:54px}
 .pst{position:absolute;right:5px;top:50%;transform:translateY(-50%);min-height:38px;width:40px;padding:0;border-radius:10px;font-size:1.05rem;border:0;background:color-mix(in srgb,var(--brand) 14%,transparent)}
 .pst:hover:not(:disabled){transform:translateY(-50%) scale(1.1);box-shadow:none}.pst:active:not(:disabled){transform:translateY(-50%) scale(.9)}
+.hbtns{display:flex;gap:8px;align-items:center}
+.pill{min-height:44px;border-radius:999px;font-size:.85rem;padding:0 15px;background:linear-gradient(110deg,var(--brand),var(--brand2));color:var(--brand-ink);border:0;animation:up .6s var(--ease) both}
+.foot2{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:16px}.foot2 .chk{margin-top:0;flex:1 1 230px}
+.ghost{min-height:42px;font-size:.88rem;white-space:nowrap;padding:0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.chip{min-height:34px;padding:0 12px;border-radius:999px;font-size:.82rem;font-weight:650;background:color-mix(in srgb,var(--brand) 10%,var(--solid))}
+.designs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:14px}
+.designs button{min-height:auto;padding:9px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.78rem;line-height:1.15;border-radius:14px}
+.designs button[aria-checked=true]{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 25%,transparent)}
+.sw{width:100%;max-width:70px;height:30px;border-radius:9px;border:1px solid rgba(0,0,0,.12)}
+.sw1{background:linear-gradient(135deg,#042f2e,#0f766e 55%,#2dd4bf)}.sw2{background:linear-gradient(135deg,#02040d,#1b1650 60%,#d9a93c)}.sw3{background:linear-gradient(180deg,#ff9933 30%,#fff 30% 65%,#138808 65%)}
+.saved{width:100%;margin-top:14px}.saved h3{margin:0 0 8px;font-size:.88rem}.sl{display:flex;flex-wrap:wrap;gap:8px}
+.sv{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:var(--solid);overflow:hidden}
+.sv button{min-height:36px;border:0;border-radius:0;background:none;font-size:.8rem;padding:0 10px;box-shadow:none!important}.sv .x{padding:0 10px 0 4px;color:var(--mute)}
+#toast button{min-height:auto;border:0;background:none;color:inherit;text-decoration:underline;padding:0 4px;box-shadow:none!important;font-weight:700}
 .hide{display:none!important}#pimg{display:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{body::before,body::after{display:none}body>*:not(#pimg){display:none!important}#pimg{display:block;margin:0 auto;max-width:100%;max-height:100vh}}
@@ -80,14 +95,14 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
 <div class="wrap">
 <header>
  <div><h1>Dynamic UPI QR Code ✨</h1><p class="sub">Pre-filled amount &amp; note. Works with every UPI app. 100% in your browser.</p></div>
- <button class="icon" id="theme" type="button" aria-label="Toggle dark mode">🌓</button>
+ <div class="hbtns"><button class="pill hide" id="install" type="button">📲 Install app</button><button class="icon" id="theme" type="button" aria-label="Toggle dark mode">🌓</button></div>
 </header>
 <main class="grid">
  <section class="card" aria-label="Payment details">
   <label for="name">🏪 Merchant / Payee name</label>
   <input id="name" maxlength="50" autocomplete="off" placeholder="e.g. Sharma Medical Store">
   <div class="msg" id="e-name"></div>
-  <div class="lrow"><label for="type">💳 Payment address type</label><button class="ea" id="up" type="button" aria-label="Upload an existing UPI QR image to auto-fill (early access)"><i>📷</i><span class="t">Upload QR</span><em>Early access</em></button></div>
+  <div class="lrow"><label for="type">💳 Payment address type</label><button class="ea" id="up" type="button" aria-label="Upload an existing UPI QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
   <select id="type">
    <option value="vpa">UPI ID (recommended)</option>
    <option value="bank">Bank account + IFSC</option>
@@ -97,7 +112,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
   <div class="msg" id="e-qr"></div>
   <input type="file" id="qrfile" accept="image/*" hidden>
   <div class="qrsum hide" id="qrsum" role="status"></div>
-  <div id="f-vpa"><label for="vpa">UPI ID</label><div class="inp"><input id="vpa" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><button class="pst" type="button" data-for="vpa" aria-label="Paste UPI ID">📋</button></div><div class="msg" id="e-vpa"></div></div>
+  <div id="f-vpa"><label for="vpa">UPI ID</label><datalist id="hl"></datalist><div class="inp"><input id="vpa" list="hl" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><button class="pst" type="button" data-for="vpa" aria-label="Paste UPI ID">📋</button></div><div class="msg" id="e-vpa"></div></div>
   <div id="f-mob" class="hide"><label for="mob">Mobile number</label>
    <div class="row"><div class="inp"><input id="mob" inputmode="numeric" maxlength="10" placeholder="9876543210"><button class="pst" type="button" data-for="mob" aria-label="Paste mobile number">📋</button></div><select id="hnd" aria-label="UPI handle"><option>@ybl</option><option>@paytm</option><option>@okaxis</option><option>@oksbi</option><option>@okhdfcbank</option><option>@okicici</option><option>@apl</option><option>@axl</option><option>@ibl</option></select></div>
    <div class="hint">Choose the handle of the UPI app this number is registered on.</div><div class="msg" id="e-mob"></div></div>
@@ -106,21 +121,24 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
   <div id="f-aad" class="hide"><label for="aad">Aadhaar number</label><div class="inp"><input id="aad" inputmode="numeric" maxlength="12" placeholder="12 digits"><button class="pst" type="button" data-for="aad" aria-label="Paste Aadhaar number">📋</button></div><div class="hint">Not every UPI app supports Aadhaar-based payments. Use a UPI ID if scans fail.</div><div class="msg" id="e-aad"></div></div>
   <label for="amt">💰 Amount (optional)</label>
   <div class="amt"><span>₹</span><input id="amt" inputmode="decimal" placeholder="Leave empty to let the payer enter it"></div>
+  <div class="chips" aria-label="Quick amounts"><button class="chip" type="button" data-v="100">₹100</button><button class="chip" type="button" data-v="250">₹250</button><button class="chip" type="button" data-v="500">₹500</button><button class="chip" type="button" data-v="1000">₹1,000</button><button class="chip" type="button" data-v="2000">₹2,000</button><button class="chip" type="button" data-v="">✕ Any</button></div>
   <div class="msg" id="e-amt"></div>
   <label for="note">📝 Note / description (optional)</label>
   <input id="note" maxlength="50" autocomplete="off" placeholder="e.g. Invoice #1042">
-  <label class="chk"><input type="checkbox" id="rem"><span>Remember these details on this device only (stored in your browser, never uploaded).</span></label>
+  <div class="foot2"><label class="chk"><input type="checkbox" id="rem"><span>Remember these details on this device only (stored in your browser, never uploaded).</span></label><button class="ghost" id="clr" type="button">🧹 Clear / New QR</button></div>
  </section>
  <section class="card prev" aria-live="polite" aria-label="QR code preview">
   <div class="empty" id="empty"><b>📲</b>Fill in the name and payment address to generate your premium QR card.</div>
   <div class="stage"><canvas id="cv" class="hide" width="1080" height="1700" role="img" aria-label="Generated UPI QR code card"></canvas></div>
+  <div class="designs hide" id="designs" role="radiogroup" aria-label="QR card design"><button type="button" role="radio" data-d="emerald" aria-checked="true"><span class="sw sw1"></span>Emerald Aurora</button><button type="button" role="radio" data-d="midnight" aria-checked="false"><span class="sw sw2"></span>Midnight Gold</button><button type="button" role="radio" data-d="tricolor" aria-checked="false"><span class="sw sw3"></span>Bharat Tricolor</button></div>
   <div class="linkbox hide" id="lb"><div class="uri" id="uri"></div><button class="copy" id="b-copy" type="button">📋 Copy</button></div>
   <div class="btns">
    <button class="primary" id="b-open" type="button" disabled><i>🚀</i>Open UPI app</button>
    <button id="b-jpg" type="button" disabled><i>📥</i>Download JPG</button>
    <button id="b-share" type="button" disabled><i>💬</i>Share</button>
   </div>
-  <div class="more">More: <button id="b-svg" type="button" disabled>SVG</button>·<button id="b-print" type="button" disabled>Print</button></div>
+  <div class="more">More: <button id="b-svg" type="button" disabled>SVG</button>·<button id="b-print" type="button" disabled>Print</button>·<button id="b-save" type="button" disabled>⭐ Save</button></div>
+  <div class="saved hide" id="saved"><h3>⭐ Saved QRs <span style="font-weight:400;color:var(--mute)">(on this device only)</span></h3><div class="sl" id="sl"></div></div>
  </section>
 </main>
 <details><summary>How it works &amp; privacy</summary><p>The QR encodes a standard UPI payment link (upi://pay) with your payee address, name, optional amount and note. Anyone can scan it with Google Pay, PhonePe, Paytm, BHIM, WhatsApp or any bank UPI app. Everything is generated locally in your browser – no server, no tracking, no signup. Always scan and verify the payee name shown by your UPI app before paying.</p></details>
@@ -136,10 +154,10 @@ footer{margin-top:24px;font-size:.8rem;color:var(--mute);text-align:center}
 "use strict";
 const $=id=>document.getElementById(id),KEY="dupi.v1",TKEY="dupi.theme";
 const el=Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note","rem"].map(k=>[k,$(k)]));
-const btn=["jpg","svg","open","share","print","copy"].map(k=>$("b-"+k));
-let cur=null,tt;
+const btn=["jpg","svg","open","share","print","copy","save"].map(k=>$("b-"+k));
+let cur=null,tt,design="emerald";
 const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
-const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2200)};
+const toast=(m,a)=>{const t=$("toast");t.textContent=m;t.style.pointerEvents="";if(a){const b=document.createElement("button");b.type="button";b.textContent=a.label;b.onclick=()=>{a.fn();t.classList.remove("on")};t.append(" ",b);t.style.pointerEvents="auto"}t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),a?5500:2200)};
 const enc=s=>encodeURIComponent(s).replace(/%40/g,"@");
 const clean=s=>s.replace(/[\u0000-\u001f\u007f<>]/g,"").replace(/\s+/g," ").trim();
 
@@ -170,31 +188,40 @@ const LG={};
 try{for(const k in(window.UPI_LOGOS||{})){const L=window.UPI_LOGOS[k],i=new Image();LG[k]={i,w:L.w,h:L.h,ok:0};i.onload=()=>{LG[k].ok=1;if(typeof cur!=="undefined"&&cur)render()};i.src=L.src}}catch{}
 function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
 const FF="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+const THEMES={
+ emerald:{bg:["#042f2e","#0f766e","#2dd4bf"],deco:"rgba(255,255,255,.07)",card:["#ffffff","#ffffff"],ttl:["#0f766e","#6366f1"],sub:"#64748b",pill:["#ecfdf5","#99f6e4","#064e3b"],frame:["#14b8a6","#6366f1","#0f766e"],amt:["#0f766e","#14b8a6","#ffffff"],vpa:"#334155",note:"#64748b",div:"#e2e8f0",lbl:"#94a3b8",foot:"#64748b",strip:0,orn:""},
+ midnight:{bg:["#02040d","#0b1230","#1b1650"],deco:"rgba(217,169,60,.09)",card:["#0a1129","#141d47"],ttl:["#f9e7a8","#d9a93c"],sub:"#9aa7c7",pill:["#141d44","#d9a93c","#f9e7a8"],frame:["#f9e7a8","#b8862b","#f9e7a8"],amt:["#f9e7a8","#d9a93c","#2a1c00"],vpa:"#eef1fb",note:"#9aa7c7",div:"#2b3568",lbl:"#d1b86a",foot:"#8f9cc0",strip:1,orn:"gold"},
+ tricolor:{bg:["#0a1a4f","#1e3a8a","#3b5bdb"],deco:"rgba(255,255,255,.07)",card:["#ffffff","#fffaf3"],ttl:["#ff7a00","#138808"],sub:"#475569",pill:["#fff4e5","#ffb366","#7a3d00"],frame:["#ff9933","#1e3a8a","#138808"],amt:["#1e3a8a","#3b5bdb","#ffffff"],vpa:"#0f172a",note:"#475569",div:"#e2e8f0",lbl:"#94a3b8",foot:"#475569",strip:0,orn:"tri"}};
 function drawCard(q,r){
- const c=$("cv"),x=c.getContext("2d"),W=1080,H=1700,n=q.getModuleCount();x.textAlign="center";x.textBaseline="alphabetic";
- let g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#042f2e");g.addColorStop(.55,"#0f766e");g.addColorStop(1,"#2dd4bf");x.fillStyle=g;x.fillRect(0,0,W,H);
- x.fillStyle="rgba(255,255,255,.07)";[[120,160,260],[980,420,320],[160,1440,300],[940,1620,220]].forEach(([a,b,d])=>{x.beginPath();x.arc(a,b,d,0,7);x.fill()});
- x.save();x.shadowColor="rgba(0,0,0,.35)";x.shadowBlur=60;x.shadowOffsetY=24;x.fillStyle="#fff";rr(x,48,48,984,1604,64);x.fill();x.restore();
+ const T=THEMES[design]||THEMES.emerald,c=$("cv"),x=c.getContext("2d"),W=1080,H=1700,n=q.getModuleCount();x.textAlign="center";x.textBaseline="alphabetic";
+ const lg=(a,b,d,e,cols)=>{const g=x.createLinearGradient(a,b,d,e);cols.forEach((k,i)=>g.addColorStop(i/(cols.length-1),k));return g};
+ x.fillStyle=lg(0,0,W,H,T.bg);x.fillRect(0,0,W,H);
+ x.fillStyle=T.deco;[[120,160,260],[980,420,320],[160,1440,300],[940,1620,220]].forEach(([a,b,d])=>{x.beginPath();x.arc(a,b,d,0,7);x.fill()});
+ x.save();x.shadowColor="rgba(0,0,0,.4)";x.shadowBlur=60;x.shadowOffsetY=24;x.fillStyle=lg(0,48,0,1652,T.card);rr(x,48,48,984,1604,64);x.fill();x.restore();
+ if(T.orn=="tri"){x.save();rr(x,48,48,984,1604,64);x.clip();x.fillStyle="#ff9933";x.fillRect(48,48,984,18);x.fillStyle="#138808";x.fillRect(48,1634,984,18);x.restore()}
+ if(T.orn=="gold"){x.strokeStyle=lg(0,0,W,H,["#f9e7a8","#b8862b","#f9e7a8"]);x.lineWidth=3;rr(x,62,62,956,1580,52);x.stroke()}
  const fit=(t,max,w,wt)=>{let s=max;do{x.font=wt+" "+s+"px "+FF;s-=2}while(x.measureText(t).width>w&&s>22);return t};
- g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,"#0f766e");g.addColorStop(1,"#6366f1");x.fillStyle=g;x.font="800 84px "+FF;x.fillText("💸 Scan & Pay",W/2,185);
- x.fillStyle="#64748b";x.font="500 31px "+FF;x.fillText("Fast  •  Secure  •  Works with every UPI app",W/2,240);
- const nm="🏪  "+r.name;fit(nm,50,780,700);const nw=x.measureText(nm).width+90;x.fillStyle="#ecfdf5";rr(x,(W-nw)/2,285,nw,92,46);x.fill();x.strokeStyle="#99f6e4";x.lineWidth=3;x.stroke();x.fillStyle="#064e3b";x.fillText(nm,W/2,347);
- const F=716,fx=(W-F)/2,fy=415;g=x.createLinearGradient(fx,fy,fx+F,fy+F);g.addColorStop(0,"#14b8a6");g.addColorStop(.5,"#6366f1");g.addColorStop(1,"#0f766e");
- x.save();x.shadowColor="rgba(15,118,110,.35)";x.shadowBlur=40;x.shadowOffsetY=14;x.fillStyle=g;rr(x,fx,fy,F,F,52);x.fill();x.restore();
+ x.fillStyle=lg(0,0,W,0,T.ttl);x.font="800 84px "+FF;x.fillText("💸 Scan & Pay",W/2,185);
+ x.fillStyle=T.sub;x.font="500 31px "+FF;x.fillText("Fast  •  Secure  •  Works with every UPI app",W/2,240);
+ const nm="🏪  "+r.name;fit(nm,50,780,700);const nw=x.measureText(nm).width+90;x.fillStyle=T.pill[0];rr(x,(W-nw)/2,285,nw,92,46);x.fill();x.strokeStyle=T.pill[1];x.lineWidth=3;x.stroke();x.fillStyle=T.pill[2];x.fillText(nm,W/2,347);
+ const F=716,fx=(W-F)/2,fy=415;
+ x.save();x.shadowColor=T.orn=="gold"?"rgba(217,169,60,.45)":"rgba(15,118,110,.35)";x.shadowBlur=40;x.shadowOffsetY=14;x.fillStyle=lg(fx,fy,fx+F,fy+F,T.frame);rr(x,fx,fy,F,F,52);x.fill();x.restore();
  x.fillStyle="#fff";rr(x,fx+10,fy+10,F-20,F-20,44);x.fill();
  const cell=Math.floor(612/n),qs=cell*n,ox=(W-qs)/2,oy=fy+(F-qs)/2;x.fillStyle="#000";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))x.fillRect(ox+j*cell,oy+i*cell,cell,cell);
  let y=1262;
- if(r.am){const t="₹ "+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2});fit(t,92,640,800);const w=x.measureText(t).width+110;g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,"#0f766e");g.addColorStop(1,"#14b8a6");x.fillStyle=g;rr(x,(W-w)/2,y-90,w,128,64);x.fill();x.fillStyle="#fff";x.fillText(t,W/2,y);}
- else{x.fillStyle="#0f766e";x.font="700 46px "+FF;x.fillText("✨ Pay any amount",W/2,y-10)}
- y=1368;x.fillStyle="#334155";fit("📲  "+r.vpa,44,860,600);x.fillText("📲  "+r.vpa,W/2,y);
- if(r.note){x.fillStyle="#64748b";const t="📝  "+r.note;fit(t,34,860,500);x.fillText(t,W/2,y+58)}
- x.strokeStyle="#e2e8f0";x.lineWidth=3;x.beginPath();x.moveTo(110,1470);x.lineTo(310,1470);x.moveTo(770,1470);x.lineTo(970,1470);x.stroke();
- x.fillStyle="#94a3b8";x.font="700 22px "+FF;x.fillText("ACCEPTED ON ALL UPI APPS",W/2,1478);
+ if(r.am){const t="₹ "+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2});fit(t,92,640,800);const w=x.measureText(t).width+110;x.fillStyle=lg(0,0,W,0,[T.amt[0],T.amt[1]]);rr(x,(W-w)/2,y-90,w,128,64);x.fill();x.fillStyle=T.amt[2];x.fillText(t,W/2,y)}
+ else{x.fillStyle=T.ttl[0];x.font="700 46px "+FF;x.fillText("✨ Pay any amount",W/2,y-10)}
+ y=1368;x.fillStyle=T.vpa;fit("📲  "+r.vpa,44,860,600);x.fillText("📲  "+r.vpa,W/2,y);
+ if(r.note){x.fillStyle=T.note;const t="📝  "+r.note;fit(t,34,860,500);x.fillText(t,W/2,y+58)}
+ x.strokeStyle=T.div;x.lineWidth=3;x.beginPath();x.moveTo(110,1470);x.lineTo(310,1470);x.moveTo(770,1470);x.lineTo(970,1470);x.stroke();
+ x.fillStyle=T.lbl;x.font="700 22px "+FF;x.fillText("ACCEPTED ON ALL UPI APPS",W/2,1478);
  x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
- const row=(ks,hh,gap,Y)=>{const L=ks.map(k=>LG[k]).filter(l=>l&&l.ok),ws=L.map(l=>l.w*hh/l.h);let X=(W-(ws.reduce((a,b)=>a+b,0)+gap*(L.length-1)))/2;L.forEach((l,i)=>{x.drawImage(l.i,X,Y,ws[i],hh);X+=ws[i]+gap})};
- row(["gpay","phonepe","paytm","bhim","upi"],54,40,1508);
- x.fillStyle="#64748b";x.font="500 26px "+FF;x.fillText("🔒 Always verify the payee name in your UPI app before paying",W/2,1622);
+ const L=["paytm","phonepe","gpay","bhim"].map(k=>LG[k]).filter(l=>l&&l.ok),hh=58,gap=56,Y=1514;
+ if(L.length){const ws=L.map(l=>l.w*hh/l.h),tot=ws.reduce((a,b)=>a+b,0)+gap*(L.length-1);
+  if(T.strip){x.fillStyle="#fff";rr(x,(W-tot)/2-46,Y-20,tot+92,hh+40,42);x.fill()}
+  let X=(W-tot)/2;L.forEach((l,i)=>{x.drawImage(l.i,X,Y,ws[i],hh);X+=ws[i]+gap})}
+ x.fillStyle=T.foot;x.font="500 26px "+FF;x.fillText("🔒 Always verify the payee name in your UPI app before paying",W/2,1626);
 }
 function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))d+=`M${j+m} ${i+m}h1v1h-1z`;
@@ -206,10 +233,10 @@ function render(){
  for(const k in map){const dirty=el[k].dataset.d=="1"||el[k].value;const m=e[k]&&(el[k].dataset.d=="1")?e[k]:"";$(map[k]).textContent=m;el[k].setAttribute("aria-invalid",m?"true":"false")}
  if(e.amt===undefined&&e.warn)$("e-amt").textContent=e.warn;
  const on=!!r.ok;cur=null;
- const was=!$("cv").classList.contains("hide");$("cv").classList.toggle("hide",!on);$("lb").classList.toggle("hide",!on);$("empty").classList.toggle("hide",on);
+ const was=!$("cv").classList.contains("hide");$("cv").classList.toggle("hide",!on);$("lb").classList.toggle("hide",!on);$("designs").classList.toggle("hide",!on);$("empty").classList.toggle("hide",on);
  if(on&&!was){const c=$("cv");c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop")}
  btn.forEach(b=>b.disabled=!on);
- if(on){try{const u=uriOf(r),q=qrOf(u);drawCard(q,r);$("uri").textContent=u;cur={u,q,r};$("pimg").src=$("cv").toDataURL("image/jpeg",.92)}
+ if(on){try{const u=uriOf(r),q=qrOf(u);drawCard(q,r);$("uri").textContent=u;cur={u,q,r}}
   catch(err){$("empty").textContent="Details are too long to encode. Shorten the name or note.";$("empty").classList.remove("hide");$("cv").classList.add("hide");$("lb").classList.add("hide");btn.forEach(b=>b.disabled=true)}}
  if(el.rem.checked)store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note"].map(k=>[k,el[k].value])),rem:1}));
 }
@@ -224,7 +251,7 @@ $("b-svg").onclick=()=>{if(cur){save(new Blob([svgOf(cur.q)],{type:"image/svg+xm
 $("b-copy").onclick=async()=>{if(!cur)return;buzz();let ok=true;try{await navigator.clipboard.writeText(cur.u)}catch{const t=document.createElement("textarea");t.value=cur.u;document.body.appendChild(t);t.select();try{ok=document.execCommand("copy")}catch{ok=false}t.remove()}
  const b=$("b-copy");if(ok){b.textContent="✅ Copied";b.classList.add("done");toast("📋 UPI link copied");setTimeout(()=>{b.textContent="📋 Copy";b.classList.remove("done")},1800)}else toast("Copy failed")};
 $("b-open").onclick=()=>{if(!cur)return;buzz();if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){toast("🚀 Opening your UPI app…");location.href=cur.u}else toast("📱 Open this page on your phone, or scan the QR")};
-$("b-print").onclick=()=>{if(cur)window.print()};
+$("b-print").onclick=()=>{if(!cur)return;const i=$("pimg");i.removeAttribute("src");i.onload=()=>{i.onload=null;window.print()};i.src=$("cv").toDataURL("image/jpeg",.92)};
 $("b-share").onclick=async()=>{if(!cur)return;buzz();const r=cur.r,link=payLink(r),text="💸 Pay "+r.name+(r.am?" ₹"+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2}):"")+" via UPI\n📲 "+r.vpa+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link;
  try{const b=await jpg(),f=new File([b],slug()+".jpg",{type:"image/jpeg"});
   if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:"Pay "+r.name,text});
@@ -293,13 +320,40 @@ async function doPaste(k){
  }catch{toast("📋 Allow clipboard access, or long-press the field to paste")}}
 document.querySelectorAll(".pst").forEach(b=>b.addEventListener("click",()=>doPaste(b.dataset.for)));
 
+
+/* ---------- Productivity extras ---------- */
+function syncDesign(){document.querySelectorAll("#designs button").forEach(b=>b.setAttribute("aria-checked",b.dataset.d==design?"true":"false"))}
+document.querySelectorAll("#designs button").forEach(b=>b.addEventListener("click",()=>{design=b.dataset.d;store.set("dupi.design",design);syncDesign();buzz();const c=$("cv");c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop");render()}));
+document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{el.amt.value=b.dataset.v;el.amt.dataset.d="1";el.amt.dispatchEvent(new Event("input",{bubbles:true}));buzz()}));
+const HANDLES=["okaxis","oksbi","okhdfcbank","okicici","ybl","ibl","axl","paytm","upi","apl","sbi","icici","hdfcbank","axisbank","pnb","kotak","indus","federal","airtel","jio","freecharge","barodampay","unionbank","postbank"];
+el.vpa.addEventListener("input",()=>{const v=el.vpa.value.trim(),i=v.indexOf("@"),dl=$("hl");dl.innerHTML="";if(v.length<2)return;const u=i<0?v:v.slice(0,i),p=i<0?"":v.slice(i+1).toLowerCase();if(!u)return;HANDLES.filter(k=>k.startsWith(p)&&k!==p).slice(0,8).forEach(k=>{const o=document.createElement("option");o.value=u+"@"+k;dl.append(o)})});
+$("clr").addEventListener("click",()=>{
+ const snap={...Object.fromEntries(Object.keys(el).filter(k=>k!="rem").map(k=>[k,el[k].value]))};
+ Object.keys(el).forEach(k=>{if(k=="rem")return;if(k=="type")el[k].value="vpa";else if(k=="hnd")el[k].selectedIndex=0;else el[k].value="";if(el[k].dataset)el[k].dataset.d=""});
+ $("qrsum").classList.add("hide");$("e-qr").textContent="";layout();render();el.name.focus();buzz();
+ toast("🧹 Cleared – ready for a new QR",{label:"↩ Undo",fn:()=>{for(const k in snap)el[k].value=snap[k];layout();render()}})});
+const SK="dupi.saved",getSaved=()=>{try{return JSON.parse(store.get(SK)||"[]")}catch{return[]}};
+function renderSaved(){const a=getSaved(),box=$("saved"),l=$("sl");box.classList.toggle("hide",!a.length);l.textContent="";
+ a.forEach((s,i)=>{const c=document.createElement("span");c.className="sv";const b=document.createElement("button");b.type="button";b.textContent="🏪 "+s.name+(s.am?" · ₹"+s.am:"");b.onclick=()=>{el.type.value="vpa";layout();el.vpa.value=s.vpa;el.name.value=s.name;el.amt.value=s.am||"";el.note.value=s.note||"";if(THEMES[s.d]){design=s.d;syncDesign()}["vpa","name"].forEach(k=>el[k].dataset.d="1");render();buzz();toast("⭐ Loaded "+s.name)};
+  const x=document.createElement("button");x.type="button";x.className="x";x.textContent="✕";x.setAttribute("aria-label","Remove saved QR");x.onclick=()=>{const n=getSaved();n.splice(i,1);store.set(SK,JSON.stringify(n));renderSaved()};c.append(b,x);l.append(c)})}
+$("b-save").addEventListener("click",()=>{if(!cur)return;const r=cur.r,it={name:r.name,vpa:r.vpa,am:r.am,note:r.note,d:design};const a=getSaved().filter(s=>!(s.vpa==it.vpa&&s.am==it.am&&s.note==it.note&&s.name==it.name));a.unshift(it);store.set(SK,JSON.stringify(a.slice(0,12)));renderSaved();buzz();toast("⭐ Saved on this device")});
+let dip;const ib=$("install");
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();dip=e;ib.classList.remove("hide")});
+ib.addEventListener("click",async()=>{if(dip){dip.prompt();try{await dip.userChoice}catch{}dip=null;ib.classList.add("hide")}else toast("📲 Tap Share, then Add to Home Screen")});
+addEventListener("appinstalled",()=>{ib.classList.add("hide");toast("🎉 App installed")});
+if(/iPhone|iPad|iPod/i.test(navigator.userAgent)&&!navigator.standalone&&!matchMedia("(display-mode: standalone)").matches)ib.classList.remove("hide");
+
 const th=$("theme"),root=document.documentElement,applyT=t=>root.dataset.theme=t;
-applyT(store.get(TKEY)||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+applyT(store.get(TKEY)==="dark"?"dark":"light");
 th.onclick=()=>{const t=root.dataset.theme=="dark"?"light":"dark";applyT(t);store.set(TKEY,t)};
 
 try{const s=JSON.parse(store.get(KEY)||"null");if(s){for(const k in el)if(k!="rem"&&s[k]!=null)el[k].value=s[k];el.rem.checked=true}}catch{}
 try{const p=new URLSearchParams(location.search);if(p.get("pa")){el.type.value="vpa";el.vpa.value=p.get("pa").slice(0,100);el.name.value=(p.get("pn")||"").slice(0,50);el.amt.value=(p.get("am")||"").slice(0,12);el.note.value=(p.get("tn")||"").slice(0,50);el.rem.checked=false;document.title="Pay "+el.name.value+" · UPI";setTimeout(()=>$("cv").scrollIntoView({behavior:"smooth",block:"center"}),500)}}catch{}
-layout();render();
+try{const d=store.get("dupi.design");if(THEMES[d])design=d;syncDesign()}catch{}
+try{const P=new URLSearchParams(location.search);
+ if(P.get("new")){Object.keys(el).forEach(k=>{if(k!="rem"&&k!="type"&&k!="hnd")el[k].value=""})}
+ else if(!P.get("pa")){for(const v of[P.get("text"),P.get("url"),P.get("title")]){const p=v&&parsePay(v.trim().split(/\s+/).find(w=>/^(upi:|https?:)/i.test(w))||v);if(p&&p.vpa){setTimeout(()=>applyPay(p,"paste"),300);break}}}}catch{}
+layout();render();renderSaved();
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 })();
 </script>
