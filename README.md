@@ -8,8 +8,8 @@ Free, private UPI QR code generator. Create a payment QR with a pre-filled amoun
 - Payee name, UPI ID / mobile number / bank account + IFSC / Aadhaar address types
 - Optional amount and note (validated, up to 2 decimals)
 - **Upload any existing UPI QR** (image, drag & drop or paste): name, UPI ID, amount and note are read automatically and turned into a fresh dynamic QR
-- Three premium card designs: Emerald Aurora, Midnight Gold, Bharat Tricolor
-- Quick amount chips, UPI handle suggestions, in-field paste, Clear / Undo, saved QRs (on-device)
+- Three premium card designs (swipe left/right on the card, or use arrow keys): Emerald Aurora, Midnight Gold, Bharat Tricolor
+- Quick amount chips (₹100 / ₹500 / ₹1,000 / ₹2,000), UPI handle suggestions, in-field paste, Clear / Undo, saved QRs (on-device)
 - Installable app (PWA / WebAPK), works offline, accepts shared UPI links
 - Download print-ready JPG card or vector SVG, copy link, share, print, open in UPI app
 - Light/dark theme, installable offline PWA, fully responsive
