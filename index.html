@@ -90,6 +90,27 @@ button:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transp
 #toast button{min-height:auto;border:0;background:none;color:inherit;text-decoration:underline;padding:0 4px;box-shadow:none!important;font-weight:800}
 details{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px 17px;animation:up .8s .25s var(--ease) both;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}summary{cursor:pointer;font-weight:650}details p{color:var(--mute);font-size:.9rem;margin:8px 0 0}
 footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
+:root{--fade:rgba(255,255,255,.92)}:root[data-theme=dark]{--fade:rgba(16,26,31,.92)}
+.modes{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:5px;margin:16px 0 20px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:up .8s .08s var(--ease) both}
+.modes::before{content:"";position:absolute;top:5px;bottom:5px;left:5px;width:calc(50% - 5px);border-radius:17px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 14px 28px -14px rgba(79,70,229,.8),0 1px 0 rgba(255,255,255,.3) inset;transition:transform .5s var(--ease)}
+.modes[data-mode=cc]::before{transform:translateX(100%)}
+.modes button{position:relative;z-index:1;min-height:54px;border:0;background:none;box-shadow:none!important;transform:none!important;display:flex;align-items:center;justify-content:center;gap:8px;font-size:.98rem;font-weight:800;color:var(--mute);transition:color .3s;border-radius:17px}
+.modes button[aria-selected=true]{color:#fff}.modes button i{font-style:normal;font-size:1.25rem}
+.swap{animation:up .5s var(--ease) both}
+.railw{position:relative;margin:2px -8px 0}
+.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding:12px 8px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;outline:0}.rail:active{cursor:grabbing}.rail::-webkit-scrollbar{display:none}
+.bank{flex:0 0 auto;width:136px;scroll-snap-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;padding:11px 10px 10px;border-radius:20px;background:var(--solid);border:1.5px solid var(--line);min-height:auto;user-select:none;-webkit-user-select:none}
+.bank .lg{display:grid;place-items:center;width:100%;height:58px;border-radius:13px;background:#fff;padding:8px 10px;border:1px solid rgba(12,40,50,.07)}.bank .lg img{max-width:100%;max-height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+.bank .bn{font-size:.78rem;font-weight:750;color:var(--mute);white-space:nowrap}
+.bank u{position:absolute;top:-7px;right:-7px;width:25px;height:25px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;display:grid;place-items:center;font-size:.8rem;text-decoration:none;transform:scale(0);transition:transform .4s var(--ease);box-shadow:0 6px 14px -4px rgba(79,70,229,.7)}
+.bank[aria-checked=true]{border-color:transparent;box-shadow:0 0 0 2.5px var(--brand),0 20px 32px -20px rgba(15,118,110,.8);transform:translateY(-3px)}.bank[aria-checked=true] u{transform:scale(1)}.bank[aria-checked=true] .bn{color:var(--ink)}
+.fadeL,.fadeR{position:absolute;top:0;bottom:0;width:38px;pointer-events:none;opacity:0;transition:opacity .25s;z-index:2}.fadeL{left:0;background:linear-gradient(90deg,var(--fade),transparent)}.fadeR{right:0;background:linear-gradient(270deg,var(--fade),transparent)}
+.rsh{text-align:center;font-size:.74rem;color:var(--brand);font-weight:700;margin:-4px 0 6px;animation:nudge 2.4s ease-in-out infinite;transition:opacity .5s}.rsh.gone{opacity:0}
+.bnote{margin-top:4px;padding:11px 13px;border-radius:15px;background:color-mix(in srgb,#16a34a 11%,var(--solid));border:1px solid color-mix(in srgb,#16a34a 32%,var(--line));font-size:.82rem;line-height:1.45}.bnote.warn{background:color-mix(in srgb,#f59e0b 14%,var(--solid));border-color:color-mix(in srgb,#f59e0b 42%,var(--line))}
+.bnote code{display:block;margin-top:4px;font:.76rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);word-break:break-all}
+.seg{display:flex;gap:6px;margin-top:12px}.seg button{flex:1;min-height:38px;font-size:.8rem;border-radius:12px}.seg button[aria-checked=true]{background:linear-gradient(135deg,var(--brand),var(--brand2));color:var(--brand-ink);border-color:transparent}
+.msg.warnmsg{color:#b45309}:root[data-theme=dark] .msg.warnmsg{color:#fbbf24}
+.ccwarn{width:100%;margin-top:12px;padding:10px 13px;border-radius:14px;font-size:.8rem;background:color-mix(in srgb,#f59e0b 13%,var(--solid));border:1px solid color-mix(in srgb,#f59e0b 40%,var(--line))}
 .hide{display:none!important}#pimg{display:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{body::after{display:none}body>*:not(#pimg){display:none!important}#pimg{display:block;margin:0 auto;max-width:100%;max-height:100vh}}
@@ -98,16 +119,17 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
 <body>
 <div class="wrap">
 <header>
- <div class="brand"><div class="mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 64 64"><g fill="#fff"><path d="M10 10h18v18H10zm5 5v8h8v-8zM36 10h18v18H36zm5 5v8h8v-8zM10 36h18v18H10zm5 5v8h8v-8z"/><path d="M36 36h7v7h-7zm11 0h7v5h-7zm-11 11h5v7h-5zm9 2h9v5h-9z"/></g></svg></div><div><h1>Dynamic <b>UPI QR</b> Code</h1><p class="sub">Premium payment QR cards in seconds</p></div></div>
+ <div class="brand"><div class="mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 64 64"><g fill="#fff"><path d="M10 10h18v18H10zm5 5v8h8v-8zM36 10h18v18H36zm5 5v8h8v-8zM10 36h18v18H10zm5 5v8h8v-8z"/><path d="M36 36h7v7h-7zm11 0h7v5h-7zm-11 11h5v7h-5zm9 2h9v5h-9z"/></g></svg></div><div><h1>Dynamic <b>UPI QR</b> Code</h1><p class="sub" id="sub">Premium payment QR cards in seconds</p></div></div>
  <div class="hbtns"><button class="pill hide" id="install" type="button">📲 Install app</button><button class="icon" id="snd" type="button" aria-label="Sounds on" aria-pressed="true">🔔</button><button class="icon" id="theme" type="button" aria-label="Toggle dark mode">🌓</button></div>
 </header>
-<div class="trust"><span>🔒 Private</span><span>⚡ Instant</span><span>📴 Offline</span><span>🆓 Free</span></div>
+<div class="modes" id="modes" data-mode="upi" role="tablist" aria-label="QR type"><button type="button" role="tab" data-mode="upi" aria-selected="true"><i>📲</i><span>UPI QR</span></button><button type="button" role="tab" data-mode="cc" aria-selected="false"><i>💳</i><span>Credit Card QR</span></button></div>
 <main class="grid">
  <section class="card" aria-label="Payment details">
-  <h2 class="sec"><span>1</span>Payee</h2>
-  <label for="name">🏪 Merchant / Payee name</label>
+  <h2 class="sec"><span>1</span><b id="s1t">Payee</b></h2>
+  <label for="name" id="l-name">🏪 Merchant / Payee name</label>
   <input id="name" maxlength="50" autocomplete="off" placeholder="e.g. Sharma Medical Store">
   <div class="msg" id="e-name"></div>
+  <div id="sec-upi">
   <h2 class="sec"><span>2</span>Payment address</h2>
   <div class="lrow"><label for="type">💳 Payment address type</label><button class="ea" id="up" type="button" aria-label="Upload an existing UPI QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
   <select id="type">
@@ -116,9 +138,6 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
    <option value="mob">Mobile number</option>
    <option value="aad">Aadhaar number</option>
   </select>
-  <div class="msg" id="e-qr"></div>
-  <input type="file" id="qrfile" accept="image/*" hidden>
-  <div class="qrsum hide" id="qrsum" role="status"></div>
   <div id="f-vpa"><label for="vpa">UPI ID</label><datalist id="hl"></datalist><div class="inp"><input id="vpa" list="hl" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><button class="pst" type="button" data-for="vpa" aria-label="Paste UPI ID">📋</button></div><div class="msg" id="e-vpa"></div></div>
   <div id="f-mob" class="hide"><label for="mob">Mobile number</label>
    <div class="row"><div class="inp"><input id="mob" inputmode="numeric" maxlength="10" placeholder="9876543210"><button class="pst" type="button" data-for="mob" aria-label="Paste mobile number">📋</button></div><select id="hnd" aria-label="UPI handle"><option>@ybl</option><option>@paytm</option><option>@okaxis</option><option>@oksbi</option><option>@okhdfcbank</option><option>@okicici</option><option>@apl</option><option>@axl</option><option>@ibl</option></select></div>
@@ -126,6 +145,21 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
   <div id="f-bank" class="hide"><label for="acc">Bank account number</label><div class="inp"><input id="acc" inputmode="numeric" maxlength="18" placeholder="9 to 18 digits"><button class="pst" type="button" data-for="acc" aria-label="Paste account number">📋</button></div><div class="msg" id="e-acc"></div>
    <label for="ifsc">IFSC code</label><div class="inp"><input id="ifsc" maxlength="11" autocapitalize="characters" placeholder="SBIN0001234"><button class="pst" type="button" data-for="ifsc" aria-label="Paste IFSC code">📋</button></div><div class="msg" id="e-ifsc"></div></div>
   <div id="f-aad" class="hide"><label for="aad">Aadhaar number</label><div class="inp"><input id="aad" inputmode="numeric" maxlength="12" placeholder="12 digits"><button class="pst" type="button" data-for="aad" aria-label="Paste Aadhaar number">📋</button></div><div class="hint">Not every UPI app supports Aadhaar-based payments. Use a UPI ID if scans fail.</div><div class="msg" id="e-aad"></div></div>
+ </div>
+  <div id="sec-cc" class="hide">
+  <h2 class="sec"><span>2</span>Select card bank</h2>
+  <div class="lrow"><label id="l-rail">💳 Swipe to choose your bank</label><button class="ea" id="up2" type="button" aria-label="Upload an existing card QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
+  <div class="railw"><div class="rail" id="rail" role="radiogroup" aria-labelledby="l-rail"></div><div class="fadeL" id="fadeL"></div><div class="fadeR" id="fadeR"></div></div>
+  <div class="rsh" id="rsh">⟵ Swipe to see more banks ⟶</div>
+  <div class="bnote" id="bnote"></div>
+  <div class="seg hide" id="iv" role="radiogroup" aria-label="ICICI UPI ID format"><button type="button" role="radio" data-v="m" aria-checked="true">Mobile + last 4</button><button type="button" role="radio" data-v="p" aria-checked="false">Full card number</button></div>
+  <div id="f-ccnum"><label for="ccnum" id="l-ccnum">Card number</label><div class="inp"><input id="ccnum" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="19" placeholder="0000 0000 0000 0000"><button class="pst" type="button" data-for="ccnum" aria-label="Paste card number">📋</button></div><div class="msg" id="e-ccnum"></div><div class="hint">🔒 Used only on your device to build the QR. Never uploaded or saved.</div></div>
+  <div id="f-ccmob" class="hide"><label for="ccmob">Mobile number registered with the card</label><div class="inp"><input id="ccmob" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="9876543210"><button class="pst" type="button" data-for="ccmob" aria-label="Paste mobile number">📋</button></div><div class="msg" id="e-ccmob"></div>
+   <label for="cc4">Last 4 digits of the card</label><div class="inp"><input id="cc4" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="1234"><button class="pst" type="button" data-for="cc4" aria-label="Paste last 4 digits">📋</button></div><div class="msg" id="e-cc4"></div></div>
+ </div>
+  <div class="msg" id="e-qr"></div>
+  <input type="file" id="qrfile" accept="image/*" hidden>
+  <div class="qrsum hide" id="qrsum" role="status"></div>
   <h2 class="sec"><span>3</span>Amount &amp; note</h2>
   <label for="amt">💰 Amount (optional)</label>
   <div class="amt"><span>₹</span><input id="amt" inputmode="decimal" placeholder="Leave empty to let the payer enter it"></div>
@@ -140,6 +174,7 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
   <div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="QR card. Swipe, or use the left and right arrow keys, to change design."><div class="tilt" id="tilt"><canvas id="cv" class="hide" width="1080" height="1700" role="img" aria-label="Generated UPI QR code card"></canvas><div class="gloss" id="gloss"></div></div></div>
   <div class="dnav hide" id="designs"><button type="button" id="d-prev" aria-label="Previous design">‹</button><div class="dmid"><div class="dots" role="tablist" aria-label="Card designs"><button type="button" role="tab" data-d="emerald" aria-selected="true" aria-label="Emerald Aurora"></button><button type="button" role="tab" data-d="midnight" aria-selected="false" aria-label="Midnight Gold"></button><button type="button" role="tab" data-d="tricolor" aria-selected="false" aria-label="Bharat Tricolor"></button></div><span id="dname" aria-live="polite">Emerald Aurora</span></div><button type="button" id="d-next" aria-label="Next design">›</button></div>
   <div class="swh hide" id="swh">⟵ Swipe the card to change design ⟶</div>
+  <div class="ccwarn hide" id="ccwarn">🛡️ This QR contains your card-linked UPI ID. Share it only with people you trust.</div>
   <div class="linkbox hide" id="lb"><div class="uri" id="uri"></div><button class="copy" id="b-copy" type="button">📋 Copy</button></div>
   <div class="btns">
    <button class="primary" id="b-open" type="button" disabled><i>🚀</i>Open UPI app</button>
@@ -150,19 +185,20 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
   <div class="saved hide" id="saved"><h3>⭐ Saved QRs <span style="font-weight:400;color:var(--mute)">(on this device only)</span></h3><div class="sl" id="sl"></div></div>
  </section>
 </main>
-<details><summary>How it works &amp; privacy</summary><p>The QR encodes a standard UPI payment link (upi://pay) with your payee address, name, optional amount and note. Anyone can scan it with Google Pay, PhonePe, Paytm, BHIM, WhatsApp or any bank UPI app. Everything is generated locally in your browser – no server, no tracking, no signup. Always scan and verify the payee name shown by your UPI app before paying.</p></details>
-<footer>Independent tool. Not affiliated with NPCI, BHIM or any bank or payment app. All trademarks belong to their owners.</footer>
+<details><summary>How it works &amp; privacy</summary><p><b>Credit Card QR:</b> several banks give every credit card a UPI address (Axis, ICICI, SBI Card, IDFC FIRST, AU, American Express). Pick your bank, enter the details it needs, and the QR lets anyone pay your card bill from a UPI app. Formats come from the banks and cardholder communities and can change, so always send a small test payment first. Card numbers are used only on your device and are never saved.</p><p>The QR encodes a standard UPI payment link (upi://pay) with your payee address, name, optional amount and note. Anyone can scan it with Google Pay, PhonePe, Paytm, BHIM, WhatsApp or any bank UPI app. Everything is generated locally in your browser – no server, no tracking, no signup. Always scan and verify the payee name shown by your UPI app before paying.</p></details>
+<footer>Independent tool. Not affiliated with NPCI, BHIM or any bank or payment app. Bank and app names and logos belong to their respective owners.</footer>
 </div>
 <img id="pimg" alt="UPI QR code for printing">
 <div id="toast" role="status"></div>
 <script src="qrcode.js"></script>
 <script src="jsqr.js"></script>
 <script src="logos.js"></script>
+<script src="banks.js"></script>
 <script>
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id),KEY="dupi.v1",TKEY="dupi.theme";
-const el=Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note","rem"].map(k=>[k,$(k)]));
+const el=Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note","ccnum","ccmob","cc4","rem"].map(k=>[k,$(k)]));
 const btn=["jpg","svg","open","share","print","copy","save"].map(k=>$("b-"+k));
 let cur=null,tt,design="emerald";
 const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
@@ -171,6 +207,7 @@ const enc=s=>encodeURIComponent(s).replace(/%40/g,"@");
 const clean=s=>s.replace(/[\u0000-\u001f\u007f<>]/g,"").replace(/\s+/g," ").trim();
 
 function resolve(){
+ if(mode==="cc")return resolveCC();
  const e={},t=el.type.value,name=clean(el.name.value);let vpa="",ok=true,touched=false;
  if(!name)e.name="Enter the merchant or payee name.";
  if(t=="vpa"){const v=el.vpa.value.trim();touched=!!v;
@@ -210,9 +247,14 @@ function drawCard(q,r){
  if(T.orn=="tri"){x.save();rr(x,48,48,984,1604,64);x.clip();x.fillStyle="#ff9933";x.fillRect(48,48,984,18);x.fillStyle="#138808";x.fillRect(48,1634,984,18);x.restore()}
  if(T.orn=="gold"){x.strokeStyle=lg(0,0,W,H,["#f9e7a8","#b8862b","#f9e7a8"]);x.lineWidth=3;rr(x,62,62,956,1580,52);x.stroke()}
  const fit=(t,max,w,wt)=>{let s=max;do{x.font=wt+" "+s+"px "+FF;s-=2}while(x.measureText(t).width>w&&s>22);return t};
- x.fillStyle=lg(0,0,W,0,T.ttl);x.font="800 84px "+FF;x.fillText("💸 Scan & Pay",W/2,185);
- x.fillStyle=T.sub;x.font="500 31px "+FF;x.fillText("Fast  •  Secure  •  Works with every UPI app",W/2,240);
- const nm="🏪  "+r.name;fit(nm,50,780,700);const nw=x.measureText(nm).width+90;x.fillStyle=T.pill[0];rr(x,(W-nw)/2,285,nw,92,46);x.fill();x.strokeStyle=T.pill[1];x.lineWidth=3;x.stroke();x.fillStyle=T.pill[2];x.fillText(nm,W/2,347);
+ x.fillStyle=lg(0,0,W,0,T.ttl);x.font="800 84px "+FF;x.fillText(r.cc?"💳 Pay Card Bill":"💸 Scan & Pay",W/2,185);
+ x.fillStyle=T.sub;x.font="500 31px "+FF;x.fillText(r.cc?"Credit card bill payment  •  Instant via UPI":"Fast  •  Secure  •  Works with every UPI app",W/2,240);
+ const cc=r.cc,BL=cc&&BG[cc.b.id]&&BG[cc.b.id].ok?BG[cc.b.id]:null;let lh=0,lw=0,chipW=0;
+ if(BL){lh=Math.min(46,230*BL.h/BL.w);lw=lh*BL.w/BL.h;chipW=lw+36}
+ const extra=BL?chipW+14:0,nm=(cc?"👤  ":"🏪  ")+r.name;fit(nm,50,Math.min(780,900-extra-90),700);const tw=x.measureText(nm).width;
+ const nw=tw+90+extra,px0=(W-nw)/2;x.fillStyle=T.pill[0];rr(x,px0,285,nw,92,46);x.fill();x.strokeStyle=T.pill[1];x.lineWidth=3;x.stroke();
+ if(BL){x.fillStyle="#fff";rr(x,px0+12,297,chipW,68,24);x.fill();x.drawImage(BL.i,px0+12+18,297+(68-lh)/2,lw,lh)}
+ x.fillStyle=T.pill[2];x.fillText(nm,px0+extra+(nw-extra)/2,347);
  const F=716,fx=(W-F)/2,fy=415;
  x.save();x.shadowColor=T.orn=="gold"?"rgba(217,169,60,.45)":"rgba(15,118,110,.35)";x.shadowBlur=40;x.shadowOffsetY=14;x.fillStyle=lg(fx,fy,fx+F,fy+F,T.frame);rr(x,fx,fy,F,F,52);x.fill();x.restore();
  x.fillStyle="#fff";rr(x,fx+10,fy+10,F-20,F-20,44);x.fill();
@@ -221,16 +263,16 @@ function drawCard(q,r){
  let y=1262;
  if(r.am){const t="₹ "+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2});fit(t,92,640,800);const w=x.measureText(t).width+110;x.fillStyle=lg(0,0,W,0,[T.amt[0],T.amt[1]]);rr(x,(W-w)/2,y-90,w,128,64);x.fill();x.fillStyle=T.amt[2];x.fillText(t,W/2,y)}
  else{x.fillStyle=T.ttl[0];x.font="700 46px "+FF;x.fillText("✨ Pay any amount",W/2,y-10)}
- y=1368;x.fillStyle=T.vpa;fit("📲  "+r.vpa,44,860,600);x.fillText("📲  "+r.vpa,W/2,y);
+ y=1368;x.fillStyle=T.vpa;const vl=cc?"💳  "+cc.b.s+"  •••• "+cc.l4:"📲  "+r.vpa;fit(vl,44,860,600);x.fillText(vl,W/2,y);
  if(r.note){x.fillStyle=T.note;const t="📝  "+r.note;fit(t,34,860,500);x.fillText(t,W/2,y+58)}
  x.strokeStyle=T.div;x.lineWidth=3;x.beginPath();x.moveTo(110,1470);x.lineTo(310,1470);x.moveTo(770,1470);x.lineTo(970,1470);x.stroke();
- x.fillStyle=T.lbl;x.font="700 22px "+FF;x.fillText("ACCEPTED ON ALL UPI APPS",W/2,1478);
+ x.fillStyle=T.lbl;x.font="700 22px "+FF;const sbi=cc&&cc.b.id==="sbi";x.fillText(sbi?"USE BHIM SBI PAY / YONO SBI":"ACCEPTED ON ALL UPI APPS",W/2,1478);
  x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
- const L=["paytm","phonepe","gpay","bhim"].map(k=>LG[k]).filter(l=>l&&l.ok),hh=58,gap=56,Y=1514;
+ const L=(sbi?["bhim"]:["paytm","phonepe","gpay","bhim"]).map(k=>LG[k]).filter(l=>l&&l.ok),hh=58,gap=56,Y=1514;
  if(L.length){const ws=L.map(l=>l.w*hh/l.h),tot=ws.reduce((a,b)=>a+b,0)+gap*(L.length-1);
   if(T.strip){x.fillStyle="#fff";rr(x,(W-tot)/2-46,Y-20,tot+92,hh+40,42);x.fill()}
   let X=(W-tot)/2;L.forEach((l,i)=>{x.drawImage(l.i,X,Y,ws[i],hh);X+=ws[i]+gap})}
- x.fillStyle=T.foot;x.font="500 26px "+FF;x.fillText("🔒 Always verify the payee name in your UPI app before paying",W/2,1626);
+ x.fillStyle=T.foot;x.font="500 26px "+FF;x.fillText(cc?"🔒 Verify the cardholder name in your UPI app before paying":"🔒 Always verify the payee name in your UPI app before paying",W/2,1626);
 }
 function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))d+=`M${j+m} ${i+m}h1v1h-1z`;
@@ -238,19 +280,31 @@ function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
 
 function render(){
  const r=resolve(),{e}=r;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",el.amt.value.replace(/,/g,"")===c.dataset.v));
- const map={name:"e-name",vpa:"e-vpa",mob:"e-mob",acc:"e-acc",ifsc:"e-ifsc",aad:"e-aad",amt:"e-amt"};
+ const map={name:"e-name",vpa:"e-vpa",mob:"e-mob",acc:"e-acc",ifsc:"e-ifsc",aad:"e-aad",amt:"e-amt",ccnum:"e-ccnum",ccmob:"e-ccmob",cc4:"e-cc4"};
  for(const k in map){const dirty=el[k].dataset.d=="1"||el[k].value;const m=e[k]&&(el[k].dataset.d=="1")?e[k]:"";$(map[k]).textContent=m;el[k].setAttribute("aria-invalid",m?"true":"false")}
  if(e.amt===undefined&&e.warn)$("e-amt").textContent=e.warn;
+ {const w=$("e-ccnum"),lw=mode==="cc"&&r.cc&&r.cc.warn&&!e.ccnum;if(lw)w.textContent=r.cc.warn;w.classList.toggle("warnmsg",!!lw)}
  const on=!!r.ok;cur=null;
  const was=!$("cv").classList.contains("hide");$("cv").classList.toggle("hide",!on);$("lb").classList.toggle("hide",!on);$("designs").classList.toggle("hide",!on);$("swh").classList.toggle("hide",!on||SW);$("empty").classList.toggle("hide",on);
  if(on&&!was){const c=$("cv");c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop")}
- btn.forEach(b=>b.disabled=!on);
- if(on){try{const u=uriOf(r),q=qrOf(u);drawCard(q,r);$("uri").textContent=u;cur={u,q,r}}
+ btn.forEach(b=>b.disabled=!on);$("ccwarn").classList.toggle("hide",!(on&&mode==="cc"));
+ if(on){try{const u=uriOf(r),q=qrOf(u);drawCard(q,r);$("uri").textContent=mode==="cc"?u.replace(/\d{8,}/g,m=>"•".repeat(m.length-4)+m.slice(-4)):u;cur={u,q,r}}
   catch(err){$("empty").textContent="Details are too long to encode. Shorten the name or note.";$("empty").classList.remove("hide");$("cv").classList.add("hide");$("lb").classList.add("hide");btn.forEach(b=>b.disabled=true)}}
- if(el.rem.checked)store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note"].map(k=>[k,el[k].value])),rem:1}));
+ if(el.rem.checked)store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","amt","note","ccmob","cc4"].map(k=>[k,el[k].value])),rem:1}));
 }
-function layout(){["vpa","mob","bank","aad"].forEach(k=>$("f-"+k).classList.toggle("hide",k!=el.type.value))}
-const slug=()=>"upi-qr-"+(clean(el.name.value).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"code")+(cur&&cur.r.am?"-"+cur.r.am:"");
+function layout(){
+ ["vpa","mob","bank","aad"].forEach(k=>$("f-"+k).classList.toggle("hide",k!=el.type.value));
+ const cc=mode==="cc",B=BANKS.find(b=>b.id===bank)||BANKS[0],pan=B.t==="pan"||(B.id==="icici"&&iv==="p");
+ $("sec-upi").classList.toggle("hide",cc);$("sec-cc").classList.toggle("hide",!cc);
+ $("f-ccnum").classList.toggle("hide",!pan);$("f-ccmob").classList.toggle("hide",pan);$("iv").classList.toggle("hide",B.id!=="icici");
+ $("l-name").textContent=cc?"👤 Cardholder name (optional)":"🏪 Merchant / Payee name";el.name.placeholder=cc?"Name on the card":"e.g. Sharma Medical Store";$("s1t").textContent=cc?"Cardholder":"Payee";
+ $("sub").textContent=cc?"Collect credit card bill payments via UPI":"Premium payment QR cards in seconds";
+ el.ccnum.placeholder=B.id==="amex"?"0000 000000 00000":"0000 0000 0000 0000";el.ccnum.maxLength=B.id==="amex"?17:19;$("l-ccnum").textContent=B.s+" card number ("+(B.id==="amex"?15:16)+" digits)";
+ const fm=B.id==="icici"&&iv==="p"?B.fp:B.f;$("bnote").className="bnote"+(B.any?"":" warn");$("bnote").innerHTML=(B.any?"✅ Works with any UPI app":"⚠️ Works only in <b>BHIM SBI Pay</b> / YONO SBI")+"<code>"+fm+"</code>";
+ document.querySelectorAll("#modes button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.mode===mode)));$("modes").dataset.mode=mode;
+ document.querySelectorAll(".bank").forEach(t=>{const on=t.dataset.b===bank;t.setAttribute("aria-checked",String(on));t.tabIndex=on?0:-1});
+ document.querySelectorAll("#iv button").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.v===iv)))}
+const slug=()=>(mode==="cc"?"card-qr-"+bank+"-":"upi-qr-")+(clean(el.name.value).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"code")+(cur&&cur.r.am?"-"+cur.r.am:"");
 const save=(blob,name)=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 const jpg=()=>new Promise(res=>$("cv").toBlob(res,"image/jpeg",.95));
 const payLink=r=>{const u=new URL(location.href);u.search="";u.hash="";u.pathname=u.pathname.replace(/index\.html$/,"");const p=new URLSearchParams({pa:r.vpa,pn:r.name});if(r.am)p.set("am",r.am);if(r.note)p.set("tn",r.note);return u.toString()+"?"+p};
@@ -261,14 +315,14 @@ $("b-copy").onclick=async()=>{if(!cur)return;buzz();playSound("tick");let ok=tru
  const b=$("b-copy");if(ok){b.textContent="✅ Copied";b.classList.add("done");toast("📋 UPI link copied");setTimeout(()=>{b.textContent="📋 Copy";b.classList.remove("done")},1800)}else toast("Copy failed")};
 $("b-open").onclick=()=>{if(!cur)return;buzz();if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){toast("🚀 Opening your UPI app…");location.href=cur.u}else toast("📱 Open this page on your phone, or scan the QR")};
 $("b-print").onclick=()=>{if(!cur)return;const i=$("pimg");i.removeAttribute("src");i.onload=()=>{i.onload=null;window.print()};i.src=$("cv").toDataURL("image/jpeg",.92)};
-$("b-share").onclick=async()=>{if(!cur)return;buzz();const r=cur.r,link=payLink(r),text="💸 Pay "+r.name+(r.am?" ₹"+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2}):"")+" via UPI\n📲 "+r.vpa+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link;
+$("b-share").onclick=async()=>{if(!cur)return;buzz();const r=cur.r,link=payLink(r),text=shareText(r,link);
  try{const b=await jpg(),f=new File([b],slug()+".jpg",{type:"image/jpeg"});
   if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:"Pay "+r.name,text});
   else if(navigator.share)await navigator.share({title:"Pay "+r.name,text});
   else{save(b,slug()+".jpg");open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener");toast("💬 JPG saved - attach it in WhatsApp")}}
  catch(e){if(e&&e.name!="AbortError")toast("Could not share")}};
 
-Object.values(el).forEach(i=>{i.addEventListener("input",()=>{if(i==el.ifsc)i.value=i.value.toUpperCase();if(["mob","acc","aad"].includes(i.id))i.value=i.value.replace(/\D/g,"");render()});i.addEventListener("blur",()=>{i.dataset.d="1";render()});i.addEventListener("change",()=>{if(i==el.type)layout();if(i==el.rem){if(!i.checked)store.del(KEY)}render()})});
+Object.values(el).forEach(i=>{i.addEventListener("input",()=>{if(i==el.ifsc)i.value=i.value.toUpperCase();if(["mob","acc","aad","ccmob","cc4"].includes(i.id))i.value=i.value.replace(/\D/g,"");if(i===el.ccnum)fmtField(i);render()});i.addEventListener("blur",()=>{i.dataset.d="1";render()});i.addEventListener("change",()=>{if(i==el.type)layout();if(i==el.rem){if(!i.checked)store.del(KEY)}render()})});
 
 
 /* ---------- Premium sound (synthesised, no audio files) ---------- */
@@ -283,6 +337,68 @@ function playSound(k){if(!soundOn())return;const c=ac();if(!c)return;const t=c.c
 addEventListener("pointerdown",()=>ac(),{once:true,passive:true});
 const sb=$("snd"),syncSnd=()=>{const on=soundOn();sb.textContent=on?"🔔":"🔕";sb.setAttribute("aria-pressed",String(on));sb.setAttribute("aria-label",on?"Sounds on":"Sounds off")};
 sb.addEventListener("click",()=>{store.set("dupi.snd",soundOn()?"0":"1");syncSnd();if(soundOn())playSound("tick");toast(soundOn()?"🔔 Sounds on":"🔕 Sounds muted")});syncSnd();
+/* ---------- Credit Card QR (bank UPI handles) ---------- */
+const BANKS=[
+ {id:"axis",n:"Axis Bank",s:"Axis",cn:"Axis Bank Credit Card",t:"mob4",any:1,f:"cc.91 + mobile + last 4 digits @axisbank",mk:(m,l)=>"cc.91"+m+l+"@axisbank"},
+ {id:"icici",n:"ICICI Bank",s:"ICICI",cn:"ICICI Bank Credit Card",t:"mob4",any:1,f:"ccpay. + mobile + last 4 digits @icici",fp:"ccpay. + card number @icici",mk:(m,l)=>"ccpay."+m+l+"@icici",mkp:p=>"ccpay."+p+"@icici"},
+ {id:"sbi",n:"SBI Card",s:"SBI",cn:"SBI Card",t:"pan",any:0,f:"sbicard. + card number @sbi",mk:p=>"sbicard."+p+"@sbi"},
+ {id:"idfc",n:"IDFC FIRST Bank",s:"IDFC FIRST",cn:"IDFC FIRST Credit Card",t:"pan",any:1,f:"card number .cc@idfcbank",mk:p=>p+".cc@idfcbank"},
+ {id:"au",n:"AU Small Finance Bank",s:"AU Bank",cn:"AU Bank Credit Card",t:"mob4",any:1,f:"aucc. + mobile + last 4 digits @aubank",mk:(m,l)=>"aucc."+m+l+"@aubank"},
+ {id:"amex",n:"American Express",s:"Amex",cn:"American Express Card",t:"pan",any:1,f:"aebc + card number @sc",mk:p=>"aebc"+p+"@sc"}];
+let mode=store.get("dupi.mode")==="cc"?"cc":"upi",bank=store.get("dupi.bank"),iv=store.get("dupi.iv")==="p"?"p":"m",RS=store.get("dupi.rs")==="1";
+if(!BANKS.some(b=>b.id===bank))bank="axis";
+const BG={};try{for(const k in(window.BANK_LOGOS||{})){const L=window.BANK_LOGOS[k],i=new Image();BG[k]={i,w:L.w,h:L.h,ok:0};i.onload=()=>{BG[k].ok=1;if(cur)render()};i.src=L.src}}catch{}
+const luhn=s=>{let t=0,alt=false;for(let i=s.length-1;i>=0;i--){let n=+s[i];if(alt){n*=2;if(n>9)n-=9}t+=n;alt=!alt}return t%10===0};
+const fmtPan=(d,amex)=>amex?d.replace(/^(\d{0,4})(\d{0,6})(\d{0,5}).*$/,(m,a,b,c)=>[a,b,c].filter(Boolean).join(" ")):d.replace(/(\d{4})(?=\d)/g,"$1 ");
+function fmtField(i){const pos=i.selectionStart==null?i.value.length:i.selectionStart,n=i.value.slice(0,pos).replace(/\D/g,"").length,am=bank==="amex",d=i.value.replace(/\D/g,"").slice(0,am?15:16);i.value=fmtPan(d,am);
+ let c=0,np=0;for(;np<i.value.length&&c<n;np++)if(/\d/.test(i.value[np]))c++;try{i.setSelectionRange(np,np)}catch{}}
+function ccFromVpa(v){v=String(v||"").trim();let m;
+ if(m=v.match(/^cc\.91(\d{10})(\d{4})@axisbank$/i))return{bank:"axis",mob:m[1],l4:m[2]};
+ if(m=v.match(/^ccpay\.(\d{10})(\d{4})@icici$/i))return{bank:"icici",iv:"m",mob:m[1],l4:m[2]};
+ if(m=v.match(/^ccpay\.(\d{16})@icici$/i))return{bank:"icici",iv:"p",pan:m[1]};
+ if(m=v.match(/^sbicard\.(\d{16})@sbi$/i))return{bank:"sbi",pan:m[1]};
+ if(m=v.match(/^(\d{16})\.cc@idfcbank$/i))return{bank:"idfc",pan:m[1]};
+ if(m=v.match(/^aucc\.(\d{10})(\d{4})@aubank$/i))return{bank:"au",mob:m[1],l4:m[2]};
+ if(m=v.match(/^aebc(\d{15})@sc$/i))return{bank:"amex",pan:m[1]};
+ return null}
+function resolveCC(){
+ const B=BANKS.find(b=>b.id===bank)||BANKS[0],e={},name=clean(el.name.value),usePan=B.t==="pan"||(B.id==="icici"&&iv==="p");let vpa="",l4="",warn="";
+ if(usePan){const len=B.id==="amex"?15:16,p=el.ccnum.value.replace(/\D/g,"");
+  if(!p)e.ccnum="Enter the "+len+"-digit card number.";else if(p.length!==len)e.ccnum=B.s+" card numbers have "+len+" digits ("+p.length+" entered).";
+  else{vpa=B.id==="icici"?B.mkp(p):B.mk(p);l4=p.slice(-4);if(!luhn(p))warn="⚠️ This number doesn't pass the card checksum – please double-check it."}}
+ else{const m=el.ccmob.value.trim(),d=el.cc4.value.trim();
+  if(!m)e.ccmob="Enter the mobile number registered with the card.";else if(!/^[6-9]\d{9}$/.test(m))e.ccmob="Enter a valid 10-digit Indian mobile number.";
+  if(!d)e.cc4="Enter the last 4 digits of the card.";else if(!/^\d{4}$/.test(d))e.cc4="Exactly 4 digits.";
+  if(!e.ccmob&&!e.cc4){vpa=B.mk(m,d);l4=d}}
+ const a=el.amt.value.trim().replace(/,/g,"");let am="";
+ if(a){if(!/^\d{1,8}(\.\d{1,2})?$/.test(a)||+a<=0)e.amt="Enter a valid amount, up to 2 decimals.";else{am=(+a).toFixed(2);if(+a>100000)e.warn="Many UPI apps cap a single payment at ₹1,00,000."}}
+ return{e,name:name||B.cn,vpa,am,note:clean(el.note.value),ok:!Object.keys(e).filter(k=>k!="warn").length&&!!vpa,touched:false,t:"cc",cc:{b:B,l4,warn,pan:usePan,own:name}}}
+const shareText=(r,link)=>{const amt=r.am?" ₹"+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2}):"";
+ return r.cc?"💳 Pay my "+r.cc.b.n+" credit card bill"+amt+"\n💳 "+r.cc.b.s+" •••• "+r.cc.l4+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link
+  :"💸 Pay "+r.name+amt+" via UPI\n📲 "+r.vpa+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link};
+const rail=$("rail");
+BANKS.forEach(b=>{const L=(window.BANK_LOGOS||{})[b.id],t=document.createElement("button");t.type="button";t.className="bank";t.setAttribute("role","radio");t.dataset.b=b.id;t.setAttribute("aria-label",b.n);
+ t.innerHTML='<span class="lg"><img alt="" draggable="false"></span><span class="bn"></span><u aria-hidden="true">✓</u>';const im=t.querySelector("img");if(L)im.src=L.src;else im.remove();t.querySelector(".bn").textContent=b.s;rail.append(t)});
+function railFades(){const m=rail.scrollWidth-rail.clientWidth;$("fadeL").style.opacity=rail.scrollLeft>6?1:0;$("fadeR").style.opacity=rail.scrollLeft<m-6?1:0}
+function centerBank(smooth){const t=rail.querySelector('[data-b="'+bank+'"]');if(!t||!rail.clientWidth)return;rail.scrollTo({left:t.offsetLeft-(rail.clientWidth-t.offsetWidth)/2,behavior:smooth?"smooth":"auto"});setTimeout(railFades,60)}
+rail.addEventListener("scroll",()=>{railFades();if(!RS&&rail.scrollLeft>24){RS=true;store.set("dupi.rs","1");$("rsh").classList.add("gone")}},{passive:true});
+if(RS)$("rsh").classList.add("hide");
+let rd=false,rx=0,rs0=0,rm=0;
+rail.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.button!==0)return;rd=true;rx=e.clientX;rs0=rail.scrollLeft;rm=0;rail.style.scrollSnapType="none"});
+rail.addEventListener("pointermove",e=>{if(!rd)return;const d=e.clientX-rx;rm=Math.max(rm,Math.abs(d));rail.scrollLeft=rs0-d});
+const rEnd=()=>{if(rd){rd=false;rail.style.scrollSnapType=""}};addEventListener("pointerup",rEnd);rail.addEventListener("pointerleave",rEnd);
+rail.addEventListener("click",e=>{if(rm>6){e.stopPropagation();e.preventDefault();rm=0;return}const t=e.target.closest(".bank");if(t)setBank(t.dataset.b)},true);
+rail.addEventListener("keydown",e=>{if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;e.preventDefault();const i=BANKS.findIndex(b=>b.id===bank),n=BANKS[(i+(e.key==="ArrowRight"?1:-1)+BANKS.length)%BANKS.length];setBank(n.id);rail.querySelector('[data-b="'+n.id+'"]').focus()});
+function setBank(id){if(id===bank){centerBank(true);return}
+ const old=el.ccnum.value.replace(/\D/g,"");bank=id;store.set("dupi.bank",id);buzz();playSound("tick");
+ const am=id==="amex";el.ccnum.value=fmtPan(old.slice(0,am?15:16),am);if(old.length>=15)el.cc4.value=old.slice(-4);
+ layout();centerBank(true);render()}
+document.querySelectorAll("#iv button").forEach(b=>b.addEventListener("click",()=>{iv=b.dataset.v;store.set("dupi.iv",iv);buzz();layout();render()}));
+function setMode(m){if(m===mode)return;mode=m;store.set("dupi.mode",m);buzz();playSound("tick");layout();const s=$(m==="cc"?"sec-cc":"sec-upi");s.classList.remove("swap");void s.offsetWidth;s.classList.add("swap");if(m==="cc")requestAnimationFrame(()=>{centerBank();railFades()});render()}
+document.querySelectorAll("#modes button").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("modes").addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();setMode(mode==="upi"?"cc":"upi");$("modes").querySelector('[aria-selected=true]').focus()}});
+addEventListener("resize",()=>railFades());
+
 /* ---------- Upload existing QR → auto-fill ---------- */
 const VPA_X=/^[a-zA-Z0-9._-]{2,64}@[a-zA-Z][a-zA-Z0-9.]{1,40}$/;
 function tlv(s){const o=[];let i=0;while(i+4<=s.length){const g=s.slice(i,i+2),n=+s.slice(i+2,i+4);if(!/^\d{2}$/.test(g)||!/^\d{2}$/.test(s.slice(i+2,i+4))||i+4+n>s.length)break;o.push([g,s.slice(i+4,i+4+n)]);i+=4+n}return o}
@@ -302,41 +418,45 @@ async function readQR(file){
  return null}
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 async function handleFile(f){
- const up=$("up"),t=up.querySelector(".t"),err=$("e-qr"),fail=m=>{err.textContent=m;playSound("err")};err.textContent="";if(!f)return;
+ const ups=[...document.querySelectorAll(".ea")],err=$("e-qr"),fail=m=>{err.textContent=m;playSound("err")},busy=(on,t)=>ups.forEach(u=>{u.classList.toggle("busy",on);u.querySelector(".t").textContent=t});err.textContent="";if(!f)return;
  if(!/^image\//.test(f.type)&&!/\.(png|jpe?g|webp|gif|bmp)$/i.test(f.name)){fail("❌ Please choose an image file.");return}
  if(f.size>20e6){fail("❌ Image is too large (max 20 MB).");return}
- up.classList.add("busy");t.textContent="Reading…";
+ busy(true,"Reading…");
  await new Promise(r=>setTimeout(r,60));
  try{const raw=await readQR(f);
   if(!raw)fail("❌ No QR code found. Use a sharp, well-lit image with the full QR visible.");
   else{const p=parsePay(raw);if(!p||!p.vpa)fail("❌ This QR has no UPI payment address. Upload a UPI / BHIM / Bharat QR.");else applyPay(p)}}
  catch{fail("❌ Couldn't open this image. Try a PNG or JPG.")}
- up.classList.remove("busy");t.textContent="Upload QR"}
+ busy(false,"Upload QR")}
 function applyPay(p,src){const W=src=="paste"?"Payment link":"QR";
- const a=p.am.replace(/,/g,""),amOk=/^\d{1,8}(\.\d{1,2})?$/.test(a)&&+a>0;
- el.type.value="vpa";layout();el.vpa.value=p.vpa.slice(0,100);el.name.value=p.name.slice(0,50);el.amt.value=amOk?a:"";el.note.value=p.note.slice(0,50);
- ["vpa","name","amt","note"].forEach(k=>el[k].dataset.d="1");render();
- const q=$("qrsum"),miss=!p.name;q.className="qrsum"+(miss?" warn":"");
- q.innerHTML="<b>"+(miss?"⚠️ "+W+" read – please add the payee name":"✅ "+W+" read successfully")+"</b>"+(p.name?"🏪 "+esc(p.name)+"<br>":"")+"📲 "+esc(p.vpa)+"<br>"+(amOk?"💰 ₹"+esc(a):"💰 No amount in QR – add one below if you like")+"<br>"+(p.note?"📝 "+esc(p.note):"📝 No note in QR")+'<br><button type="button" id="again">📷 Upload another QR</button>';
+ const a=p.am.replace(/,/g,""),amOk=/^\d{1,8}(\.\d{1,2})?$/.test(a)&&+a>0,cv=ccFromVpa(p.vpa);let shown,label,miss;
+ if(cv){const B=BANKS.find(b=>b.id===cv.bank);mode="cc";bank=cv.bank;if(cv.iv)iv=cv.iv;store.set("dupi.mode","cc");store.set("dupi.bank",bank);
+  el.ccnum.value=cv.pan?fmtPan(cv.pan,B.id==="amex"):"";el.ccmob.value=cv.mob||"";el.cc4.value=cv.l4||(cv.pan?cv.pan.slice(-4):"");el.name.value=(p.name||"").slice(0,50);
+  el.amt.value=amOk?a:"";el.note.value=p.note.slice(0,50);layout();centerBank();["ccnum","ccmob","cc4","name","amt","note"].forEach(k=>el[k].dataset.d="1");render();
+  shown="💳 "+esc(B.n)+" card •••• "+esc(cv.l4||cv.pan.slice(-4));label="card QR";miss=false}
+ else{mode="upi";store.set("dupi.mode","upi");el.type.value="vpa";layout();el.vpa.value=p.vpa.slice(0,100);el.name.value=p.name.slice(0,50);el.amt.value=amOk?a:"";el.note.value=p.note.slice(0,50);
+  ["vpa","name","amt","note"].forEach(k=>el[k].dataset.d="1");render();miss=!p.name;shown=(p.name?"🏪 "+esc(p.name)+"<br>":"")+"📲 "+esc(p.vpa);label="QR"}
+ const q=$("qrsum");q.className="qrsum"+(miss?" warn":"");
+ q.innerHTML="<b>"+(miss?"⚠️ "+W+" read – please add the payee name":"✅ "+(cv?"Credit card ":"")+W+" read successfully")+"</b>"+shown+"<br>"+(amOk?"💰 ₹"+esc(a):"💰 No amount found – add one below if you like")+"<br>"+(p.note?"📝 "+esc(p.note):"📝 No note found")+(cv&&cv.pan?"<br>🔒 Full card number stays on this device and is never saved.":"")+'<br><button type="button" id="again">📷 Upload another QR</button>';
  $("again").onclick=()=>{ac();$("qrfile").click()};
  toast(miss?"⚠️ Add the payee name":"✅ "+W+" read – dynamic QR ready");buzz();try{navigator.vibrate&&navigator.vibrate([20,50,30])}catch{}playSound("ok");
  if(miss)el.name.focus();else if(matchMedia("(max-width:820px)").matches)setTimeout(()=>$("cv").scrollIntoView({behavior:"smooth",block:"center"}),350)}
 const qf=$("qrfile");
-$("up").addEventListener("click",()=>{ac();qf.click()});
+document.querySelectorAll(".ea").forEach(b=>b.addEventListener("click",()=>{ac();qf.click()}));
 qf.addEventListener("change",()=>{const f=qf.files[0];qf.value="";handleFile(f)});
 const card=document.querySelector("main .card");
 ["dragenter","dragover"].forEach(v=>card.addEventListener(v,e=>{if([...(e.dataTransfer&&e.dataTransfer.types||[])].includes("Files")){e.preventDefault();card.classList.add("drag")}}));
 ["dragleave","drop"].forEach(v=>card.addEventListener(v,e=>{e.preventDefault();card.classList.remove("drag")}));
 card.addEventListener("drop",e=>handleFile(e.dataTransfer.files[0]));
 addEventListener("paste",e=>{const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>i.type.startsWith("image/"));if(it){e.preventDefault();handleFile(it.getAsFile())}});
-const PASTE={vpa:t=>t.replace(/\s+/g,""),mob:t=>t.replace(/\D/g,"").slice(-10),acc:t=>t.replace(/\D/g,"").slice(0,18),ifsc:t=>t.replace(/\s+/g,"").toUpperCase().slice(0,11),aad:t=>t.replace(/\D/g,"").slice(0,12)};
+const PASTE={ccnum:t=>fmtPan(t.replace(/\D/g,"").slice(0,bank==="amex"?15:16),bank==="amex"),ccmob:t=>t.replace(/\D/g,"").slice(-10),cc4:t=>t.replace(/\D/g,"").slice(-4),vpa:t=>t.replace(/\s+/g,""),mob:t=>t.replace(/\D/g,"").slice(-10),acc:t=>t.replace(/\D/g,"").slice(0,18),ifsc:t=>t.replace(/\s+/g,"").toUpperCase().slice(0,11),aad:t=>t.replace(/\D/g,"").slice(0,12)};
 async function doPaste(k){ac();
  const c=navigator.clipboard;if(!c||!c.readText){toast("📋 Long-press the field to paste");return}
  try{
   if(c.read){try{for(const it of await c.read()){const ty=it.types.find(x=>x.startsWith("image/"));if(ty){handleFile(new File([await it.getType(ty)],"clipboard.png",{type:ty}));return}}}catch{}}
   const t=((await c.readText())||"").trim();
   if(!t){toast("📋 Clipboard is empty");return}
-  const p=parsePay(t);if(p&&p.vpa){applyPay(p,"paste");return}
+  const p=parsePay(t)||(ccFromVpa(t.split(/\s+/)[0])?{vpa:t.split(/\s+/)[0],name:"",am:"",note:""}:null);if(p&&p.vpa){applyPay(p,"paste");return}
   el[k].value=PASTE[k](t.split(/\r?\n/)[0]);el[k].dataset.d="1";el[k].dispatchEvent(new Event("input",{bubbles:true}));toast("📋 Pasted");buzz()
  }catch{toast("📋 Allow clipboard access, or long-press the field to paste")}}
 document.querySelectorAll(".pst").forEach(b=>b.addEventListener("click",()=>doPaste(b.dataset.for)));
@@ -376,10 +496,22 @@ $("clr").addEventListener("click",()=>{
  $("qrsum").classList.add("hide");$("e-qr").textContent="";layout();render();el.name.focus();buzz();
  toast("🧹 Cleared – ready for a new QR",{label:"↩ Undo",fn:()=>{for(const k in snap)el[k].value=snap[k];layout();render()}})});
 const SK="dupi.saved",getSaved=()=>{try{return JSON.parse(store.get(SK)||"[]")}catch{return[]}};
+const sLabel=s=>s.m==="cc"?"💳 "+((BANKS.find(b=>b.id===s.b)||{s:"Card"}).s)+" ••"+s.l4+(s.am?" · ₹"+s.am:""):"🏪 "+s.name+(s.am?" · ₹"+s.am:"");
+function loadSaved(s){
+ if(THEMES[s.d]){design=s.d;syncDesign()}
+ if(s.m==="cc"){mode="cc";bank=BANKS.some(b=>b.id===s.b)?s.b:"axis";iv=s.iv==="p"?"p":"m";store.set("dupi.mode","cc");store.set("dupi.bank",bank);
+  el.name.value=s.name||"";el.amt.value=s.am||"";el.note.value=s.note||"";el.ccnum.value="";el.ccmob.value=s.mob||"";el.cc4.value=s.l4||"";layout();centerBank();render();
+  const B=BANKS.find(b=>b.id===bank);if(B.t==="pan"||iv==="p"){el.ccnum.focus();toast("🔒 Enter the full card number – it's never saved")}else toast("⭐ Loaded "+sLabel(s).slice(3))}
+ else{mode="upi";store.set("dupi.mode","upi");el.type.value="vpa";layout();el.vpa.value=s.vpa;el.name.value=s.name;el.amt.value=s.am||"";el.note.value=s.note||"";["vpa","name"].forEach(k=>el[k].dataset.d="1");render();toast("⭐ Loaded "+s.name)}
+ buzz()}
 function renderSaved(){const a=getSaved(),box=$("saved"),l=$("sl");box.classList.toggle("hide",!a.length);l.textContent="";
- a.forEach((s,i)=>{const c=document.createElement("span");c.className="sv";const b=document.createElement("button");b.type="button";b.textContent="🏪 "+s.name+(s.am?" · ₹"+s.am:"");b.onclick=()=>{el.type.value="vpa";layout();el.vpa.value=s.vpa;el.name.value=s.name;el.amt.value=s.am||"";el.note.value=s.note||"";if(THEMES[s.d]){design=s.d;syncDesign()}["vpa","name"].forEach(k=>el[k].dataset.d="1");render();buzz();toast("⭐ Loaded "+s.name)};
+ a.forEach((s,i)=>{const c=document.createElement("span");c.className="sv";const b=document.createElement("button");b.type="button";b.textContent=sLabel(s);b.onclick=()=>loadSaved(s);
   const x=document.createElement("button");x.type="button";x.className="x";x.textContent="✕";x.setAttribute("aria-label","Remove saved QR");x.onclick=()=>{const n=getSaved();n.splice(i,1);store.set(SK,JSON.stringify(n));renderSaved()};c.append(b,x);l.append(c)})}
-$("b-save").addEventListener("click",()=>{if(!cur)return;const r=cur.r,it={name:r.name,vpa:r.vpa,am:r.am,note:r.note,d:design};const a=getSaved().filter(s=>!(s.vpa==it.vpa&&s.am==it.am&&s.note==it.note&&s.name==it.name));a.unshift(it);store.set(SK,JSON.stringify(a.slice(0,12)));renderSaved();buzz();playSound("tick");toast("⭐ Saved on this device")});
+$("b-save").addEventListener("click",()=>{if(!cur)return;const r=cur.r;let it;
+ if(r.cc){const B=r.cc.b;it={m:"cc",b:B.id,iv:B.id==="icici"?iv:"m",mob:r.cc.pan?"":el.ccmob.value,l4:r.cc.l4,name:r.cc.own,am:r.am,note:r.note,d:design}}
+ else{if(/@aadhaar\.npci$/i.test(r.vpa)){toast("🔒 Aadhaar-based QRs aren't saved");return}it={name:r.name,vpa:r.vpa,am:r.am,note:r.note,d:design}}
+ const key=o=>JSON.stringify([o.m,o.b,o.iv,o.mob,o.l4,o.name,o.vpa,o.am,o.note]);
+ const a=getSaved().filter(s=>key(s)!==key(it));a.unshift(it);store.set(SK,JSON.stringify(a.slice(0,12)));renderSaved();buzz();playSound("tick");toast("⭐ Saved on this device")});
 let dip;const ib=$("install");
 addEventListener("beforeinstallprompt",e=>{e.preventDefault();dip=e;ib.classList.remove("hide")});
 ib.addEventListener("click",async()=>{if(dip){dip.prompt();try{await dip.userChoice}catch{}dip=null;ib.classList.add("hide")}else toast("📲 Tap Share, then Add to Home Screen")});
@@ -390,13 +522,14 @@ const th=$("theme"),root=document.documentElement,applyT=t=>root.dataset.theme=t
 applyT(store.get(TKEY)==="dark"?"dark":"light");
 th.onclick=()=>{const t=root.dataset.theme=="dark"?"light":"dark";applyT(t);store.set(TKEY,t)};
 
-try{const s=JSON.parse(store.get(KEY)||"null");if(s){for(const k in el)if(k!="rem"&&s[k]!=null)el[k].value=s[k];el.rem.checked=true}}catch{}
+try{const s=JSON.parse(store.get(KEY)||"null");if(s){for(const k in el)if(k!="rem"&&k!="ccnum"&&k!="aad"&&s[k]!=null)el[k].value=s[k];el.rem.checked=true}}catch{}
 try{const p=new URLSearchParams(location.search);if(p.get("pa")){el.type.value="vpa";el.vpa.value=p.get("pa").slice(0,100);el.name.value=(p.get("pn")||"").slice(0,50);el.amt.value=(p.get("am")||"").slice(0,12);el.note.value=(p.get("tn")||"").slice(0,50);el.rem.checked=false;document.title="Pay "+el.name.value+" · UPI";setTimeout(()=>$("cv").scrollIntoView({behavior:"smooth",block:"center"}),500)}}catch{}
 try{const d=store.get("dupi.design");if(THEMES[d])design=d;syncDesign()}catch{}
 try{const P=new URLSearchParams(location.search);
  if(P.get("new")){Object.keys(el).forEach(k=>{if(k!="rem"&&k!="type"&&k!="hnd")el[k].value=""})}
  else if(!P.get("pa")){for(const v of[P.get("text"),P.get("url"),P.get("title")]){const p=v&&parsePay(v.trim().split(/\s+/).find(w=>/^(upi:|https?:)/i.test(w))||v);if(p&&p.vpa){setTimeout(()=>applyPay(p,"paste"),300);break}}}}catch{}
-layout();render();renderSaved();
+try{const pa=new URLSearchParams(location.search).get("pa");if(pa&&ccFromVpa(pa)){const P=new URLSearchParams(location.search);setTimeout(()=>applyPay({vpa:pa,name:P.get("pn")||"",am:P.get("am")||"",note:P.get("tn")||""},"paste"),80)}}catch{}
+layout();render();renderSaved();setTimeout(()=>{centerBank();railFades()},80);
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 })();
 </script>
