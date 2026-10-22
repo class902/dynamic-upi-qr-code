@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
+<script>try{if(localStorage.getItem("dupi.mode")==="cc")document.documentElement.dataset.mode="cc"}catch(e){}</script>
 <title>Dynamic UPI QR Code Generator – Free, Private, No Signup</title>
 <meta name="description" content="Create dynamic UPI QR codes with a pre-filled amount and note. Works with Google Pay, PhonePe, Paytm, BHIM and all UPI apps. Runs entirely in your browser.">
 <meta name="theme-color" content="#0f766e">
@@ -11,21 +12,20 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
-:root{--bg:#f4f7fb;--ink:#0c1a1f;--mute:#5c6f78;--line:rgba(12,40,50,.11);--card:rgba(255,255,255,.8);--solid:#fff;--field:#f3f6f9;--brand:#0f766e;--brand2:#14b8a6;--accent:#6366f1;--brand-ink:#fff;--err:#c0332a;--shadow:0 1px 0 rgba(255,255,255,.95) inset,0 30px 60px -34px rgba(14,70,80,.5),0 0 0 1px rgba(255,255,255,.65);--ease:cubic-bezier(.22,1,.36,1)}
-:root[data-theme=dark]{--bg:#070d12;--ink:#e9f3f1;--mute:#8fa5ad;--line:rgba(255,255,255,.1);--card:rgba(16,26,31,.74);--solid:#101c22;--field:#0b1519;--brand:#2dd4bf;--brand2:#14b8a6;--accent:#818cf8;--brand-ink:#032019;--err:#f97066;--shadow:0 1px 0 rgba(255,255,255,.06) inset,0 30px 60px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.05)}
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;min-height:100vh;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;color:var(--ink);background:radial-gradient(900px 520px at 6% -8%,rgba(20,184,166,.2),transparent 62%),radial-gradient(820px 520px at 100% 0,rgba(99,102,241,.17),transparent 60%),var(--bg);background-attachment:fixed;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);overflow-x:hidden;transition:background-color .4s,color .4s;-webkit-font-smoothing:antialiased}
-body::after{content:"";position:fixed;z-index:-1;width:55vmax;height:55vmax;right:-22vmax;bottom:-28vmax;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.2),transparent 65%);animation:float 20s ease-in-out infinite alternate;will-change:transform}
-@keyframes float{to{transform:translate(-8vmax,-6vmax) scale(1.12)}}
+:root{--bg:#f4f7fb;--ink:#0c1a1f;--mute:#5c6f78;--line:rgba(12,40,50,.11);--card:rgba(255,255,255,.94);--solid:#fff;--field:#f3f6f9;--brand:#0f766e;--brand2:#14b8a6;--accent:#6366f1;--brand-ink:#fff;--err:#c0332a;--shadow:0 1px 0 rgba(255,255,255,.95) inset,0 30px 60px -34px rgba(14,70,80,.5),0 0 0 1px rgba(255,255,255,.65);--ease:cubic-bezier(.22,1,.36,1)}
+:root[data-theme=dark]{--bg:#070d12;--ink:#e9f3f1;--mute:#8fa5ad;--line:rgba(255,255,255,.1);--card:rgba(16,26,31,.94);--solid:#101c22;--field:#0b1519;--brand:#2dd4bf;--brand2:#14b8a6;--accent:#818cf8;--brand-ink:#032019;--err:#f97066;--shadow:0 1px 0 rgba(255,255,255,.06) inset,0 30px 60px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.05)}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;color:var(--ink);background:var(--bg);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);overflow-x:hidden;transition:background-color .4s,color .4s;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 520px at 6% -8%,var(--glow1),transparent 62%),radial-gradient(820px 520px at 100% 0,var(--glow2),transparent 60%)}
 .wrap{max-width:1060px;margin:0 auto;padding:18px 16px 44px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px;animation:up .7s var(--ease) both}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}.mark{flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#0f766e,#6366f1);display:grid;place-items:center;box-shadow:0 10px 24px -10px rgba(99,102,241,.7),0 1px 0 rgba(255,255,255,.35) inset}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}.mark{flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--accent));display:grid;place-items:center;box-shadow:0 10px 24px -10px rgba(99,102,241,.7),0 1px 0 rgba(255,255,255,.35) inset}
 h1{font-size:clamp(1.25rem,4.6vw,1.85rem);margin:0;line-height:1.12;letter-spacing:-.025em;font-weight:800}
 h1 b{background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{color:var(--mute);margin:2px 0 0;font-size:.9rem}
-.trust{display:flex;gap:6px;flex-wrap:nowrap;margin:16px 0 18px;animation:up .8s .08s var(--ease) both}.trust span{flex:1 1 0;min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.62rem,2.9vw,.76rem);font-weight:650;color:var(--mute);padding:7px 4px;border-radius:999px;background:var(--card);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.grid{display:grid;grid-template-columns:1.02fr .98fr;gap:22px;align-items:start}@media(max-width:860px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow);animation:up .75s var(--ease) both}.grid .card:nth-child(2){animation-delay:.12s}
+.trust{display:flex;gap:6px;flex-wrap:nowrap;margin:16px 0 18px;animation:up .8s .08s var(--ease) both}.trust span{flex:1 1 0;min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(.62rem,2.9vw,.76rem);font-weight:650;color:var(--mute);padding:7px 4px;border-radius:999px;background:var(--card);border:1px solid var(--line);}
+.grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:22px;align-items:start}.grid>*{min-width:0}@media(max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{position:relative;overflow:hidden;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow);animation:up .75s var(--ease) both}.grid .card:nth-child(2){animation-delay:.12s}
 @media(min-width:861px){.prev{position:sticky;top:16px}}
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 .sec{display:flex;align-items:center;gap:10px;margin:24px 0 12px;font-size:.74rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--mute)}.sec:first-child{margin-top:0}
@@ -40,15 +40,15 @@ input[aria-invalid=true]{border-color:var(--err)}
 .amt{position:relative}.amt span{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--brand);font-weight:800;font-size:1.15rem}.amt input{padding-left:36px;font-size:1.15rem;font-weight:700}
 .chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin-top:16px;font-size:.84rem;color:var(--mute)}.chk input{width:20px;min-height:20px;margin:2px 0 0;accent-color:var(--brand);box-shadow:none}
 button{font:inherit;font-weight:650;min-height:50px;border-radius:16px;border:1.5px solid var(--line);background:var(--solid);color:var(--ink);cursor:pointer;padding:0 12px;transition:transform .25s var(--ease),box-shadow .25s,filter .2s,opacity .2s,background .2s;-webkit-tap-highlight-color:transparent}
-button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px -14px rgba(15,118,110,.6)}button:active:not(:disabled){transform:scale(.96)}
+button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px -14px color-mix(in srgb,var(--brand) 60%,transparent)}button:active:not(:disabled){transform:scale(.96)}
 button:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transparent);outline-offset:2px}button:disabled{opacity:.38;cursor:not-allowed}
-.primary{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--brand),var(--brand2));color:var(--brand-ink);border:0;box-shadow:0 14px 28px -14px rgba(15,118,110,.8),0 1px 0 rgba(255,255,255,.35) inset}
+.primary{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--brand),var(--brand2));color:var(--brand-ink);border:0;box-shadow:0 14px 28px -14px color-mix(in srgb,var(--brand) 80%,transparent),0 1px 0 rgba(255,255,255,.35) inset}
 .primary::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-120%);animation:shine 3.8s 1.2s infinite}@keyframes shine{to{transform:translateX(120%)}}
 .icon{min-height:44px;width:46px;padding:0;font-size:1.15rem;border-radius:50%}
 .pill{min-height:44px;border-radius:999px;font-size:.84rem;padding:0 15px;background:linear-gradient(110deg,var(--brand),var(--brand2));color:var(--brand-ink);border:0;animation:up .6s var(--ease) both}
 .hbtns{display:flex;gap:8px;align-items:center}
 .lrow{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;flex-wrap:wrap;margin:0 0 8px}.lrow label{margin:0}
-.ea{position:relative;min-height:38px;padding:0 15px 0 11px;border-radius:999px;border:0;color:#fff;font-size:.84rem;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(110deg,#6366f1,#14b8a6,#6366f1);background-size:220% 100%;animation:slide 4s linear infinite;box-shadow:0 10px 22px -10px #6366f1}
+.ea{position:relative;min-height:38px;padding:0 15px 0 11px;border-radius:999px;border:0;color:#fff;font-size:.84rem;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(110deg,var(--accent),var(--brand));box-shadow:0 10px 22px -10px #6366f1}
 .ea i{font-style:normal;display:inline-block;animation:bob 2.2s ease-in-out infinite}
 .ea::before{content:"";position:absolute;inset:-4px;border-radius:inherit;border:2px solid #6366f1;opacity:0;animation:ping 2.4s ease-out infinite;pointer-events:none}
 @keyframes slide{to{background-position:-220% 0}}@keyframes ping{0%{opacity:.7;transform:scale(.94)}100%{opacity:0;transform:scale(1.16)}}@keyframes bob{50%{transform:translateY(-4px)}}@keyframes spin{to{transform:rotate(360deg)}}
@@ -64,8 +64,8 @@ button:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transp
 .prev{display:flex;flex-direction:column;align-items:center}
 .stage{position:relative;width:100%;display:flex;justify-content:center;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;outline:0;padding:6px 0 2px}.stage:active{cursor:grabbing}
 .stage:focus-visible #cv{outline:3px solid color-mix(in srgb,var(--brand) 55%,transparent);outline-offset:4px}
-.tilt{position:relative;display:inline-block;max-width:100%;width:100%;max-width:380px;transition:transform .35s var(--ease);transform-style:preserve-3d}
-#cv{display:block;width:100%;height:auto;border-radius:24px;box-shadow:0 38px 70px -30px rgba(4,47,46,.7),0 0 0 1px rgba(255,255,255,.08);background:#fff;-webkit-user-drag:none;touch-action:pan-y;will-change:transform}
+.tilt{position:relative;display:inline-block;max-width:100%;width:100%;max-width:380px;transition:transform .35s var(--ease)}
+#cv{display:block;width:100%;height:auto;border-radius:24px;box-shadow:0 38px 70px -30px rgba(10,25,40,.55),0 0 0 1px rgba(255,255,255,.08);background:#fff;-webkit-user-drag:none;touch-action:pan-y}
 #cv.pop{animation:pop .8s var(--ease) both}@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.9) rotateX(10deg)}to{opacity:1;transform:none}}
 .gloss{position:absolute;inset:0;border-radius:24px;pointer-events:none;opacity:0;transition:opacity .3s;mix-blend-mode:soft-light}
 .dnav{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;width:100%}
@@ -77,7 +77,7 @@ button:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transp
 #dname{font-size:.78rem;font-weight:700;color:var(--mute);letter-spacing:.02em}
 .swh{margin-top:2px;font-size:.74rem;color:var(--brand);font-weight:650;animation:nudge 2.4s ease-in-out infinite;transition:opacity .5s}.swh.gone{opacity:0}@keyframes nudge{0%,100%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
 .empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:34px 10px;color:var(--mute);font-size:.95rem;width:100%}.empty b{color:var(--ink);font-size:1.02rem}.empty small{font-size:.82rem}
-.ph{width:132px;height:132px;color:color-mix(in srgb,var(--brand) 55%,var(--mute));opacity:.85;margin-bottom:8px;animation:bob 3s ease-in-out infinite}.ph rect{animation:blink 2.4s ease-in-out infinite}.ph rect:nth-child(2n){animation-delay:.6s}.ph rect:nth-child(3n){animation-delay:1.2s}@keyframes blink{50%{opacity:.25}}
+.ph{width:132px;height:132px;color:color-mix(in srgb,var(--brand) 55%,var(--mute));opacity:.85;margin-bottom:8px;animation:bob 3s ease-in-out infinite}
 .linkbox{display:flex;align-items:stretch;gap:8px;width:100%;margin-top:14px}
 .uri{flex:1;min-width:0;font:.73rem/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--mute);word-break:break-all;background:var(--field);border-radius:14px;padding:9px 12px;border:1.5px dashed var(--line);max-height:76px;overflow:auto}
 .copy{min-height:auto;flex:0 0 auto;min-width:88px;font-size:.85rem}.copy.done{background:#16a34a;color:#fff;border-color:#16a34a}
@@ -88,32 +88,41 @@ button:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transp
 .sv{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:var(--solid);overflow:hidden}.sv button{min-height:36px;border:0;border-radius:0;background:none;font-size:.8rem;padding:0 10px;box-shadow:none!important}.sv .x{padding:0 11px 0 4px;color:var(--mute)}
 #toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translate(-50%,24px) scale(.95);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-size:.92rem;font-weight:600;opacity:0;pointer-events:none;transition:.35s var(--ease);max-width:92vw;z-index:9;box-shadow:0 14px 34px rgba(0,0,0,.35)}#toast.on{opacity:1;transform:translate(-50%,0)}
 #toast button{min-height:auto;border:0;background:none;color:inherit;text-decoration:underline;padding:0 4px;box-shadow:none!important;font-weight:800}
-details{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px 17px;animation:up .8s .25s var(--ease) both;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}summary{cursor:pointer;font-weight:650}details p{color:var(--mute);font-size:.9rem;margin:8px 0 0}
+details{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px 17px;animation:up .8s .25s var(--ease) both;}summary{cursor:pointer;font-weight:650}details p{color:var(--mute);font-size:.9rem;margin:8px 0 0}
 footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
 :root{--fade:rgba(255,255,255,.92)}:root[data-theme=dark]{--fade:rgba(16,26,31,.92)}
-.modes{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:5px;margin:16px 0 20px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:up .8s .08s var(--ease) both}
+.modes{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:5px;margin:16px 0 20px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);animation:up .8s .08s var(--ease) both}
 .modes::before{content:"";position:absolute;top:5px;bottom:5px;left:5px;width:calc(50% - 5px);border-radius:17px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 14px 28px -14px rgba(79,70,229,.8),0 1px 0 rgba(255,255,255,.3) inset;transition:transform .5s var(--ease)}
 .modes[data-mode=cc]::before{transform:translateX(100%)}
-.modes button{position:relative;z-index:1;min-height:54px;border:0;background:none;box-shadow:none!important;transform:none!important;display:flex;align-items:center;justify-content:center;gap:8px;font-size:.98rem;font-weight:800;color:var(--mute);transition:color .3s;border-radius:17px}
-.modes button[aria-selected=true]{color:#fff}.modes button i{font-style:normal;font-size:1.25rem}
+.modes button{position:relative;z-index:1;min-height:54px;border:0;background:none;box-shadow:none!important;transform:none!important;display:flex;align-items:center;justify-content:center;gap:8px;font-size:clamp(.8rem,3.7vw,.98rem);white-space:nowrap;font-weight:800;color:var(--mute);transition:color .3s;border-radius:17px}
+.modes button[aria-selected=true]{color:#fff}.modes button i{font-style:normal;font-size:1.2rem}
 .swap{animation:up .5s var(--ease) both}
-.railw{position:relative;margin:2px -8px 0}
-.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding:12px 8px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;outline:0}.rail:active{cursor:grabbing}.rail::-webkit-scrollbar{display:none}
+.railw{position:relative;margin:2px 0 0;max-width:100%}
+.rail{width:100%;max-width:100%;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding:12px 8px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;outline:0}.rail:active{cursor:grabbing}.rail::-webkit-scrollbar{display:none}
 .bank{flex:0 0 auto;width:136px;scroll-snap-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;padding:11px 10px 10px;border-radius:20px;background:var(--solid);border:1.5px solid var(--line);min-height:auto;user-select:none;-webkit-user-select:none}
 .bank .lg{display:grid;place-items:center;width:100%;height:58px;border-radius:13px;background:#fff;padding:8px 10px;border:1px solid rgba(12,40,50,.07)}.bank .lg img{max-width:100%;max-height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
 .bank .bn{font-size:.78rem;font-weight:750;color:var(--mute);white-space:nowrap}
 .bank u{position:absolute;top:-7px;right:-7px;width:25px;height:25px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;display:grid;place-items:center;font-size:.8rem;text-decoration:none;transform:scale(0);transition:transform .4s var(--ease);box-shadow:0 6px 14px -4px rgba(79,70,229,.7)}
-.bank[aria-checked=true]{border-color:transparent;box-shadow:0 0 0 2.5px var(--brand),0 20px 32px -20px rgba(15,118,110,.8);transform:translateY(-3px)}.bank[aria-checked=true] u{transform:scale(1)}.bank[aria-checked=true] .bn{color:var(--ink)}
+.bank[aria-checked=true]{border-color:transparent;box-shadow:0 0 0 2.5px var(--brand),0 10px 18px -12px color-mix(in srgb,var(--brand) 80%,transparent);transform:translateY(-3px)}.bank[aria-checked=true] u{transform:scale(1)}.bank[aria-checked=true] .bn{color:var(--ink)}
 .fadeL,.fadeR{position:absolute;top:0;bottom:0;width:38px;pointer-events:none;opacity:0;transition:opacity .25s;z-index:2}.fadeL{left:0;background:linear-gradient(90deg,var(--fade),transparent)}.fadeR{right:0;background:linear-gradient(270deg,var(--fade),transparent)}
 .rsh{text-align:center;font-size:.74rem;color:var(--brand);font-weight:700;margin:-4px 0 6px;animation:nudge 2.4s ease-in-out infinite;transition:opacity .5s}.rsh.gone{opacity:0}
 .bnote{margin-top:4px;padding:11px 13px;border-radius:15px;background:color-mix(in srgb,#16a34a 11%,var(--solid));border:1px solid color-mix(in srgb,#16a34a 32%,var(--line));font-size:.82rem;line-height:1.45}.bnote.warn{background:color-mix(in srgb,#f59e0b 14%,var(--solid));border-color:color-mix(in srgb,#f59e0b 42%,var(--line))}
-.bnote code{display:block;margin-top:4px;font:.76rem ui-monospace,Menlo,Consolas,monospace;color:var(--mute);word-break:break-all}
+.bnote code{display:block;margin-top:4px;font:.7rem/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--mute);overflow-wrap:anywhere}
 .seg{display:flex;gap:6px;margin-top:12px}.seg button{flex:1;min-height:38px;font-size:.8rem;border-radius:12px}.seg button[aria-checked=true]{background:linear-gradient(135deg,var(--brand),var(--brand2));color:var(--brand-ink);border-color:transparent}
 .msg.warnmsg{color:#b45309}:root[data-theme=dark] .msg.warnmsg{color:#fbbf24}
 .ccwarn{width:100%;margin-top:12px;padding:10px 13px;border-radius:14px;font-size:.8rem;background:color-mix(in srgb,#f59e0b 13%,var(--solid));border:1px solid color-mix(in srgb,#f59e0b 40%,var(--line))}
 .hide{display:none!important}#pimg{display:none}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-@media print{body::after{display:none}body>*:not(#pimg){display:none!important}#pimg{display:block;margin:0 auto;max-width:100%;max-height:100vh}}
+@media print{body::before{display:none}body>*:not(#pimg){display:none!important}#pimg{display:block;margin:0 auto;max-width:100%;max-height:100vh}}
+
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--brand),var(--accent))}
+:root{--glow1:rgba(20,184,166,.2);--glow2:rgba(99,102,241,.17)}
+:root[data-theme=dark]{--glow1:rgba(45,212,191,.12);--glow2:rgba(129,140,248,.12)}
+html[data-mode=cc]{--brand:#5b3fd6;--brand2:#8b5cf6;--accent:#ec4899;--glow1:rgba(139,92,246,.26);--glow2:rgba(236,72,153,.16)}
+:root[data-theme=dark][data-mode=cc]{--brand:#a78bfa;--brand2:#8b5cf6;--accent:#f472b6;--brand-ink:#14072f;--glow1:rgba(139,92,246,.2);--glow2:rgba(244,114,182,.12)}
+html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.85),0 1px 0 rgba(255,255,255,.3) inset}
+
+#e-qr:empty{display:none}.amt input::placeholder{font-size:.92rem;font-weight:500}
 </style>
 </head>
 <body>
@@ -131,7 +140,7 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
   <div class="msg" id="e-name"></div>
   <div id="sec-upi">
   <h2 class="sec"><span>2</span>Payment address</h2>
-  <div class="lrow"><label for="type">💳 Payment address type</label><button class="ea" id="up" type="button" aria-label="Upload an existing UPI QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
+  <div class="lrow"><label for="type">💳 Address type</label><button class="ea" id="up" type="button" aria-label="Upload an existing UPI QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
   <select id="type">
    <option value="vpa">UPI ID (recommended)</option>
    <option value="bank">Bank account + IFSC</option>
@@ -148,7 +157,7 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
  </div>
   <div id="sec-cc" class="hide">
   <h2 class="sec"><span>2</span>Select card bank</h2>
-  <div class="lrow"><label id="l-rail">💳 Swipe to choose your bank</label><button class="ea" id="up2" type="button" aria-label="Upload an existing card QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
+  <div class="lrow"><label id="l-rail">💳 Choose your bank</label><button class="ea" id="up2" type="button" aria-label="Upload an existing card QR image to auto-fill"><i>📷</i><span class="t">Upload QR</span></button></div>
   <div class="railw"><div class="rail" id="rail" role="radiogroup" aria-labelledby="l-rail"></div><div class="fadeL" id="fadeL"></div><div class="fadeR" id="fadeR"></div></div>
   <div class="rsh" id="rsh">⟵ Swipe to see more banks ⟶</div>
   <div class="bnote" id="bnote"></div>
@@ -156,13 +165,14 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
   <div id="f-ccnum"><label for="ccnum" id="l-ccnum">Card number</label><div class="inp"><input id="ccnum" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="19" placeholder="0000 0000 0000 0000"><button class="pst" type="button" data-for="ccnum" aria-label="Paste card number">📋</button></div><div class="msg" id="e-ccnum"></div><div class="hint">🔒 Used only on your device to build the QR. Never uploaded or saved.</div></div>
   <div id="f-ccmob" class="hide"><label for="ccmob">Mobile number registered with the card</label><div class="inp"><input id="ccmob" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="9876543210"><button class="pst" type="button" data-for="ccmob" aria-label="Paste mobile number">📋</button></div><div class="msg" id="e-ccmob"></div>
    <label for="cc4">Last 4 digits of the card</label><div class="inp"><input id="cc4" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="1234"><button class="pst" type="button" data-for="cc4" aria-label="Paste last 4 digits">📋</button></div><div class="msg" id="e-cc4"></div></div>
+  <label class="chk" id="l-showid"><input type="checkbox" id="showid" checked><span>Show the UPI ID on the card image (turn off to keep your card number private)</span></label>
  </div>
   <div class="msg" id="e-qr"></div>
   <input type="file" id="qrfile" accept="image/*" hidden>
   <div class="qrsum hide" id="qrsum" role="status"></div>
   <h2 class="sec"><span>3</span>Amount &amp; note</h2>
   <label for="amt">💰 Amount (optional)</label>
-  <div class="amt"><span>₹</span><input id="amt" inputmode="decimal" placeholder="Leave empty to let the payer enter it"></div>
+  <div class="amt"><span>₹</span><input id="amt" inputmode="decimal" placeholder="Leave empty to let payer decide"></div>
   <div class="chips" aria-label="Quick amounts"><button class="chip" type="button" data-v="100">₹100</button><button class="chip" type="button" data-v="500">₹500</button><button class="chip" type="button" data-v="1000">₹1,000</button><button class="chip" type="button" data-v="2000">₹2,000</button></div>
   <div class="msg" id="e-amt"></div>
   <label for="note">📝 Note / description (optional)</label>
@@ -200,7 +210,7 @@ footer{margin-top:24px;font-size:.78rem;color:var(--mute);text-align:center}
 const $=id=>document.getElementById(id),KEY="dupi.v1",TKEY="dupi.theme";
 const el=Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note","ccnum","ccmob","cc4","rem"].map(k=>[k,$(k)]));
 const btn=["jpg","svg","open","share","print","copy","save"].map(k=>$("b-"+k));
-let cur=null,tt,design="emerald";
+let cur=null,tt,design="emerald",need=false,dT=0,dRaf=0,pT=0,qcache=null;
 const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const toast=(m,a)=>{const t=$("toast");t.textContent=m;t.style.pointerEvents="";if(a){const b=document.createElement("button");b.type="button";b.textContent=a.label;b.onclick=()=>{a.fn();t.classList.remove("on")};t.append(" ",b);t.style.pointerEvents="auto"}t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),a?5500:2200)};
 const enc=s=>encodeURIComponent(s).replace(/%40/g,"@");
@@ -238,8 +248,10 @@ const THEMES={
  emerald:{bg:["#042f2e","#0f766e","#2dd4bf"],deco:"rgba(255,255,255,.07)",card:["#ffffff","#ffffff"],ttl:["#0f766e","#6366f1"],sub:"#64748b",pill:["#ecfdf5","#99f6e4","#064e3b"],frame:["#14b8a6","#6366f1","#0f766e"],amt:["#0f766e","#14b8a6","#ffffff"],vpa:"#334155",note:"#64748b",div:"#e2e8f0",lbl:"#94a3b8",foot:"#64748b",strip:0,orn:""},
  midnight:{bg:["#02040d","#0b1230","#1b1650"],deco:"rgba(217,169,60,.09)",card:["#0a1129","#141d47"],ttl:["#f9e7a8","#d9a93c"],sub:"#9aa7c7",pill:["#141d44","#d9a93c","#f9e7a8"],frame:["#f9e7a8","#b8862b","#f9e7a8"],amt:["#f9e7a8","#d9a93c","#2a1c00"],vpa:"#eef1fb",note:"#9aa7c7",div:"#2b3568",lbl:"#d1b86a",foot:"#8f9cc0",strip:1,orn:"gold"},
  tricolor:{bg:["#0a1a4f","#1e3a8a","#3b5bdb"],deco:"rgba(255,255,255,.07)",card:["#ffffff","#fffaf3"],ttl:["#ff7a00","#138808"],sub:"#475569",pill:["#fff4e5","#ffb366","#7a3d00"],frame:["#ff9933","#1e3a8a","#138808"],amt:["#1e3a8a","#3b5bdb","#ffffff"],vpa:"#0f172a",note:"#475569",div:"#e2e8f0",lbl:"#94a3b8",foot:"#475569",strip:0,orn:"tri"}};
+const THEMES_CC={emerald:{...THEMES.emerald,bg:["#0d0630","#3a2a9c","#8b5cf6"],ttl:["#4f35c9","#d6336c"],pill:["#f3efff","#c9b8ff","#2c1a78"],frame:["#8b5cf6","#ec4899","#4f35c9"],amt:["#4f35c9","#8b5cf6","#ffffff"],vpa:"#2a2150",lbl:"#9a8fc4"}};
+const maskId=v=>v.replace(/\d{8,}/g,m=>"•".repeat(m.length-4)+m.slice(-4));
 function drawCard(q,r){
- const T=THEMES[design]||THEMES.emerald,c=$("cv"),x=c.getContext("2d"),W=1080,H=1700,n=q.getModuleCount();x.textAlign="center";x.textBaseline="alphabetic";
+ const cc=r.cc,T=(cc&&THEMES_CC[design])||THEMES[design]||THEMES.emerald,c=$("cv"),x=c.getContext("2d"),W=1080,H=1700,n=q.getModuleCount();x.textAlign="center";x.textBaseline="alphabetic";
  const lg=(a,b,d,e,cols)=>{const g=x.createLinearGradient(a,b,d,e);cols.forEach((k,i)=>g.addColorStop(i/(cols.length-1),k));return g};
  x.fillStyle=lg(0,0,W,H,T.bg);x.fillRect(0,0,W,H);
  x.fillStyle=T.deco;[[120,160,260],[980,420,320],[160,1440,300],[940,1620,220]].forEach(([a,b,d])=>{x.beginPath();x.arc(a,b,d,0,7);x.fill()});
@@ -249,21 +261,24 @@ function drawCard(q,r){
  const fit=(t,max,w,wt)=>{let s=max;do{x.font=wt+" "+s+"px "+FF;s-=2}while(x.measureText(t).width>w&&s>22);return t};
  x.fillStyle=lg(0,0,W,0,T.ttl);x.font="800 84px "+FF;x.fillText(r.cc?"💳 Pay Card Bill":"💸 Scan & Pay",W/2,185);
  x.fillStyle=T.sub;x.font="500 31px "+FF;x.fillText(r.cc?"Credit card bill payment  •  Instant via UPI":"Fast  •  Secure  •  Works with every UPI app",W/2,240);
- const cc=r.cc,BL=cc&&BG[cc.b.id]&&BG[cc.b.id].ok?BG[cc.b.id]:null;let lh=0,lw=0,chipW=0;
+ const BL=cc&&BG[cc.b.id]&&BG[cc.b.id].ok?BG[cc.b.id]:null;let lh=0,lw=0,chipW=0;
  if(BL){lh=Math.min(46,230*BL.h/BL.w);lw=lh*BL.w/BL.h;chipW=lw+36}
  const extra=BL?chipW+14:0,nm=(cc?"👤  ":"🏪  ")+r.name;fit(nm,50,Math.min(780,900-extra-90),700);const tw=x.measureText(nm).width;
  const nw=tw+90+extra,px0=(W-nw)/2;x.fillStyle=T.pill[0];rr(x,px0,285,nw,92,46);x.fill();x.strokeStyle=T.pill[1];x.lineWidth=3;x.stroke();
  if(BL){x.fillStyle="#fff";rr(x,px0+12,297,chipW,68,24);x.fill();x.drawImage(BL.i,px0+12+18,297+(68-lh)/2,lw,lh)}
  x.fillStyle=T.pill[2];x.fillText(nm,px0+extra+(nw-extra)/2,347);
  const F=716,fx=(W-F)/2,fy=415;
- x.save();x.shadowColor=T.orn=="gold"?"rgba(217,169,60,.45)":"rgba(15,118,110,.35)";x.shadowBlur=40;x.shadowOffsetY=14;x.fillStyle=lg(fx,fy,fx+F,fy+F,T.frame);rr(x,fx,fy,F,F,52);x.fill();x.restore();
+ x.save();x.shadowColor=T.orn=="gold"?"rgba(217,169,60,.45)":cc?"rgba(91,63,214,.4)":"rgba(15,118,110,.35)";x.shadowBlur=40;x.shadowOffsetY=14;x.fillStyle=lg(fx,fy,fx+F,fy+F,T.frame);rr(x,fx,fy,F,F,52);x.fill();x.restore();
  x.fillStyle="#fff";rr(x,fx+10,fy+10,F-20,F-20,44);x.fill();
  const cell=Math.floor(612/n),qs=cell*n,ox=(W-qs)/2,oy=fy+(F-qs)/2;x.fillStyle="#000";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))x.fillRect(ox+j*cell,oy+i*cell,cell,cell);
  let y=1262;
  if(r.am){const t="₹ "+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2});fit(t,92,640,800);const w=x.measureText(t).width+110;x.fillStyle=lg(0,0,W,0,[T.amt[0],T.amt[1]]);rr(x,(W-w)/2,y-90,w,128,64);x.fill();x.fillStyle=T.amt[2];x.fillText(t,W/2,y)}
  else{x.fillStyle=T.ttl[0];x.font="700 46px "+FF;x.fillText("✨ Pay any amount",W/2,y-10)}
- y=1368;x.fillStyle=T.vpa;const vl=cc?"💳  "+cc.b.s+"  •••• "+cc.l4:"📲  "+r.vpa;fit(vl,44,860,600);x.fillText(vl,W/2,y);
+ y=1368;{const idT=cc&&!cc.show?maskId(r.vpa):r.vpa,UL=LG.upi&&LG.upi.ok?LG.upi:null,lh=UL?42:0,lw=UL?lh*UL.w/UL.h:0,gap=UL?22:0;
+  fit(idT,44,850-lw-gap,600);const tw=x.measureText(idT).width,X0=(W-(lw+gap+tw))/2;
+  if(UL){if(T.strip){x.fillStyle="#fff";rr(x,X0-14,y-54,lw+28,68,20);x.fill()}x.drawImage(UL.i,X0,y-40,lw,lh)}
+  x.textAlign="left";x.fillStyle=T.vpa;x.fillText(idT,X0+lw+gap,y);x.textAlign="center"}
  if(r.note){x.fillStyle=T.note;const t="📝  "+r.note;fit(t,34,860,500);x.fillText(t,W/2,y+58)}
  x.strokeStyle=T.div;x.lineWidth=3;x.beginPath();x.moveTo(110,1470);x.lineTo(310,1470);x.moveTo(770,1470);x.lineTo(970,1470);x.stroke();
  x.fillStyle=T.lbl;x.font="700 22px "+FF;const sbi=cc&&cc.b.id==="sbi";x.fillText(sbi?"USE BHIM SBI PAY / YONO SBI":"ACCEPTED ON ALL UPI APPS",W/2,1478);
@@ -278,6 +293,8 @@ function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))d+=`M${j+m} ${i+m}h1v1h-1z`;
  const s=n+m*2;return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges"><rect width="${s}" height="${s}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`}
 
+function drawNow(){clearTimeout(dT);cancelAnimationFrame(dRaf);if(need&&cur){need=false;drawCard(cur.q,cur.r)}}
+function scheduleDraw(){need=true;clearTimeout(dT);dT=setTimeout(()=>{dRaf=requestAnimationFrame(()=>{if(need&&cur){need=false;drawCard(cur.q,cur.r)}})},60)}
 function render(){
  const r=resolve(),{e}=r;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",el.amt.value.replace(/,/g,"")===c.dataset.v));
  const map={name:"e-name",vpa:"e-vpa",mob:"e-mob",acc:"e-acc",ifsc:"e-ifsc",aad:"e-aad",amt:"e-amt",ccnum:"e-ccnum",ccmob:"e-ccmob",cc4:"e-cc4"};
@@ -288,9 +305,9 @@ function render(){
  const was=!$("cv").classList.contains("hide");$("cv").classList.toggle("hide",!on);$("lb").classList.toggle("hide",!on);$("designs").classList.toggle("hide",!on);$("swh").classList.toggle("hide",!on||SW);$("empty").classList.toggle("hide",on);
  if(on&&!was){const c=$("cv");c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop")}
  btn.forEach(b=>b.disabled=!on);$("ccwarn").classList.toggle("hide",!(on&&mode==="cc"));
- if(on){try{const u=uriOf(r),q=qrOf(u);drawCard(q,r);$("uri").textContent=mode==="cc"?u.replace(/\d{8,}/g,m=>"•".repeat(m.length-4)+m.slice(-4)):u;cur={u,q,r}}
+ if(on){try{const u=uriOf(r);$("uri").textContent=mode==="cc"?u.replace(/\d{8,}/g,m=>"•".repeat(m.length-4)+m.slice(-4)):u;cur={u,r,get q(){return qcache&&qcache.u===u?qcache.q:(qcache={u,q:qrOf(u)}).q}};if(!was){drawCard(cur.q,r);need=false}else scheduleDraw()}
   catch(err){$("empty").textContent="Details are too long to encode. Shorten the name or note.";$("empty").classList.remove("hide");$("cv").classList.add("hide");$("lb").classList.add("hide");btn.forEach(b=>b.disabled=true)}}
- if(el.rem.checked)store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","amt","note","ccmob","cc4"].map(k=>[k,el[k].value])),rem:1}));
+ if(el.rem.checked){clearTimeout(pT);pT=setTimeout(()=>store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","amt","note","ccmob","cc4"].map(k=>[k,el[k].value])),rem:1})),400)}
 }
 function layout(){
  ["vpa","mob","bank","aad"].forEach(k=>$("f-"+k).classList.toggle("hide",k!=el.type.value));
@@ -301,12 +318,12 @@ function layout(){
  $("sub").textContent=cc?"Collect credit card bill payments via UPI":"Premium payment QR cards in seconds";
  el.ccnum.placeholder=B.id==="amex"?"0000 000000 00000":"0000 0000 0000 0000";el.ccnum.maxLength=B.id==="amex"?17:19;$("l-ccnum").textContent=B.s+" card number ("+(B.id==="amex"?15:16)+" digits)";
  const fm=B.id==="icici"&&iv==="p"?B.fp:B.f;$("bnote").className="bnote"+(B.any?"":" warn");$("bnote").innerHTML=(B.any?"✅ Works with any UPI app":"⚠️ Works only in <b>BHIM SBI Pay</b> / YONO SBI")+"<code>"+fm+"</code>";
- document.querySelectorAll("#modes button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.mode===mode)));$("modes").dataset.mode=mode;
+ document.querySelectorAll("#modes button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.mode===mode)));$("modes").dataset.mode=mode;document.documentElement.dataset.mode=mode;{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=cc?"#5b3fd6":"#0f766e"}syncDesign();
  document.querySelectorAll(".bank").forEach(t=>{const on=t.dataset.b===bank;t.setAttribute("aria-checked",String(on));t.tabIndex=on?0:-1});
  document.querySelectorAll("#iv button").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.v===iv)))}
 const slug=()=>(mode==="cc"?"card-qr-"+bank+"-":"upi-qr-")+(clean(el.name.value).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"code")+(cur&&cur.r.am?"-"+cur.r.am:"");
 const save=(blob,name)=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
-const jpg=()=>new Promise(res=>$("cv").toBlob(res,"image/jpeg",.95));
+const jpg=()=>new Promise(res=>{drawNow();$("cv").toBlob(res,"image/jpeg",.95)});
 const payLink=r=>{const u=new URL(location.href);u.search="";u.hash="";u.pathname=u.pathname.replace(/index\.html$/,"");const p=new URLSearchParams({pa:r.vpa,pn:r.name});if(r.am)p.set("am",r.am);if(r.note)p.set("tn",r.note);return u.toString()+"?"+p};
 const buzz=()=>{try{navigator.vibrate&&navigator.vibrate(12)}catch{}};
 $("b-jpg").onclick=async()=>{if(cur){buzz();playSound("tick");save(await jpg(),slug()+".jpg");toast("📥 JPG saved to your device")}};
@@ -314,7 +331,7 @@ $("b-svg").onclick=()=>{if(cur){save(new Blob([svgOf(cur.q)],{type:"image/svg+xm
 $("b-copy").onclick=async()=>{if(!cur)return;buzz();playSound("tick");let ok=true;try{await navigator.clipboard.writeText(cur.u)}catch{const t=document.createElement("textarea");t.value=cur.u;document.body.appendChild(t);t.select();try{ok=document.execCommand("copy")}catch{ok=false}t.remove()}
  const b=$("b-copy");if(ok){b.textContent="✅ Copied";b.classList.add("done");toast("📋 UPI link copied");setTimeout(()=>{b.textContent="📋 Copy";b.classList.remove("done")},1800)}else toast("Copy failed")};
 $("b-open").onclick=()=>{if(!cur)return;buzz();if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){toast("🚀 Opening your UPI app…");location.href=cur.u}else toast("📱 Open this page on your phone, or scan the QR")};
-$("b-print").onclick=()=>{if(!cur)return;const i=$("pimg");i.removeAttribute("src");i.onload=()=>{i.onload=null;window.print()};i.src=$("cv").toDataURL("image/jpeg",.92)};
+$("b-print").onclick=()=>{if(!cur)return;drawNow();const i=$("pimg");i.removeAttribute("src");i.onload=()=>{i.onload=null;window.print()};i.src=$("cv").toDataURL("image/jpeg",.92)};
 $("b-share").onclick=async()=>{if(!cur)return;buzz();const r=cur.r,link=payLink(r),text=shareText(r,link);
  try{const b=await jpg(),f=new File([b],slug()+".jpg",{type:"image/jpeg"});
   if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:"Pay "+r.name,text});
@@ -322,7 +339,7 @@ $("b-share").onclick=async()=>{if(!cur)return;buzz();const r=cur.r,link=payLink(
   else{save(b,slug()+".jpg");open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener");toast("💬 JPG saved - attach it in WhatsApp")}}
  catch(e){if(e&&e.name!="AbortError")toast("Could not share")}};
 
-Object.values(el).forEach(i=>{i.addEventListener("input",()=>{if(i==el.ifsc)i.value=i.value.toUpperCase();if(["mob","acc","aad","ccmob","cc4"].includes(i.id))i.value=i.value.replace(/\D/g,"");if(i===el.ccnum)fmtField(i);render()});i.addEventListener("blur",()=>{i.dataset.d="1";render()});i.addEventListener("change",()=>{if(i==el.type)layout();if(i==el.rem){if(!i.checked)store.del(KEY)}render()})});
+Object.values(el).forEach(i=>{i.addEventListener("input",()=>{if(i==el.ifsc)i.value=i.value.toUpperCase();if(["mob","acc","aad","ccmob","cc4"].includes(i.id))i.value=i.value.replace(/\D/g,"");if(i===el.ccnum)fmtField(i);render()});i.addEventListener("blur",()=>{i.dataset.d="1";render()});i.addEventListener("change",()=>{if(i==el.type)layout();if(i==el.rem){if(!i.checked){clearTimeout(pT);store.del(KEY)}}render()})});
 
 
 /* ---------- Premium sound (synthesised, no audio files) ---------- */
@@ -372,7 +389,7 @@ function resolveCC(){
   if(!e.ccmob&&!e.cc4){vpa=B.mk(m,d);l4=d}}
  const a=el.amt.value.trim().replace(/,/g,"");let am="";
  if(a){if(!/^\d{1,8}(\.\d{1,2})?$/.test(a)||+a<=0)e.amt="Enter a valid amount, up to 2 decimals.";else{am=(+a).toFixed(2);if(+a>100000)e.warn="Many UPI apps cap a single payment at ₹1,00,000."}}
- return{e,name:name||B.cn,vpa,am,note:clean(el.note.value),ok:!Object.keys(e).filter(k=>k!="warn").length&&!!vpa,touched:false,t:"cc",cc:{b:B,l4,warn,pan:usePan,own:name}}}
+ return{e,name:name||B.cn,vpa,am,note:clean(el.note.value),ok:!Object.keys(e).filter(k=>k!="warn").length&&!!vpa,touched:false,t:"cc",cc:{b:B,l4,warn,pan:usePan,own:name,show:$("showid").checked}}}
 const shareText=(r,link)=>{const amt=r.am?" ₹"+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2}):"";
  return r.cc?"💳 Pay my "+r.cc.b.n+" credit card bill"+amt+"\n💳 "+r.cc.b.s+" •••• "+r.cc.l4+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link
   :"💸 Pay "+r.name+amt+" via UPI\n📲 "+r.vpa+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link};
@@ -398,6 +415,7 @@ function setMode(m){if(m===mode)return;mode=m;store.set("dupi.mode",m);buzz();pl
 document.querySelectorAll("#modes button").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("modes").addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();setMode(mode==="upi"?"cc":"upi");$("modes").querySelector('[aria-selected=true]').focus()}});
 addEventListener("resize",()=>railFades());
+$("showid").checked=store.get("dupi.showid")!=="0";$("showid").addEventListener("change",()=>{store.set("dupi.showid",$("showid").checked?"1":"0");render()});
 
 /* ---------- Upload existing QR → auto-fill ---------- */
 const VPA_X=/^[a-zA-Z0-9._-]{2,64}@[a-zA-Z][a-zA-Z0-9.]{1,40}$/;
@@ -464,25 +482,25 @@ document.querySelectorAll(".pst").forEach(b=>b.addEventListener("click",()=>doPa
 
 /* ---------- Productivity extras ---------- */
 const ORDER=["emerald","midnight","tricolor"],DN={emerald:"Emerald Aurora",midnight:"Midnight Gold",tricolor:"Bharat Tricolor"};let SW=store.get("dupi.sw")==="1";
-function syncDesign(){document.querySelectorAll(".dots button").forEach(b=>b.setAttribute("aria-selected",b.dataset.d==design?"true":"false"));$("dname").textContent=DN[design]}
+function syncDesign(){document.querySelectorAll(".dots button").forEach(b=>b.setAttribute("aria-selected",b.dataset.d==design?"true":"false"));$("dname").textContent=mode==="cc"&&design==="emerald"?"Sapphire Aurora":DN[design]}
 function setDesign(d,dir){if(d===design||!THEMES[d])return;const c=$("cv");design=d;store.set("dupi.design",design);syncDesign();buzz();
  if(!SW){SW=true;store.set("dupi.sw","1");$("swh").classList.add("gone")}
  if(!cur){return}
  c.classList.remove("pop");c.style.transition="transform .17s ease,opacity .17s ease";c.style.transform="translateX("+(-dir*80)+"px) rotate("+(-dir*5)+"deg)";c.style.opacity="0";
- setTimeout(()=>{render();c.style.transition="none";c.style.transform="translateX("+(dir*80)+"px) rotate("+(dir*5)+"deg)";void c.offsetWidth;c.style.transition="transform .5s var(--ease),opacity .3s";c.style.transform="";c.style.opacity="1"},170)}
+ setTimeout(()=>{render();drawNow();c.style.transition="none";c.style.transform="translateX("+(dir*80)+"px) rotate("+(dir*5)+"deg)";void c.offsetWidth;c.style.transition="transform .5s var(--ease),opacity .3s";c.style.transform="";c.style.opacity="1"},170)}
 const go=dir=>setDesign(ORDER[(ORDER.indexOf(design)+dir+ORDER.length)%ORDER.length],dir);
 $("d-prev").addEventListener("click",()=>go(-1));$("d-next").addEventListener("click",()=>go(1));
 document.querySelectorAll(".dots button").forEach(b=>b.addEventListener("click",()=>{const t=ORDER.indexOf(b.dataset.d),c=ORDER.indexOf(design);setDesign(b.dataset.d,t>c?1:-1)}));
 $("cv").addEventListener("animationend",e=>e.currentTarget.classList.remove("pop"));
-const stage=$("stage"),tilt=$("tilt"),gl=$("gloss"),cvEl=$("cv");let sx=0,sy=0,dx=0,drag=false,lock=null,t0=0;
+const stage=$("stage"),tilt=$("tilt"),gl=$("gloss"),cvEl=$("cv");let sx=0,sy=0,dx=0,drag=false,lock=null,t0=0,tiltBusy=false;
 stage.addEventListener("keydown",e=>{if(e.key=="ArrowLeft"){e.preventDefault();go(-1)}else if(e.key=="ArrowRight"){e.preventDefault();go(1)}});
 stage.addEventListener("pointerdown",e=>{if(!cur||(e.pointerType=="mouse"&&e.button!==0))return;drag=true;lock=null;sx=e.clientX;sy=e.clientY;dx=0;t0=performance.now();cvEl.classList.remove("pop");tilt.style.transform=""});
 stage.addEventListener("pointermove",e=>{
  if(drag){const mx=e.clientX-sx,my=e.clientY-sy;if(lock===null&&(Math.abs(mx)>8||Math.abs(my)>8))lock=Math.abs(mx)>Math.abs(my)?"x":"y";
-  if(lock==="x"){dx=mx;cvEl.style.transition="none";cvEl.style.transform="translateX("+dx*.7+"px) rotate("+dx/38+"deg)";cvEl.style.opacity=String(1-Math.min(Math.abs(dx)/420,.4))}return}
- if(e.pointerType!=="mouse"||!cur)return;const r=tilt.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
- tilt.style.transform="perspective(900px) rotateY("+px*8+"deg) rotateX("+(-py*8)+"deg)";gl.style.background="radial-gradient(circle at "+(px+.5)*100+"% "+(py+.5)*100+"%,rgba(255,255,255,.55),transparent 55%)";gl.style.opacity="1"});
-const endDrag=()=>{if(!drag)return;drag=false;const v=dx/Math.max(1,performance.now()-t0);
+  if(lock==="x"){dx=mx;cvEl.style.willChange="transform";cvEl.style.transition="none";cvEl.style.transform="translateX("+dx*.7+"px) rotate("+dx/38+"deg)";cvEl.style.opacity=String(1-Math.min(Math.abs(dx)/420,.4))}return}
+ if(e.pointerType!=="mouse"||!cur||tiltBusy)return;tiltBusy=true;const cx=e.clientX,cy=e.clientY;requestAnimationFrame(()=>{tiltBusy=false;const r=tilt.getBoundingClientRect(),px=(cx-r.left)/r.width-.5,py=(cy-r.top)/r.height-.5;
+ tilt.style.transform="perspective(900px) rotateY("+px*8+"deg) rotateX("+(-py*8)+"deg)";gl.style.background="radial-gradient(circle at "+(px+.5)*100+"% "+(py+.5)*100+"%,rgba(255,255,255,.55),transparent 55%)";gl.style.opacity="1"})});
+const endDrag=()=>{if(!drag)return;drag=false;setTimeout(()=>{cvEl.style.willChange=""},700);const v=dx/Math.max(1,performance.now()-t0);
  if(lock==="x"&&(Math.abs(dx)>70||(Math.abs(dx)>35&&Math.abs(v)>.5))){const dir=dx<0?1:-1;cvEl.style.transition="";cvEl.style.transform="";cvEl.style.opacity="1";go(dir)}
  else if(lock==="x"){cvEl.style.transition="transform .45s var(--ease),opacity .3s";cvEl.style.transform="";cvEl.style.opacity="1"}lock=null};
 stage.addEventListener("pointerup",endDrag);stage.addEventListener("pointercancel",endDrag);
