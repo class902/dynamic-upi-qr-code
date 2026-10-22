@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
-<script>try{if(localStorage.getItem("dupi.mode")==="cc")document.documentElement.dataset.mode="cc"}catch(e){}</script>
+<script>try{var s=location.search;if(/[?&]pa=/.test(s)&&!/[?&]edit=/.test(s))document.documentElement.classList.add("payview");if(localStorage.getItem("dupi.mode")==="cc")document.documentElement.dataset.mode="cc"}catch(e){}</script>
 <title>Dynamic UPI QR Code Generator – Free, Private, No Signup</title>
 <meta name="description" content="Create dynamic UPI QR codes with a pre-filled amount and note. Works with Google Pay, PhonePe, Paytm, BHIM and all UPI apps. Runs entirely in your browser.">
 <meta name="theme-color" content="#0f766e">
@@ -123,15 +123,47 @@ html[data-mode=cc]{--brand:#5b3fd6;--brand2:#8b5cf6;--accent:#ec4899;--glow1:rgb
 html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.85),0 1px 0 rgba(255,255,255,.3) inset}
 
 #e-qr:empty{display:none}.amt input::placeholder{font-size:.92rem;font-weight:500}
+
+.brand{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;transition:transform .25s var(--ease)}.brand:active{transform:scale(.97)}.brand:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transparent);outline-offset:4px;border-radius:14px}
+body.leaving .wrap{opacity:0;transform:translateY(8px);transition:opacity .18s,transform .18s}
+.opts{display:grid;gap:12px;margin-top:18px}
+.tg{display:flex;align-items:center;gap:12px;margin:0;font-weight:650;font-size:.9rem;color:var(--ink);cursor:pointer}
+.tg input{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:46px;height:28px;min-height:0;margin:0;padding:0;border:0;border-radius:99px;background:var(--line);position:relative;cursor:pointer;transition:background .3s;box-shadow:none}
+.tg input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3);transition:transform .35s var(--ease)}
+.tg input:checked{background:linear-gradient(135deg,var(--brand),var(--accent))}.tg input:checked::after{transform:translateX(18px)}
+.tg input:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 50%,transparent);outline-offset:2px;box-shadow:none}
+.tg span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hint.sm{margin:-6px 0 0 58px}
+html.payview .modes,html.payview .grid,html.payview details{display:none}html:not(.payview) #pay{display:none}
+.payc{max-width:520px;margin:18px auto 0;text-align:center}
+.pay-hd{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}.pay-hd .bk{height:42px;max-width:150px;object-fit:contain;background:#fff;border-radius:12px;padding:6px 10px;border:1px solid var(--line)}
+.pay-sm{font-size:.76rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}.pay-to{margin:2px 0 0;font-size:1.5rem;line-height:1.2;letter-spacing:-.02em}
+.pay-amt{margin:16px 0 4px;font-size:clamp(2rem,9vw,2.8rem);font-weight:850;letter-spacing:-.03em;line-height:1.15;background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}.pay-amt.sm{font-size:1.05rem;font-weight:700;letter-spacing:0}
+.pay-note{color:var(--mute);font-size:.95rem;min-height:1.2em}
+.pay-id{display:inline-flex;align-items:center;gap:10px;margin-top:12px;padding:8px 8px 8px 14px;border-radius:16px;background:var(--field);border:1px solid var(--line);font:.78rem ui-monospace,Menlo,Consolas,monospace;max-width:100%}.pay-id img{height:20px}.pay-id b{font-weight:650;overflow-wrap:anywhere;text-align:left}.pay-id button{min-height:36px;width:40px;padding:0;border-radius:11px}
+.pay-go{width:100%;min-height:62px;font-size:1.12rem;margin-top:18px;border-radius:18px}.pay-st{margin-top:10px;min-height:1.4em;font-size:.85rem;color:var(--mute)}
+.pay-lbl{margin:14px 0 8px;font-size:.78rem;font-weight:700;color:var(--mute)}.pay-apps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pay-apps button{min-height:64px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:.68rem;color:var(--mute);border-radius:16px}.pay-apps img{height:24px;max-width:90%;object-fit:contain}
+.pay-qr canvas{width:min(280px,100%);height:auto;border-radius:18px;background:#fff;box-shadow:0 20px 40px -24px rgba(10,25,40,.5)}
+.pay-ft{margin-top:18px;font-size:.88rem;color:var(--mute)}.pay-ft a{color:var(--brand);font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
- <div class="brand"><div class="mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 64 64"><g fill="#fff"><path d="M10 10h18v18H10zm5 5v8h8v-8zM36 10h18v18H36zm5 5v8h8v-8zM10 36h18v18H10zm5 5v8h8v-8z"/><path d="M36 36h7v7h-7zm11 0h7v5h-7zm-11 11h5v7h-5zm9 2h9v5h-9z"/></g></svg></div><div><h1>Dynamic <b>UPI QR</b> Code</h1><p class="sub" id="sub">Premium payment QR cards in seconds</p></div></div>
+ <a class="brand" id="home" href="./" aria-label="Refresh – Dynamic UPI QR Code"><div class="mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 64 64"><g fill="#fff"><path d="M10 10h18v18H10zm5 5v8h8v-8zM36 10h18v18H36zm5 5v8h8v-8zM10 36h18v18H10zm5 5v8h8v-8z"/><path d="M36 36h7v7h-7zm11 0h7v5h-7zm-11 11h5v7h-5zm9 2h9v5h-9z"/></g></svg></div><div><h1>Dynamic <b>UPI QR</b> Code</h1><p class="sub" id="sub">Premium payment QR cards in seconds</p></div></a>
  <div class="hbtns"><button class="pill hide" id="install" type="button">📲 Install app</button><button class="icon" id="snd" type="button" aria-label="Sounds on" aria-pressed="true">🔔</button><button class="icon" id="theme" type="button" aria-label="Toggle dark mode">🌓</button></div>
 </header>
 <div class="modes" id="modes" data-mode="upi" role="tablist" aria-label="QR type"><button type="button" role="tab" data-mode="upi" aria-selected="true"><i>📲</i><span>UPI QR</span></button><button type="button" role="tab" data-mode="cc" aria-selected="false"><i>💳</i><span>Credit Card QR</span></button></div>
+<section class="card payc" id="pay" aria-live="polite">
+ <div class="pay-hd"><img class="bk hide" id="pay-bk" alt=""><div><div class="pay-sm" id="pay-sm">You are paying</div><h2 class="pay-to" id="pay-to">…</h2></div></div>
+ <div class="pay-amt" id="pay-amt"></div><div class="pay-note" id="pay-note"></div>
+ <div class="pay-id" id="pay-idb"><img id="pay-upi" alt="UPI" class="hide"><b id="pay-vpa"></b><button type="button" id="pay-copy" aria-label="Copy UPI ID">📋</button></div>
+ <button type="button" class="primary pay-go" id="pay-go">🚀 Pay with UPI app</button>
+ <div class="pay-st" id="pay-st"></div>
+ <div id="pay-appsw"><div class="pay-lbl">Or choose an app</div><div class="pay-apps" id="pay-apps"></div></div>
+ <div class="pay-qr hide" id="pay-qr"><div class="pay-lbl">On a computer? Scan this with your phone's UPI app</div><canvas id="pay-cv" width="320" height="320"></canvas></div>
+ <div class="pay-ft"><a href="./">✨ Create your own QR</a> · <a href="./" id="pay-edit">✏️ Edit this</a></div>
+</section>
 <main class="grid">
  <section class="card" aria-label="Payment details">
   <h2 class="sec"><span>1</span><b id="s1t">Payee</b></h2>
@@ -147,7 +179,7 @@ html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.8
    <option value="mob">Mobile number</option>
    <option value="aad">Aadhaar number</option>
   </select>
-  <div id="f-vpa"><label for="vpa">UPI ID</label><datalist id="hl"></datalist><div class="inp"><input id="vpa" list="hl" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><button class="pst" type="button" data-for="vpa" aria-label="Paste UPI ID">📋</button></div><div class="msg" id="e-vpa"></div></div>
+  <div id="f-vpa"><label for="vpa">UPI ID</label><datalist id="hl"></datalist><div class="inp"><input id="vpa" list="hl" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="yourname@okaxis"><button class="pst" type="button" data-for="vpa" aria-label="Paste UPI ID">📋</button></div><div class="msg" id="e-vpa"></div><div class="hint" id="h-vpa"></div></div>
   <div id="f-mob" class="hide"><label for="mob">Mobile number</label>
    <div class="row"><div class="inp"><input id="mob" inputmode="numeric" maxlength="10" placeholder="9876543210"><button class="pst" type="button" data-for="mob" aria-label="Paste mobile number">📋</button></div><select id="hnd" aria-label="UPI handle"><option>@ybl</option><option>@paytm</option><option>@okaxis</option><option>@oksbi</option><option>@okhdfcbank</option><option>@okicici</option><option>@apl</option><option>@axl</option><option>@ibl</option></select></div>
    <div class="hint">Choose the handle of the UPI app this number is registered on.</div><div class="msg" id="e-mob"></div></div>
@@ -165,7 +197,6 @@ html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.8
   <div id="f-ccnum"><label for="ccnum" id="l-ccnum">Card number</label><div class="inp"><input id="ccnum" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="19" placeholder="0000 0000 0000 0000"><button class="pst" type="button" data-for="ccnum" aria-label="Paste card number">📋</button></div><div class="msg" id="e-ccnum"></div><div class="hint">🔒 Used only on your device to build the QR. Never uploaded or saved.</div></div>
   <div id="f-ccmob" class="hide"><label for="ccmob">Mobile number registered with the card</label><div class="inp"><input id="ccmob" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="9876543210"><button class="pst" type="button" data-for="ccmob" aria-label="Paste mobile number">📋</button></div><div class="msg" id="e-ccmob"></div>
    <label for="cc4">Last 4 digits of the card</label><div class="inp"><input id="cc4" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="1234"><button class="pst" type="button" data-for="cc4" aria-label="Paste last 4 digits">📋</button></div><div class="msg" id="e-cc4"></div></div>
-  <label class="chk" id="l-showid"><input type="checkbox" id="showid" checked><span>Show the UPI ID on the card image (turn off to keep your card number private)</span></label>
  </div>
   <div class="msg" id="e-qr"></div>
   <input type="file" id="qrfile" accept="image/*" hidden>
@@ -177,6 +208,7 @@ html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.8
   <div class="msg" id="e-amt"></div>
   <label for="note">📝 Note / description (optional)</label>
   <input id="note" maxlength="50" autocomplete="off" placeholder="e.g. Invoice #1042">
+  <div class="opts"><label class="tg"><input type="checkbox" id="showid" checked><span>Show UPI ID on the card image</span></label><div class="hint sm hide" id="showid-h">Turn off to keep your card number private.</div><label class="tg"><input type="checkbox" id="logoc"><span>Show logo in the QR centre</span></label></div>
   <div class="foot2"><label class="chk"><input type="checkbox" id="rem"><span>Remember these details on this device only (stored in your browser, never uploaded).</span></label><button class="ghost" id="clr" type="button">🧹 Clear / New QR</button></div>
  </section>
  <section class="card prev" aria-live="polite" aria-label="QR code preview">
@@ -191,12 +223,12 @@ html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.8
    <button id="b-jpg" type="button" disabled><i>📥</i>Download JPG</button>
    <button id="b-share" type="button" disabled><i>💬</i>Share</button>
   </div>
-  <div class="more">More: <button id="b-svg" type="button" disabled>SVG</button>·<button id="b-print" type="button" disabled>Print</button>·<button id="b-save" type="button" disabled>⭐ Save</button></div>
+  <div class="more">More: <button id="b-svg" type="button" disabled>SVG</button>·<button id="b-print" type="button" disabled>Print</button>·<button id="b-save" type="button" disabled>⭐ Save</button>·<button id="b-plink" type="button" disabled>🔗 Pay link</button></div>
   <div class="saved hide" id="saved"><h3>⭐ Saved QRs <span style="font-weight:400;color:var(--mute)">(on this device only)</span></h3><div class="sl" id="sl"></div></div>
  </section>
 </main>
 <details><summary>How it works &amp; privacy</summary><p><b>Credit Card QR:</b> several banks give every credit card a UPI address (Axis, ICICI, SBI Card, IDFC FIRST, AU, American Express). Pick your bank, enter the details it needs, and the QR lets anyone pay your card bill from a UPI app. Formats come from the banks and cardholder communities and can change, so always send a small test payment first. Card numbers are used only on your device and are never saved.</p><p>The QR encodes a standard UPI payment link (upi://pay) with your payee address, name, optional amount and note. Anyone can scan it with Google Pay, PhonePe, Paytm, BHIM, WhatsApp or any bank UPI app. Everything is generated locally in your browser – no server, no tracking, no signup. Always scan and verify the payee name shown by your UPI app before paying.</p></details>
-<footer>Independent tool. Not affiliated with NPCI, BHIM or any bank or payment app. Bank and app names and logos belong to their respective owners.</footer>
+<footer>Independent tool. Shared pay links open the payer's own UPI app – no account needed. Not affiliated with NPCI, BHIM or any bank or payment app. Bank and app names and logos belong to their respective owners.</footer>
 </div>
 <img id="pimg" alt="UPI QR code for printing">
 <div id="toast" role="status"></div>
@@ -209,7 +241,7 @@ html[data-mode=cc] .modes::before{box-shadow:0 14px 28px -14px rgba(91,63,214,.8
 "use strict";
 const $=id=>document.getElementById(id),KEY="dupi.v1",TKEY="dupi.theme";
 const el=Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note","ccnum","ccmob","cc4","rem"].map(k=>[k,$(k)]));
-const btn=["jpg","svg","open","share","print","copy","save"].map(k=>$("b-"+k));
+const btn=["jpg","svg","open","share","print","copy","save","plink"].map(k=>$("b-"+k));
 let cur=null,tt,design="emerald",need=false,dT=0,dRaf=0,pT=0,qcache=null;
 const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const toast=(m,a)=>{const t=$("toast");t.textContent=m;t.style.pointerEvents="";if(a){const b=document.createElement("button");b.type="button";b.textContent=a.label;b.onclick=()=>{a.fn();t.classList.remove("on")};t.append(" ",b);t.style.pointerEvents="auto"}t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),a?5500:2200)};
@@ -238,7 +270,7 @@ function resolve(){
  return{e,name,vpa,am,note,ok:!Object.keys(e).filter(k=>k!="warn").length&&vpa&&name,touched,t};
 }
 const uriOf=r=>"upi://pay?pa="+enc(r.vpa)+"&pn="+enc(r.name)+(r.am?"&am="+r.am:"")+"&cu=INR"+(r.note?"&tn="+enc(r.note):"");
-function qrOf(text){const q=qrcode(0,"M");q.addData(text,"Byte");q.make();return q}
+function qrOf(text,ecl){const q=qrcode(0,ecl||"M");q.addData(text,"Byte");q.make();return q}
 
 const LG={};
 try{for(const k in(window.UPI_LOGOS||{})){const L=window.UPI_LOGOS[k],i=new Image();LG[k]={i,w:L.w,h:L.h,ok:0};i.onload=()=>{LG[k].ok=1;if(typeof cur!=="undefined"&&cur)render()};i.src=L.src}}catch{}
@@ -272,14 +304,15 @@ function drawCard(q,r){
  x.fillStyle="#fff";rr(x,fx+10,fy+10,F-20,F-20,44);x.fill();
  const cell=Math.floor(612/n),qs=cell*n,ox=(W-qs)/2,oy=fy+(F-qs)/2;x.fillStyle="#000";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))x.fillRect(ox+j*cell,oy+i*cell,cell,cell);
+ if(r.logo&&LG.bhim&&LG.bhim.ok){const L=LG.bhim,sq=Math.round(qs*.18),cx=W/2,cy=fy+F/2;x.fillStyle="#fff";rr(x,cx-sq/2,cy-sq/2,sq,sq,sq*.24);x.fill();x.strokeStyle="rgba(0,0,0,.1)";x.lineWidth=2;x.stroke();const ih=sq*.66,iw=ih*L.w/L.h;x.drawImage(L.i,cx-iw/2,cy-ih/2,iw,ih)}
  let y=1262;
  if(r.am){const t="₹ "+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2});fit(t,92,640,800);const w=x.measureText(t).width+110;x.fillStyle=lg(0,0,W,0,[T.amt[0],T.amt[1]]);rr(x,(W-w)/2,y-90,w,128,64);x.fill();x.fillStyle=T.amt[2];x.fillText(t,W/2,y)}
  else{x.fillStyle=T.ttl[0];x.font="700 46px "+FF;x.fillText("✨ Pay any amount",W/2,y-10)}
- y=1368;{const idT=cc&&!cc.show?maskId(r.vpa):r.vpa,UL=LG.upi&&LG.upi.ok?LG.upi:null,lh=UL?42:0,lw=UL?lh*UL.w/UL.h:0,gap=UL?22:0;
+ y=1368;if(r.show!==false){const idT=r.vpa,UL=LG.upi&&LG.upi.ok?LG.upi:null,lh=UL?42:0,lw=UL?lh*UL.w/UL.h:0,gap=UL?22:0;
   fit(idT,44,850-lw-gap,600);const tw=x.measureText(idT).width,X0=(W-(lw+gap+tw))/2;
   if(UL){if(T.strip){x.fillStyle="#fff";rr(x,X0-14,y-54,lw+28,68,20);x.fill()}x.drawImage(UL.i,X0,y-40,lw,lh)}
   x.textAlign="left";x.fillStyle=T.vpa;x.fillText(idT,X0+lw+gap,y);x.textAlign="center"}
- if(r.note){x.fillStyle=T.note;const t="📝  "+r.note;fit(t,34,860,500);x.fillText(t,W/2,y+58)}
+ if(r.note){x.fillStyle=T.note;const t="📝  "+r.note;fit(t,34,860,500);x.fillText(t,W/2,y+(r.show!==false?58:0))}
  x.strokeStyle=T.div;x.lineWidth=3;x.beginPath();x.moveTo(110,1470);x.lineTo(310,1470);x.moveTo(770,1470);x.lineTo(970,1470);x.stroke();
  x.fillStyle=T.lbl;x.font="700 22px "+FF;const sbi=cc&&cc.b.id==="sbi";x.fillText(sbi?"USE BHIM SBI PAY / YONO SBI":"ACCEPTED ON ALL UPI APPS",W/2,1478);
  x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
@@ -296,7 +329,7 @@ function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
 function drawNow(){clearTimeout(dT);cancelAnimationFrame(dRaf);if(need&&cur){need=false;drawCard(cur.q,cur.r)}}
 function scheduleDraw(){need=true;clearTimeout(dT);dT=setTimeout(()=>{dRaf=requestAnimationFrame(()=>{if(need&&cur){need=false;drawCard(cur.q,cur.r)}})},60)}
 function render(){
- const r=resolve(),{e}=r;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",el.amt.value.replace(/,/g,"")===c.dataset.v));
+ const r=resolve(),{e}=r;r.show=$("showid").checked;r.logo=$("logoc").checked;vHint();document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",el.amt.value.replace(/,/g,"")===c.dataset.v));
  const map={name:"e-name",vpa:"e-vpa",mob:"e-mob",acc:"e-acc",ifsc:"e-ifsc",aad:"e-aad",amt:"e-amt",ccnum:"e-ccnum",ccmob:"e-ccmob",cc4:"e-cc4"};
  for(const k in map){const dirty=el[k].dataset.d=="1"||el[k].value;const m=e[k]&&(el[k].dataset.d=="1")?e[k]:"";$(map[k]).textContent=m;el[k].setAttribute("aria-invalid",m?"true":"false")}
  if(e.amt===undefined&&e.warn)$("e-amt").textContent=e.warn;
@@ -305,17 +338,17 @@ function render(){
  const was=!$("cv").classList.contains("hide");$("cv").classList.toggle("hide",!on);$("lb").classList.toggle("hide",!on);$("designs").classList.toggle("hide",!on);$("swh").classList.toggle("hide",!on||SW);$("empty").classList.toggle("hide",on);
  if(on&&!was){const c=$("cv");c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop")}
  btn.forEach(b=>b.disabled=!on);$("ccwarn").classList.toggle("hide",!(on&&mode==="cc"));
- if(on){try{const u=uriOf(r);$("uri").textContent=mode==="cc"?u.replace(/\d{8,}/g,m=>"•".repeat(m.length-4)+m.slice(-4)):u;cur={u,r,get q(){return qcache&&qcache.u===u?qcache.q:(qcache={u,q:qrOf(u)}).q}};if(!was){drawCard(cur.q,r);need=false}else scheduleDraw()}
+ if(on){try{const u=uriOf(r),ecl="M";$("uri").textContent=mode==="cc"?u.replace(/\d{8,}/g,m=>"•".repeat(m.length-4)+m.slice(-4)):u;cur={u,r,get q(){return qcache&&qcache.u===u&&qcache.e===ecl?qcache.q:(qcache={u,e:ecl,q:qrOf(u,ecl)}).q}};if(!was){drawCard(cur.q,r);need=false}else scheduleDraw()}
   catch(err){$("empty").textContent="Details are too long to encode. Shorten the name or note.";$("empty").classList.remove("hide");$("cv").classList.add("hide");$("lb").classList.add("hide");btn.forEach(b=>b.disabled=true)}}
  if(el.rem.checked){clearTimeout(pT);pT=setTimeout(()=>store.set(KEY,JSON.stringify({...Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","amt","note","ccmob","cc4"].map(k=>[k,el[k].value])),rem:1})),400)}
 }
 function layout(){
  ["vpa","mob","bank","aad"].forEach(k=>$("f-"+k).classList.toggle("hide",k!=el.type.value));
  const cc=mode==="cc",B=BANKS.find(b=>b.id===bank)||BANKS[0],pan=B.t==="pan"||(B.id==="icici"&&iv==="p");
- $("sec-upi").classList.toggle("hide",cc);$("sec-cc").classList.toggle("hide",!cc);
+ $("showid-h").classList.toggle("hide",!cc);$("sec-upi").classList.toggle("hide",cc);$("sec-cc").classList.toggle("hide",!cc);
  $("f-ccnum").classList.toggle("hide",!pan);$("f-ccmob").classList.toggle("hide",pan);$("iv").classList.toggle("hide",B.id!=="icici");
  $("l-name").textContent=cc?"👤 Cardholder name (optional)":"🏪 Merchant / Payee name";el.name.placeholder=cc?"Name on the card":"e.g. Sharma Medical Store";$("s1t").textContent=cc?"Cardholder":"Payee";
- $("sub").textContent=cc?"Collect credit card bill payments via UPI":"Premium payment QR cards in seconds";
+ $("sub").textContent=cc?"Collect credit card bills via UPI":"Premium payment QR cards in seconds";
  el.ccnum.placeholder=B.id==="amex"?"0000 000000 00000":"0000 0000 0000 0000";el.ccnum.maxLength=B.id==="amex"?17:19;$("l-ccnum").textContent=B.s+" card number ("+(B.id==="amex"?15:16)+" digits)";
  const fm=B.id==="icici"&&iv==="p"?B.fp:B.f;$("bnote").className="bnote"+(B.any?"":" warn");$("bnote").innerHTML=(B.any?"✅ Works with any UPI app":"⚠️ Works only in <b>BHIM SBI Pay</b> / YONO SBI")+"<code>"+fm+"</code>";
  document.querySelectorAll("#modes button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.mode===mode)));$("modes").dataset.mode=mode;document.documentElement.dataset.mode=mode;{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=cc?"#5b3fd6":"#0f766e"}syncDesign();
@@ -391,8 +424,8 @@ function resolveCC(){
  if(a){if(!/^\d{1,8}(\.\d{1,2})?$/.test(a)||+a<=0)e.amt="Enter a valid amount, up to 2 decimals.";else{am=(+a).toFixed(2);if(+a>100000)e.warn="Many UPI apps cap a single payment at ₹1,00,000."}}
  return{e,name:name||B.cn,vpa,am,note:clean(el.note.value),ok:!Object.keys(e).filter(k=>k!="warn").length&&!!vpa,touched:false,t:"cc",cc:{b:B,l4,warn,pan:usePan,own:name,show:$("showid").checked}}}
 const shareText=(r,link)=>{const amt=r.am?" ₹"+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2}):"";
- return r.cc?"💳 Pay my "+r.cc.b.n+" credit card bill"+amt+"\n💳 "+r.cc.b.s+" •••• "+r.cc.l4+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link
-  :"💸 Pay "+r.name+amt+" via UPI\n📲 "+r.vpa+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay: "+link};
+ return r.cc?"💳 Pay my "+r.cc.b.n+" credit card bill"+amt+"\n💳 "+r.cc.b.s+" •••• "+r.cc.l4+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay (opens your UPI app): "+link
+  :"💸 Pay "+r.name+amt+" via UPI\n📲 "+r.vpa+(r.note?"\n📝 "+r.note:"")+"\n\n👉 Tap to pay (opens your UPI app): "+link};
 const rail=$("rail");
 BANKS.forEach(b=>{const L=(window.BANK_LOGOS||{})[b.id],t=document.createElement("button");t.type="button";t.className="bank";t.setAttribute("role","radio");t.dataset.b=b.id;t.setAttribute("aria-label",b.n);
  t.innerHTML='<span class="lg"><img alt="" draggable="false"></span><span class="bn"></span><u aria-hidden="true">✓</u>';const im=t.querySelector("img");if(L)im.src=L.src;else im.remove();t.querySelector(".bn").textContent=b.s;rail.append(t)});
@@ -415,7 +448,8 @@ function setMode(m){if(m===mode)return;mode=m;store.set("dupi.mode",m);buzz();pl
 document.querySelectorAll("#modes button").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 $("modes").addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();setMode(mode==="upi"?"cc":"upi");$("modes").querySelector('[aria-selected=true]').focus()}});
 addEventListener("resize",()=>railFades());
-$("showid").checked=store.get("dupi.showid")!=="0";$("showid").addEventListener("change",()=>{store.set("dupi.showid",$("showid").checked?"1":"0");render()});
+$("showid").checked=store.get("dupi.showid")!=="0";$("showid").addEventListener("change",()=>{store.set("dupi.showid",$("showid").checked?"1":"0");render();drawNow()});
+$("logoc").checked=store.get("dupi.logoc")==="1";$("logoc").addEventListener("change",()=>{store.set("dupi.logoc",$("logoc").checked?"1":"0");buzz();render();drawNow()});
 
 /* ---------- Upload existing QR → auto-fill ---------- */
 const VPA_X=/^[a-zA-Z0-9._-]{2,64}@[a-zA-Z][a-zA-Z0-9.]{1,40}$/;
@@ -536,18 +570,48 @@ ib.addEventListener("click",async()=>{if(dip){dip.prompt();try{await dip.userCho
 addEventListener("appinstalled",()=>{ib.classList.add("hide");toast("🎉 App installed")});
 if(/iPhone|iPad|iPod/i.test(navigator.userAgent)&&!navigator.standalone&&!matchMedia("(display-mode: standalone)").matches)ib.classList.remove("hide");
 
+
+/* ---------- Extras: handle hint, pay-link copy, header refresh ---------- */
+const HAPP={okaxis:"Google Pay",oksbi:"Google Pay",okhdfcbank:"Google Pay",okicici:"Google Pay",ybl:"PhonePe",ibl:"PhonePe",axl:"PhonePe",paytm:"Paytm",ptyes:"Paytm",ptsbi:"Paytm",pthdfc:"Paytm",apl:"Amazon Pay",upi:"BHIM",sbi:"SBI Pay",icici:"iMobile Pay",hdfcbank:"HDFC Bank",axisbank:"Axis Bank",pnb:"PNB",kotak:"Kotak",indus:"IndusInd",federal:"Federal Bank",airtel:"Airtel Payments Bank",jio:"JioPay",freecharge:"Freecharge",barodampay:"Bank of Baroda",unionbank:"Union Bank",postbank:"India Post",aubank:"AU Bank",idfcbank:"IDFC FIRST",yesbank:"YES Bank"};
+function vHint(){const h=$("h-vpa");if(!h)return;const v=el.vpa.value.trim();if(!VPA_X.test(v)){h.textContent="";return}const a=HAPP[v.split("@")[1].toLowerCase()];h.textContent=a?"✓ "+a+" handle":"ℹ️ Unusual handle – double-check the spelling";h.style.color=a?"var(--brand)":"#b45309"}
+$("b-plink").addEventListener("click",async()=>{if(!cur)return;buzz();playSound("tick");const l=payLink(cur.r);try{await navigator.clipboard.writeText(l);toast("🔗 Pay link copied – opens the UPI app")}catch{const t=document.createElement("textarea");t.value=l;document.body.appendChild(t);t.select();let ok=false;try{ok=document.execCommand("copy")}catch{}t.remove();toast(ok?"🔗 Pay link copied":"Copy failed")}});
+$("home").addEventListener("click",e=>{if(!location.search&&!location.hash){e.preventDefault();document.body.classList.add("leaving");setTimeout(()=>location.reload(),190)}});
+
+/* ---------- Pay page: what a payer sees when they open a shared link ---------- */
+function initPay(){
+ const P=new URLSearchParams(location.search),vpa=(P.get("pa")||"").trim(),pn=clean(P.get("pn")||""),a=(P.get("am")||"").replace(/,/g,""),tn=clean(P.get("tn")||"");
+ const amOk=/^\d{1,8}(\.\d{1,2})?$/.test(a)&&+a>0,am=amOk?(+a).toFixed(2):"",cv=ccFromVpa(vpa),B=cv?BANKS.find(b=>b.id===cv.bank):null,st=$("pay-st"),mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+ document.documentElement.dataset.mode=cv?"cc":"upi";{const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=cv?"#5b3fd6":"#0f766e"}
+ $("pay-edit").href=location.pathname+"?edit=1&"+location.search.slice(1);
+ if(!VPA_X.test(vpa)){$("pay-to").textContent="This payment link isn't valid";$("pay-sm").textContent="Oops";["pay-go","pay-idb","pay-appsw"].forEach(i=>$(i).classList.add("hide"));$("pay-note").textContent="Ask the sender for a new link.";return}
+ const name=pn||(B?B.cn:"Payee"),u=uriOf({vpa,name,am,note:tn}),L=window.UPI_LOGOS||{};
+ document.title="Pay "+name+" · UPI";$("sub").textContent=cv?"Secure credit card bill payment":"Secure payment via UPI";$("pay-to").textContent=name;$("pay-sm").textContent=cv?"Credit card bill payment":"You are paying";
+ if(B&&window.BANK_LOGOS&&window.BANK_LOGOS[B.id]){const i=$("pay-bk");i.src=window.BANK_LOGOS[B.id].src;i.alt=B.n;i.classList.remove("hide")}
+ if(am)$("pay-amt").textContent="₹ "+Number(am).toLocaleString("en-IN",{minimumFractionDigits:2});else{$("pay-amt").textContent="Enter the amount in your UPI app";$("pay-amt").classList.add("sm")}
+ $("pay-note").textContent=tn?"📝 "+tn:"";
+ if(L.upi){const i=$("pay-upi");i.src=L.upi.src;i.classList.remove("hide")}
+ $("pay-vpa").textContent=cv?maskId(vpa):vpa;
+ $("pay-copy").onclick=async()=>{try{await navigator.clipboard.writeText(vpa);toast("📋 UPI ID copied")}catch{toast("Long-press the ID to copy")}};
+ let hT=0;const go=url=>{st.textContent="🚀 Opening your UPI app…";location.href=url;clearTimeout(hT);hT=setTimeout(()=>{st.textContent=B&&B.id==="sbi"?"Didn't open? Use the BHIM SBI Pay or YONO SBI app.":"Didn't open? Tap an app below, or install Google Pay, PhonePe or Paytm."},2600)};
+ const q=u.slice(u.indexOf("?")),apps=[["gpay","Google Pay","gpay://upi/pay"],["phonepe","PhonePe","phonepe://pay"],["paytm","Paytm","paytmmp://pay"],["bhim","BHIM / other","upi://pay"]];
+ $("pay-go").onclick=()=>go(u);$("pay-go").dataset.uri=u;
+ apps.forEach(([k,n,sc])=>{const b=document.createElement("button");b.type="button";b.dataset.uri=sc+q;b.setAttribute("aria-label","Pay with "+n);if(L[k]){const i=document.createElement("img");i.alt="";i.src=L[k].src;b.append(i)}const s=document.createElement("span");s.textContent=n;b.append(s);b.onclick=()=>go(b.dataset.uri);$("pay-apps").append(b)});
+ if(mobile){setTimeout(()=>go(u),900);document.addEventListener("visibilitychange",()=>{st.textContent=document.hidden?"✅ Opened your UPI app":"Back here? You can close this tab once your payment is done."})}
+ else{$("pay-go").classList.add("hide");$("pay-appsw").classList.add("hide");$("pay-qr").classList.remove("hide");st.textContent="Open this link on your phone to pay with a UPI app.";
+  const cvs=$("pay-cv"),x=cvs.getContext("2d"),qq=qrOf(u,"M"),n=qq.getModuleCount(),cell=Math.floor(288/n),qs=cell*n,o=(320-qs)/2;x.fillStyle="#fff";x.fillRect(0,0,320,320);x.fillStyle="#000";for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(qq.isDark(i,j))x.fillRect(o+j*cell,o+i*cell,cell,cell)}}
 const th=$("theme"),root=document.documentElement,applyT=t=>root.dataset.theme=t;
 applyT(store.get(TKEY)==="dark"?"dark":"light");
 th.onclick=()=>{const t=root.dataset.theme=="dark"?"light":"dark";applyT(t);store.set(TKEY,t)};
 
 try{const s=JSON.parse(store.get(KEY)||"null");if(s){for(const k in el)if(k!="rem"&&k!="ccnum"&&k!="aad"&&s[k]!=null)el[k].value=s[k];el.rem.checked=true}}catch{}
-try{const p=new URLSearchParams(location.search);if(p.get("pa")){el.type.value="vpa";el.vpa.value=p.get("pa").slice(0,100);el.name.value=(p.get("pn")||"").slice(0,50);el.amt.value=(p.get("am")||"").slice(0,12);el.note.value=(p.get("tn")||"").slice(0,50);el.rem.checked=false;document.title="Pay "+el.name.value+" · UPI";setTimeout(()=>$("cv").scrollIntoView({behavior:"smooth",block:"center"}),500)}}catch{}
+try{const p=new URLSearchParams(location.search);if(p.get("pa")&&p.get("edit")){el.type.value="vpa";el.vpa.value=p.get("pa").slice(0,100);el.name.value=(p.get("pn")||"").slice(0,50);el.amt.value=(p.get("am")||"").slice(0,12);el.note.value=(p.get("tn")||"").slice(0,50);el.rem.checked=false;document.title="Pay "+el.name.value+" · UPI";setTimeout(()=>$("cv").scrollIntoView({behavior:"smooth",block:"center"}),500)}}catch{}
 try{const d=store.get("dupi.design");if(THEMES[d])design=d;syncDesign()}catch{}
 try{const P=new URLSearchParams(location.search);
  if(P.get("new")){Object.keys(el).forEach(k=>{if(k!="rem"&&k!="type"&&k!="hnd")el[k].value=""})}
  else if(!P.get("pa")){for(const v of[P.get("text"),P.get("url"),P.get("title")]){const p=v&&parsePay(v.trim().split(/\s+/).find(w=>/^(upi:|https?:)/i.test(w))||v);if(p&&p.vpa){setTimeout(()=>applyPay(p,"paste"),300);break}}}}catch{}
-try{const pa=new URLSearchParams(location.search).get("pa");if(pa&&ccFromVpa(pa)){const P=new URLSearchParams(location.search);setTimeout(()=>applyPay({vpa:pa,name:P.get("pn")||"",am:P.get("am")||"",note:P.get("tn")||""},"paste"),80)}}catch{}
+try{const pa=new URLSearchParams(location.search).get("pa");if(pa&&ccFromVpa(pa)&&new URLSearchParams(location.search).get("edit")){const P=new URLSearchParams(location.search);setTimeout(()=>applyPay({vpa:pa,name:P.get("pn")||"",am:P.get("am")||"",note:P.get("tn")||""},"paste"),80)}}catch{}
 layout();render();renderSaved();setTimeout(()=>{centerBank();railFades()},80);
+if(document.documentElement.classList.contains("payview"))initPay();
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 })();
 </script>

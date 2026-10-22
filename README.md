@@ -10,6 +10,8 @@ Free, private UPI QR code generator. Create a payment QR with a pre-filled amoun
 - **Upload any existing UPI QR** (image, drag & drop or paste): name, UPI ID, amount and note are read automatically and turned into a fresh dynamic QR
 - **Credit Card QR mode**: pick Axis, ICICI, SBI Card, IDFC FIRST, AU or American Express from a swipeable logo rail; the QR uses each bank's card-bill UPI address. Card numbers are never stored
 - Separate colour themes: teal/indigo for UPI QR, violet/pink for Credit Card QR
+- **Pay links**: the shared link opens a payer page that launches the UPI app directly (Google Pay, PhonePe, Paytm, BHIM buttons; QR on desktop)
+- Optional logo in the QR centre, hide-UPI-ID switch, UPI handle recognition, tap-the-header refresh
 - Three premium card designs (swipe left/right on the card, or use arrow keys): Emerald Aurora, Midnight Gold, Bharat Tricolor
 - Quick amount chips (₹100 / ₹500 / ₹1,000 / ₹2,000), UPI handle suggestions, in-field paste, Clear / Undo, saved QRs (on-device)
 - Premium synthesised success chime when a QR is read (mute with the 🔔 button)
