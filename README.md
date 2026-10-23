@@ -10,18 +10,22 @@ Free, private UPI QR code generator. Create a payment QR with a pre-filled amoun
 - **Upload any existing UPI QR** (image, drag & drop or paste): name, UPI ID, amount and note are read automatically and turned into a fresh dynamic QR
 - **Credit Card QR mode**: pick Axis, ICICI, SBI Card, IDFC FIRST, AU or American Express from a swipeable logo rail; the QR uses each bank's card-bill UPI address. Card numbers are never stored
 - Separate colour themes: teal/indigo for UPI QR, violet/pink for Credit Card QR
-- **Pay links**: the shared link opens a payer page that launches the UPI app directly (Google Pay, PhonePe, Paytm, BHIM buttons; QR on desktop)
-- Optional logo in the QR centre, hide-UPI-ID switch, UPI handle recognition, tap-the-header refresh
+- **Direct UPI payment links**: copy or share the standard `upi://pay?pa=…&pn=…&am=…&cu=INR&tn=…` URI so recipients can open it in their UPI app
+- UPI ID is shown on the QR card by default, with a per-QR visibility switch; UPI handle recognition and tap-the-header refresh
 - Three premium card designs (swipe left/right on the card, or use arrow keys): Emerald Aurora, Midnight Gold, Bharat Tricolor
 - Quick amount chips (₹100 / ₹500 / ₹1,000 / ₹2,000), UPI handle suggestions, in-field paste, Clear / Undo, saved QRs (on-device)
 - Premium synthesised success chime when a QR is read (mute with the 🔔 button)
-- Installable app (PWA / WebAPK), works offline, accepts shared UPI links
+- Version 4.7: installable offline PWA plus a native Android APK project that bundles the web app locally
 - Download print-ready JPG card or vector SVG, copy link, share, print, open in UPI app
 - Light/dark theme, installable offline PWA, fully responsive
 - 100% client-side: nothing is uploaded, no cookies, no analytics, no ads
 
 ## Deploy (GitHub Pages)
 Repo **Settings → Pages → Build and deployment → Deploy from a branch → `main` / `/ (root)` → Save.**
+
+## Android APK (version 4.7)
+
+The Android project lives in `android/`. GitHub Actions builds an installable APK and publishes a preview asset tagged `v4.7` after the successful branch build. The preview APK uses Android debug signing: suitable for sideload testing, but not Google Play distribution or guaranteed in-place upgrades from an APK signed with a different key.
 
 ## How it works
 Builds a standard `upi://pay?pa=…&pn=…&am=…&cu=INR&tn=…` link and encodes it with [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT, bundled as `qrcode.js`).
