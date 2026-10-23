@@ -9,7 +9,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate-and-build:
@@ -62,3 +62,27 @@ jobs:
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
+
+      - name: Prepare release APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/feat/premium-qr-v4.7'
+        run: |
+          mkdir -p release
+          cp android/app/build/outputs/apk/debug/app-debug.apk release/DynamicUPIQR-4.7.apk
+
+      - name: Publish version 4.7 preview release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/feat/premium-qr-v4.7'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v4.7
+          target_commitish: ${{ github.sha }}
+          name: Dynamic UPI QR Code 4.7 (Preview)
+          body: |
+            Version 4.7 preview APK built from the feature branch.
+            Includes direct UPI URI sharing, centre-logo removal, default-on UPI ID display, refined typography, and offline-bundled Android assets.
+            This APK is signed with the generated debug key for sideload testing; it is not Play Store signed.
+          draft: false
+          prerelease: true
+          files: release/DynamicUPIQR-4.7.apk
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
