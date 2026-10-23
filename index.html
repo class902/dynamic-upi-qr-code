@@ -381,7 +381,7 @@ const b64=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(String(f.re
 async function copyText(t){if(APP&&APP.copy){try{APP.copy(t);return true}catch{}}try{await navigator.clipboard.writeText(t);return true}catch{}const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();let ok=false;try{ok=document.execCommand("copy")}catch{}a.remove();return ok}
 const save=async(blob,name)=>{if(APP&&APP.saveFile){try{APP.saveFile(await b64(blob),name,blob.type||"application/octet-stream");return}catch{}}const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 const jpg=()=>fontsP.then(()=>new Promise(res=>{drawNow();$("cv").toBlob(res,"image/jpeg",.95)}));
-const payLink=r=>{const u=new URL(location.href);u.search="";u.hash="";u.pathname=u.pathname.replace(/index\.html$/,"");const p=new URLSearchParams({pa:r.vpa,pn:r.name});if(r.am)p.set("am",r.am);if(r.note)p.set("tn",r.note);return u.toString()+"?"+p};
+const payLink=r=>uriOf(r);
 const buzz=()=>{try{navigator.vibrate&&navigator.vibrate(12)}catch{}};
 $("b-jpg").onclick=async()=>{if(cur){buzz();playSound("tick");save(await jpg(),slug()+".jpg");toast("📥 JPG saved to your device")}};
 $("b-svg").onclick=()=>{if(cur){save(new Blob([svgOf(cur.q)],{type:"image/svg+xml"}),slug()+".svg");toast("🧩 SVG downloaded")}};
@@ -503,7 +503,7 @@ async function handleFile(f){
   else{const p=parsePay(raw);if(!p||!p.vpa)fail("❌ This QR has no UPI payment address. Upload a UPI / BHIM / Bharat QR.");else applyPay(p)}}
  catch{fail("❌ Couldn't open this image. Try a PNG or JPG.")}
  busy(false,"Upload QR")}
-function applyPay(p,src){const W=src=="paste"?"Payment link":"QR";
+function applyPay(p,src){$("showid").checked=true;const W=src=="paste"?"Payment link":"QR";
  const a=p.am.replace(/,/g,""),amOk=/^\d{1,8}(\.\d{1,2})?$/.test(a)&&+a>0,cv=ccFromVpa(p.vpa);let shown,label,miss;
  if(cv){const B=BANKS.find(b=>b.id===cv.bank);mode="cc";bank=cv.bank;if(cv.iv)iv=cv.iv;store.set("dupi.mode","cc");store.set("dupi.bank",bank);
   el.ccnum.value=cv.pan?fmtPan(cv.pan,B.id==="amex"):"";el.ccmob.value=cv.mob||"";el.cc4.value=cv.l4||(cv.pan?cv.pan.slice(-4):"");el.name.value=(p.name||"").slice(0,50);
@@ -565,14 +565,14 @@ stage.addEventListener("pointerleave",e=>{tilt.style.transform="";gl.style.opaci
 document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{el.amt.value=el.amt.value.replace(/,/g,"")===b.dataset.v?"":b.dataset.v;el.amt.dataset.d="1";el.amt.dispatchEvent(new Event("input",{bubbles:true}));buzz()}));
 const HANDLES=["okaxis","oksbi","okhdfcbank","okicici","ybl","ibl","axl","paytm","upi","apl","sbi","icici","hdfcbank","axisbank","pnb","kotak","indus","federal","airtel","jio","freecharge","barodampay","unionbank","postbank"];
 el.vpa.addEventListener("input",()=>{const v=el.vpa.value.trim(),i=v.indexOf("@"),dl=$("hl");dl.innerHTML="";if(v.length<2)return;const u=i<0?v:v.slice(0,i),p=i<0?"":v.slice(i+1).toLowerCase();if(!u)return;HANDLES.filter(k=>k.startsWith(p)&&k!==p).slice(0,8).forEach(k=>{const o=document.createElement("option");o.value=u+"@"+k;dl.append(o)})});
-$("clr").addEventListener("click",()=>{
+$("clr").addEventListener("click",()=>{$("showid").checked=true;
  const snap={...Object.fromEntries(Object.keys(el).filter(k=>k!="rem").map(k=>[k,el[k].value]))};
  Object.keys(el).forEach(k=>{if(k=="rem")return;if(k=="type")el[k].value="vpa";else if(k=="hnd")el[k].selectedIndex=0;else el[k].value="";if(el[k].dataset)el[k].dataset.d=""});
  $("qrsum").classList.add("hide");$("e-qr").textContent="";layout();render();el.name.focus();buzz();
  toast("🧹 Cleared – ready for a new QR",{label:"↩ Undo",fn:()=>{for(const k in snap)el[k].value=snap[k];layout();render()}})});
 const SK="dupi.saved",getSaved=()=>{try{return JSON.parse(store.get(SK)||"[]")}catch{return[]}};
 const sLabel=s=>s.m==="cc"?"💳 "+((BANKS.find(b=>b.id===s.b)||{s:"Card"}).s)+" ••"+s.l4+(s.am?" · ₹"+s.am:""):"🏪 "+s.name+(s.am?" · ₹"+s.am:"");
-function loadSaved(s){
+function loadSaved(s){$("showid").checked=true;
  if(THEMES[s.d]){design=s.d;syncDesign()}
  if(s.m==="cc"){mode="cc";bank=BANKS.some(b=>b.id===s.b)?s.b:"axis";iv=s.iv==="p"?"p":"m";store.set("dupi.mode","cc");store.set("dupi.bank",bank);
   el.name.value=s.name||"";el.amt.value=s.am||"";el.note.value=s.note||"";el.ccnum.value="";el.ccmob.value=s.mob||"";el.cc4.value=s.l4||"";layout();centerBank();render();
@@ -597,7 +597,7 @@ if(/iPhone|iPad|iPod/i.test(navigator.userAgent)&&!navigator.standalone&&!matchM
 /* ---------- Extras: handle hint, pay-link copy, header refresh ---------- */
 const HAPP={okaxis:"Google Pay",oksbi:"Google Pay",okhdfcbank:"Google Pay",okicici:"Google Pay",ybl:"PhonePe",ibl:"PhonePe",axl:"PhonePe",paytm:"Paytm",ptyes:"Paytm",ptsbi:"Paytm",pthdfc:"Paytm",apl:"Amazon Pay",upi:"BHIM",sbi:"SBI Pay",icici:"iMobile Pay",hdfcbank:"HDFC Bank",axisbank:"Axis Bank",pnb:"PNB",kotak:"Kotak",indus:"IndusInd",federal:"Federal Bank",airtel:"Airtel Payments Bank",jio:"JioPay",freecharge:"Freecharge",barodampay:"Bank of Baroda",unionbank:"Union Bank",postbank:"India Post",aubank:"AU Bank",idfcbank:"IDFC FIRST",yesbank:"YES Bank"};
 function vHint(){const h=$("h-vpa");if(!h)return;const v=el.vpa.value.trim();if(!VPA_X.test(v)){h.textContent="";return}const a=HAPP[v.split("@")[1].toLowerCase()];h.textContent=a?"✓ "+a+" handle":"ℹ️ Unusual handle – double-check the spelling";h.style.color=a?"var(--brand)":"#b45309"}
-$("b-plink").addEventListener("click",async()=>{if(!cur)return;buzz();playSound("tick");toast(await copyText(payLink(cur.r))?"🔗 Web pay link copied":"Copy failed")});
+$("b-plink").addEventListener("click",async()=>{if(!cur)return;buzz();playSound("tick");toast(await copyText(payLink(cur.r))?"🔗 Pay link copied – opens the UPI app":"Copy failed")});
 $("home").addEventListener("click",e=>{if(!location.search&&!location.hash){e.preventDefault();document.body.classList.add("leaving");setTimeout(()=>location.reload(),190)}});
 
 /* ---------- Pay page: what a payer sees when they open a shared link ---------- */
