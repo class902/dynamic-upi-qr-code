@@ -1,0 +1,64 @@
+name: Android APK 4.7
+
+on:
+  push:
+    branches:
+      - feat/premium-qr-v4.7
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate app markup, inline JavaScript, and UPI URI
+        run: |
+          node <<'NODE'
+          const fs = require("node:fs");
+          const assert = require("node:assert/strict");
+          const html = fs.readFileSync("index.html", "utf8");
+          const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
+            .map(m => m[1]).filter(s => s.trim());
+          for (const js of scripts) new Function(js);
+          assert.ok(!html.includes('id="logoc"'), "centre-logo option should be removed");
+          assert.ok(!html.includes("r.logo"), "centre-logo drawing should be removed");
+          assert.ok(html.includes('const payLink=r=>uriOf(r);'), "Pay link should use the standard UPI URI");
+          const main = scripts[scripts.length - 1];
+          const encCode = main.match(/const enc=s=>[^\n;]+;/)?.[0];
+          const uriCode = main.match(/const uriOf=r=>[^\n;]+;/)?.[0];
+          assert.ok(encCode && uriCode, "Could not locate the application's UPI URI builder");
+          const uriOf = new Function(encCode + uriCode + "; return uriOf;")();
+          assert.equal(uriOf({vpa:"7877675227@upi",name:"RAJU S/O NANA LAL KUMAWAT",am:"354.00",note:""}),
+            "upi://pay?pa=7877675227@upi&pn=RAJU%20S%2FO%20NANA%20LAL%20KUMAWAT&am=354.00&cu=INR");
+          assert.equal(uriOf({vpa:"shop@okaxis",name:"A & B",am:"12.50",note:"Invoice 7"}),
+            "upi://pay?pa=shop@okaxis&pn=A%20%26%20B&am=12.50&cu=INR&tn=Invoice%207");
+          console.log("Validation passed: inline JS parses, centre logo is removed, URI strings match expected format.");
+          NODE
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Install Android platform tools
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Build installable APK
+        run: gradle --no-daemon --project-dir android assembleDebug
+      - name: Upload APK build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DynamicUPIQR-4.7-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30

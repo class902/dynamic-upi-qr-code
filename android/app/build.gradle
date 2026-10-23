@@ -1,0 +1,35 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.class902.dynamicupiqr"
+    compileSdk 35
+    defaultConfig {
+        applicationId "com.class902.dynamicupiqr"
+        minSdk 29
+        targetSdk 34
+        versionCode 47
+        versionName "4.7"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation "androidx.webkit:webkit:1.12.1"
+    implementation "androidx.core:core:1.15.0"
+}
+
+def webRoot = rootProject.projectDir.parentFile
+tasks.register("syncWebAssets", Copy) {
+    from(webRoot) {
+        include "index.html", "qrcode.js", "jsqr.js", "logos.js", "banks.js", "sw.js"
+        include "manifest.webmanifest", "favicon.svg", "icon-180.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png"
+        into "www"
+    }
+    into layout.projectDirectory.dir("src/main/assets")
+}
+tasks.named("preBuild").configure { dependsOn("syncWebAssets") }
