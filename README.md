@@ -8,6 +8,7 @@ Create a QR with a pre-filled amount and note that works with every UPI app, sha
 
 ## Highlights
 - **UPI QR** and **Credit Card QR** (Axis, ICICI, SBI Card, IDFC FIRST, AU, American Express) with separate themes
+- The BHIM mark sits in the centre of every QR (scan-tested), including exports
 - Three premium card designs - swipe the card to switch
 - Upload or paste an existing QR and every detail is filled in automatically
 - Download as JPG or SVG, share the card with the real `upi://pay?...` link, or copy a web pay link

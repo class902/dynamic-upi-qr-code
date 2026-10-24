@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
+<script>try{if(window.AndroidApp){var vm=document.querySelector('meta[name="viewport"]');if(vm)vm.setAttribute("content","width=device-width,initial-scale=.88,minimum-scale=.88,viewport-fit=cover")}}catch(e){}</script>
 <script>try{var s=location.search;if(/[?&]pa=/.test(s)&&!/[?&]edit=/.test(s))document.documentElement.classList.add("payview");if(localStorage.getItem("dupi.mode")==="cc")document.documentElement.dataset.mode="cc"}catch(e){}</script>
 <title>Dynamic UPI QR Code Generator – Free, Private, No Signup</title>
 <meta name="description" content="Create dynamic UPI QR codes with a pre-filled amount and note. Works with Google Pay, PhonePe, Paytm, BHIM and all UPI apps. Runs entirely in your browser.">
@@ -265,7 +266,7 @@ const APP=window.AndroidApp||null,VER="4.7";
 const $=id=>document.getElementById(id),KEY="dupi.v1",TKEY="dupi.theme";
 const el=Object.fromEntries(["name","type","vpa","mob","hnd","acc","ifsc","aad","amt","note","ccnum","ccmob","cc4","rem"].map(k=>[k,$(k)]));
 const btn=["jpg","svg","open","share","print","copy","save","plink"].map(k=>$("b-"+k));
-let cur=null,tt,design="emerald",need=false,dT=0,dRaf=0,pT=0,qcache=null;
+let payRedraw=null,cur=null,tt,design="emerald",need=false,dT=0,dRaf=0,pT=0,qcache=null;
 const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
 const toast=(m,a)=>{const t=$("toast");t.textContent=m;t.style.pointerEvents="";if(a){const b=document.createElement("button");b.type="button";b.textContent=a.label;b.onclick=()=>{a.fn();t.classList.remove("on")};t.append(" ",b);t.style.pointerEvents="auto"}t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),a?5500:2200)};
 const enc=s=>encodeURIComponent(s).replace(/%40/g,"@");
@@ -296,7 +297,8 @@ const uriOf=r=>"upi://pay?pa="+enc(r.vpa)+"&pn="+enc(r.name)+(r.am?"&am="+r.am:"
 function qrOf(text,ecl){const q=qrcode(0,ecl||"M");q.addData(text,"Byte");q.make();return q}
 
 const LG={};
-try{for(const k in(window.UPI_LOGOS||{})){const L=window.UPI_LOGOS[k],i=new Image();LG[k]={i,w:L.w,h:L.h,ok:0};i.onload=()=>{LG[k].ok=1;if(typeof cur!=="undefined"&&cur)render()};i.src=L.src}}catch{}
+try{for(const k in(window.UPI_LOGOS||{})){const L=window.UPI_LOGOS[k],i=new Image();LG[k]={i,w:L.w,h:L.h,ok:0};i.onload=()=>{LG[k].ok=1;if(typeof cur!=="undefined"&&cur)render();if(typeof payRedraw==="function"&&payRedraw)payRedraw()};i.src=L.src}}catch{}
+function centerLogo(x,cx,cy,sq){const L=LG.bhim;if(!L||!L.ok)return;x.save();x.fillStyle="#fff";rr(x,cx-sq/2,cy-sq/2,sq,sq,sq*.24);x.fill();x.strokeStyle="rgba(15,23,42,.12)";x.lineWidth=Math.max(1,sq/48);x.stroke();const ih=sq*.68,iw=ih*L.w/L.h;x.drawImage(L.i,cx-iw/2,cy-ih/2,iw,ih);x.restore()}
 function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
 const FI="Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif",FD="Sora,Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif",FF=FI;
 const THEMES={
@@ -327,6 +329,7 @@ function drawCard(q,r){
  x.fillStyle="#fff";rr(x,fx+10,fy+10,F-20,F-20,44);x.fill();
  const cell=Math.floor(612/n),qs=cell*n,ox=(W-qs)/2,oy=fy+(F-qs)/2;x.fillStyle="#000";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))x.fillRect(ox+j*cell,oy+i*cell,cell,cell);
+ centerLogo(x,W/2,fy+F/2,Math.round(qs*.18));
  let y=1262;
  if(r.am){const t="₹ "+Number(r.am).toLocaleString("en-IN",{minimumFractionDigits:2});fit(t,88,640,800,FD);const w=x.measureText(t).width+110;x.fillStyle=lg(0,0,W,0,[T.amt[0],T.amt[1]]);rr(x,(W-w)/2,y-90,w,128,64);x.fill();x.fillStyle=T.amt[2];x.fillText(t,W/2,y)}
  else{x.fillStyle=T.ttl[0];x.font="700 44px "+FD;x.fillText("✨ Pay any amount",W/2,y-10)}
@@ -346,7 +349,9 @@ function drawCard(q,r){
 }
 function svgOf(q){const n=q.getModuleCount(),m=4;let d="";
  for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))d+=`M${j+m} ${i+m}h1v1h-1z`;
- const s=n+m*2;return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges"><rect width="${s}" height="${s}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`}
+ const s=n+m*2,L=(window.UPI_LOGOS||{}).bhim,sq=n*.18,ih=sq*.68,iw=ih*(L?L.w/L.h:1),c=s/2;
+ const lg=L?`<rect x="${c-sq/2}" y="${c-sq/2}" width="${sq}" height="${sq}" rx="${sq*.24}" fill="#fff" stroke="#0f172a" stroke-opacity=".12" stroke-width="${sq/48}"/><image x="${c-iw/2}" y="${c-ih/2}" width="${iw}" height="${ih}" href="${L.src}"/>`:"";
+ return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges"><rect width="${s}" height="${s}" fill="#fff"/><path d="${d}" fill="#000"/>${lg}</svg>`}
 
 function drawNow(){clearTimeout(dT);cancelAnimationFrame(dRaf);if(need&&cur){need=false;drawCard(cur.q,cur.r)}}
 function scheduleDraw(){need=true;clearTimeout(dT);dT=setTimeout(()=>{dRaf=requestAnimationFrame(()=>{if(need&&cur){need=false;drawCard(cur.q,cur.r)}})},60)}
@@ -621,7 +626,7 @@ function initPay(){
  apps.forEach(([k,n,sc])=>{const b=document.createElement("button");b.type="button";b.dataset.uri=sc+q;b.setAttribute("aria-label","Pay with "+n);if(L[k]){const i=document.createElement("img");i.alt="";i.src=L[k].src;b.append(i)}const s=document.createElement("span");s.textContent=n;b.append(s);b.onclick=()=>go(b.dataset.uri);$("pay-apps").append(b)});
  if(mobile){setTimeout(()=>go(u),900);document.addEventListener("visibilitychange",()=>{st.textContent=document.hidden?"✅ Opened your UPI app":"Back here? You can close this tab once your payment is done."})}
  else{$("pay-go").classList.add("hide");$("pay-appsw").classList.add("hide");$("pay-qr").classList.remove("hide");st.textContent="Open this link on your phone to pay with a UPI app.";
-  const cvs=$("pay-cv"),x=cvs.getContext("2d"),qq=qrOf(u,"M"),n=qq.getModuleCount(),cell=Math.floor(288/n),qs=cell*n,o=(320-qs)/2;x.fillStyle="#fff";x.fillRect(0,0,320,320);x.fillStyle="#000";for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(qq.isDark(i,j))x.fillRect(o+j*cell,o+i*cell,cell,cell)}}
+  const cvs=$("pay-cv"),x=cvs.getContext("2d"),qq=qrOf(u,"M"),n=qq.getModuleCount(),cell=Math.floor(288/n),qs=cell*n,o=(320-qs)/2;x.fillStyle="#fff";x.fillRect(0,0,320,320);payRedraw=()=>{x.fillStyle="#fff";x.fillRect(0,0,320,320);x.fillStyle="#000";for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(qq.isDark(i,j))x.fillRect(o+j*cell,o+i*cell,cell,cell);centerLogo(x,160,160,Math.round(qs*.18))};payRedraw()}}
 
 /* ---------- Fonts & app extras ---------- */
 const fontsP=(document.fonts&&document.fonts.load)?Promise.all(["800 60px Sora","700 40px Sora","600 40px Inter","500 30px Inter","700 22px Inter","800 80px Sora"].map(f=>document.fonts.load(f,"₹ABCabc0123"))).catch(()=>{}):Promise.resolve();

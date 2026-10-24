@@ -12,7 +12,7 @@ cp "$SITE"/fonts/*.woff2 "$OUT/assets/www/fonts/"
 javac -nowarn -source 8 -target 8 -bootclasspath "$JAR" -d "$OUT/classes" $(find src -name '*.java')
 java -cp "$DX" com.android.dx.command.Main --dex --output="$OUT/classes.dex" "$OUT/classes"
 aapt package -f -M AndroidManifest.xml -S res -A "$OUT/assets" -I "$JAR" -F "$OUT/app-unsigned.apk" \
-  --min-sdk-version 29 --target-sdk-version 34 --version-code 47 --version-name 4.7
+  --min-sdk-version 29 --target-sdk-version 34 --version-code 48 --version-name 4.7
 ( cd "$OUT" && aapt add app-unsigned.apk classes.dex >/dev/null )
 zipalign -p -f 4 "$OUT/app-unsigned.apk" "$OUT/app-aligned.apk"
 apksigner sign --min-sdk-version 24 --v1-signing-enabled false --v2-signing-enabled true --v3-signing-enabled true --ks "$KS" --ks-pass "pass:$KSPASS" --out "$OUT/Dynamic-UPI-QR-Code-v4.7.apk" "$OUT/app-aligned.apk"

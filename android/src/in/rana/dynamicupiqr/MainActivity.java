@@ -53,6 +53,8 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(false);
         s.setAllowContentAccess(false);
         s.setBuiltInZoomControls(false);
+        s.setUseWideViewPort(true);          // honour the page viewport (zoomed-out app layout)
+        s.setLoadWithOverviewMode(false);
         s.setUserAgentString(s.getUserAgentString() + " DynamicUPIQR/4.7");
 
         web.addJavascriptInterface(new Bridge(), "AndroidApp");
